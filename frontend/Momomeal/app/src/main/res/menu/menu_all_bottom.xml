@@ -1,0 +1,21 @@
+<!--
+메인 화면의 BottomNavigationView를 구성하는 XML 파일입니다.
+-->
+
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/itemMyChatRoom"
+        android:title="@string/bnv_mychatroom_title"
+        android:icon="@drawable/ic_bnv_question_answer_24"
+        android:enabled="true" />
+
+    <item android:id="@+id/itemFindChatRoom"
+        android:title="@string/bnv_findchatroom_title"
+        android:icon="@drawable/ic_bnv_search_24"
+        android:enabled="true" />
+
+    <item android:id="@+id/itemMyProfile"
+        android:title="@string/bnv_myprofile_title"
+        android:icon="@drawable/ic_bnv_perm_identity_24"
+        android:enabled="true" />
+</menu>

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Momomeal</string>
+    <string name="bnv_mychatroom_title">내 채팅방</string>
+    <string name="bnv_findchatroom_title">채팅 검색</string>
+    <string name="bnv_myprofile_title">내 프로필</string>
 </resources>
