@@ -5,4 +5,10 @@
     <string name="bnv_mypage_title">마이페이지</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="prompt_email">이메일</string>
+    <string name="prompt_password">비밀번호</string>
+    <string name="btn_login_text">로그인</string>
+    <string name="view_login_signUp">아직 계정이 없으신가요?</string>
+    <string name="btn_login_signup" >회원가입</string>
 </resources>
