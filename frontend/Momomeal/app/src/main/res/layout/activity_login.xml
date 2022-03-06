@@ -24,7 +24,7 @@
         android:layout_marginHorizontal="32dp"
         app:endIconMode="custom"
         app:endIconDrawable="@drawable/ic_baseline_check_24"
-        app:boxStrokeColor="@color/darkOrange"
+        app:boxStrokeColor="@color/orange_deep"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         >
         <com.google.android.material.textfield.TextInputEditText
@@ -44,7 +44,7 @@
         android:layout_centerInParent="true"
         android:layout_marginHorizontal="32dp"
         app:endIconMode="password_toggle"
-        app:boxStrokeColor="@color/darkOrange"
+        app:boxStrokeColor="@color/orange_deep"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/login_btn_background"
         android:textColor="@color/white"
-        android:text="@string/login_btn"
+        android:text="@string/btn_login_text"
         />
     <LinearLayout
         android:layout_width="wrap_content"
@@ -80,14 +80,14 @@
             android:id="@+id/activity_login_signUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_login_signUp"
+            android:text="@string/view_login_signUp"
             android:layout_marginEnd="8dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:textColor="@color/darkOrange"
-            android:text="@string/signup"
+            android:textColor="@color/orange_deep"
+            android:text="@string/btn_login_signup"
             />
 
     </LinearLayout>

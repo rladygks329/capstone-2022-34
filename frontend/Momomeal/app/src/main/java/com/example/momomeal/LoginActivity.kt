@@ -1,4 +1,4 @@
-package com.example
+package com.example.momomeal
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
