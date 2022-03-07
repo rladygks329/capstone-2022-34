@@ -69,6 +69,7 @@
         android:background="@drawable/login_btn_background"
         android:textColor="@color/white"
         android:text="@string/btn_login_text"
+        android:onClick="onLoginBtnClick"
         />
     <LinearLayout
         android:layout_width="wrap_content"
