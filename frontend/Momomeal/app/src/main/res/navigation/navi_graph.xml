@@ -8,16 +8,37 @@
     <fragment
         android:id="@+id/itemHome"
         android:name="com.example.momomeal.HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_itemHome_to_itemChatRoom"
+            app:destination="@id/itemChatRoom" />
+        <action
+            android:id="@+id/action_itemHome_to_itemMypage"
+            app:destination="@id/itemMypage" />
+    </fragment>
 
     <fragment
         android:id="@+id/itemChatRoom"
         android:name="com.example.momomeal.ChatroomFragment"
-        tools:layout="@layout/fragment_chatroom" />
+        tools:layout="@layout/fragment_chatroom" >
+        <action
+            android:id="@+id/action_itemChatRoom_to_itemHome"
+            app:destination="@id/itemHome" />
+        <action
+            android:id="@+id/action_itemChatRoom_to_itemMypage"
+            app:destination="@id/itemMypage" />
+    </fragment>
 
     <fragment
         android:id="@+id/itemMypage"
-        android:name="com.example.momomeal.MyPageFragment"
-        tools:layout="@layout/fragment_mypage" />
+        android:name="com.example.momomeal.MypageFragment"
+        tools:layout="@layout/fragment_mypage" >
+        <action
+            android:id="@+id/action_itemMypage_to_itemHome"
+            app:destination="@id/itemHome" />
+        <action
+            android:id="@+id/action_itemMypage_to_itemChatRoom"
+            app:destination="@id/itemChatRoom" />
+    </fragment>
 
 </navigation>
