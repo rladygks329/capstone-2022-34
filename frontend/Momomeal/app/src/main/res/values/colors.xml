@@ -5,12 +5,27 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
     <color name="black">#FF000000</color>
+    <color name="gray1">#FF323232</color>
+    <color name="gray2">#FF646464</color>
+    <color name="gray3">#FF969696</color>
+    <color name="gray4">#FFC8C8C8</color>
+    <color name="gray5">#FFFAFAFA</color>
     <color name="white">#FFFFFFFF</color>
-    
+
     <!-- 새로 지정한 색(외주 기준) -->
     <color name="orange_deep">#FF8761</color>
     <color name="orange_light">#FEBF61</color>
     <color name="yellow_">#FFEA7B</color>
     <color name="teal">#5CC0AE</color>
+
+    <color name="orange_deep2">#FC815B</color>
+    <color name="orange_light2">#F3B265</color>
+    <color name="yellow_2">#ECDE61</color>
+    <color name="teal2">#3CB1A3</color>
+    
+    <color name="darkPink">#FFFF4085</color>
+    <color name="pink">#FFFFC9DD</color>
+    <color name="green">#FF3CB1A3</color>
 </resources>
