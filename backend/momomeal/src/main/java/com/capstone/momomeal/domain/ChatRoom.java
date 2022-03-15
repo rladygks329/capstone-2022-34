@@ -1,5 +1,7 @@
 package com.capstone.momomeal.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -22,8 +24,8 @@ public class ChatRoom extends BaseTimeEntity{
     private int maxCapacity;
     private String storeName;
     private String pickupPlaceName;
-    private double pickupPlaceCoordX;
-    private double pickupPlaceCoordY;
+    private double pickupPlaceXCoord;
+    private double pickupPlaceYCoord;
 
     public ChatRoom() {
     }
@@ -38,8 +40,8 @@ public class ChatRoom extends BaseTimeEntity{
         this.maxCapacity = maxCapacity;
         this.storeName = storeName;
         this.pickupPlaceName = pickupPlaceName;
-        this.pickupPlaceCoordX = pickupPlaceCoordX;
-        this.pickupPlaceCoordY = pickupPlaceCoordY;
+        this.pickupPlaceXCoord = pickupPlaceCoordX;
+        this.pickupPlaceYCoord = pickupPlaceCoordY;
     }
 
 }

@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -33,7 +35,8 @@ public class ChatRoomService {
     @Transactional
     public Long createChatRoom(Member member, ChatRoomRequestDTO requestDTO){
         // string -> Category enum 타입 변환
-        Category category = transferStringToEnum(requestDTO.getCategoryName());
+        TransStringToEnum te = new TransStringToEnum();
+        Category category = te.transferStringToEnum(requestDTO.getCategoryName());
 
         // 채팅방 생성
         ChatRoom chatRoom = new ChatRoom(category, requestDTO.getTitle(), requestDTO.getHostId(),
@@ -50,51 +53,9 @@ public class ChatRoomService {
 
     }
 
-    /**
-     *
-     * @param categoryName 안드로이드에서 받은 카테고리 string값
-     * @return enum으로 변환한 값
-     */
-    public Category transferStringToEnum(String categoryName){
-        Category category;
-        switch (categoryName){
-            case "Chicken":
-                category = Category.CHICKEN;
-                break;
-            case "Pizza":
-                category = Category.PIZZA;
-                break;
-            case "Korean":
-                category = Category.KOREAN;
-                break;
-            case "Chinese":
-                category = Category.CHINESE;
-                break;
-            case "Japanese":
-                category = Category.JAPANESE;
-                break;
-            case "Western":
-                category = Category.WESTERN;
-                break;
-            case "Snackbar":
-                category = Category.SNACKBAR;
-                break;
-            case "MidnightSnack":
-                category = Category.MIDNIGHTSNACK;
-                break;
-            case "BoiledPork":
-                category = Category.BOILEDPORK;
-                break;
-            case "CafeAndDesert":
-                category = Category.CAFE;
-                break;
-            case "Fastfood":
-                category = Category.FASTFOOD;
-                break;
-            default:
-                category = Category.ETC;
-                break;
-        }
-        return category;
+    public List<ChatRoom> findAll(){
+        return chatRoomRepository.findAll();
     }
+
+
 }
