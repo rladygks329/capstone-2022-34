@@ -14,8 +14,7 @@ public class ChatRoom extends BaseTimeEntity{
     @Column(name = "chatroom_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @Enumerated(value = EnumType.STRING)
     private Category category;
 
     private String title;

@@ -1,22 +1,18 @@
 package com.capstone.momomeal.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+public enum Category {
+    CHICKEN("Chicken"), PIZZA("Pizza"), KOREAN("Korean"),
+    CHINESE("Chinese"), JAPANESE("Japanese"), WESTERN("Western"), SNACKBAR("Snackbar")
+    , MIDNIGHTSNACK("MidnightSnack"), BOILEDPORK("BoiledPork"), CAFE("CafeAndDesert"),
+    FASTFOOD("Fastfood"), ETC("Etc");
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+    private String krName;
 
-@Entity
-@Getter
-@Setter
-public class Category {
-    @Id @GeneratedValue
-    @Column(name = "category_id")
-    Long id;
+    Category(String krName) {
+        this.krName = krName;
+    }
 
-    String categoryName;
-
-
+    public String getKrName() {
+        return krName;
+    }
 }

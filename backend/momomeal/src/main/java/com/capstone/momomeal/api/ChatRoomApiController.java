@@ -1,11 +1,7 @@
 package com.capstone.momomeal.api;
 
-import com.capstone.momomeal.domain.Category;
-import com.capstone.momomeal.domain.ChatRoom;
 import com.capstone.momomeal.domain.ChatRoomRequestDTO;
 import com.capstone.momomeal.domain.Member;
-import com.capstone.momomeal.repository.CategoryRepository;
-import com.capstone.momomeal.service.CategoryService;
 import com.capstone.momomeal.service.ChatRoomService;
 import com.capstone.momomeal.service.MemberService;
 import lombok.Data;
@@ -21,8 +17,6 @@ import javax.validation.Valid;
 public class ChatRoomApiController {
     private final ChatRoomService chatRoomService;
     private final MemberService memberService;
-    private final CategoryService categoryService;
-
 
     /**
      * 채팅방 생성 요청 api
@@ -31,17 +25,12 @@ public class ChatRoomApiController {
      */
     @PostMapping("/chat")
     public CreateChatRoomResponse saveChatRoom(@RequestBody @Valid ChatRoomRequestDTO requestDTO) {
-        // 카테고리 생성
-        Category category = new Category();
-        category.setCategoryName(requestDTO.getCategoryName());
-        categoryService.save(category);
-
 
         // 현재 회원 데이터 가져오기
         Member member = memberService.findOne(requestDTO.getHostId());
 
         // 채팅방 생성
-        Long createChatRoomId = chatRoomService.createChatRoom(category, member, requestDTO);
+        Long createChatRoomId = chatRoomService.createChatRoom(member, requestDTO);
 
         return new CreateChatRoomResponse(createChatRoomId);
     }
