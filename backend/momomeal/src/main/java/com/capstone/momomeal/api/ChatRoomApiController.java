@@ -1,10 +1,10 @@
 package com.capstone.momomeal.api;
 
 import com.capstone.momomeal.domain.*;
+import com.capstone.momomeal.exception.ChatRoomNotExistException;
 import com.capstone.momomeal.service.ChatRoomService;
 import com.capstone.momomeal.service.MemberService;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class ChatRoomApiController {
     private final MemberService memberService;
 
     /**
-     * 채팅방 생성 요청 api
+     * 채팅방 생성 응답 api
      * @param requestDTO 안드로이드에서 받은 채팅방 데이터
      * @return 생성한 채팅방(ChatRoom) id값
      */
@@ -41,18 +41,15 @@ public class ChatRoomApiController {
      * 채팅방 생성 요청 처리 후 응답
      */
     @Data
+    @AllArgsConstructor
     static class CreateChatRoomResponse {
         private Long id;
-
-        public CreateChatRoomResponse(Long id) {
-            this.id = id;
-        }
     }
 
     /**
-     * 해당 카테고리별 채팅방 데이터(dto) 전송
+     * 해당 카테고리별 채팅방 데이터(dto) 전송 api
      * @param categoryName 사용자가 선택한 카테고리명
-     * @return
+     * @return 해당 카테고리에 해당하는 모든 채팅방 dto 리스트
      */
     @GetMapping("/chat/{categoryName}")
     public List<ChatRoomListDto> returnCategoryList(@PathVariable String categoryName){
@@ -64,7 +61,8 @@ public class ChatRoomApiController {
         List<ChatRoom> chatRooms = chatRoomService.findAll();
 
         // 해당 카테고리의 dto만 뽑음
-        List<ChatRoomListDto> result = chatRooms.stream().filter(c -> c.getCategory().equals(selectedCategory))
+        List<ChatRoomListDto> result = chatRooms.stream()
+                .filter(c -> c.getCategory().equals(selectedCategory))
                 .map(c -> new ChatRoomListDto(c))
                 .collect(Collectors.toList());
 
@@ -72,6 +70,11 @@ public class ChatRoomApiController {
 
     }
 
+
+    /**
+     * 모든 채팅방 데이터(dto) 전송 api
+     * @return 모든 채팅방의 dto 리스트
+     */
     @GetMapping("/chat")
     public List<ChatRoomListDto> returnAllList() {
 
@@ -79,14 +82,20 @@ public class ChatRoomApiController {
         List<ChatRoom> chatRooms = chatRoomService.findAll();
 
         // 모든 채팅방의 dto만 뽑음
-        List<ChatRoomListDto> result = chatRooms.stream().map(c -> new ChatRoomListDto(c))
+        return chatRooms.stream().map(c -> new ChatRoomListDto(c))
                 .collect(Collectors.toList());
-
-        return result;
 
     }
 
+    // response body가 []가 아닌 {}로 감싸기 위한 장치
     @Data
+    @AllArgsConstructor
+    static class Result<T>{
+        private T data;
+    }
+
+    @Data
+    @AllArgsConstructor
     static class ChatRoomListDto{
         private Long id;
         private String title;
@@ -100,6 +109,49 @@ public class ChatRoomApiController {
             this.title = chatRoom.getTitle();
             this.pickupPlaceName = chatRoom.getPickupPlaceName();
             this.createdDate = chatRoom.getCreatedDate();
+            this.pickupPlaceXCoord = chatRoom.getPickupPlaceXCoord();
+            this.pickupPlaceYCoord = chatRoom.getPickupPlaceYCoord();
+        }
+    }
+
+    /**
+     * 사용자가 클릭한 채팅방 데이터(dto) 전송 api
+     * @param chatroomId 클릭한 채팅방 id
+     * @return 클릭한 채팅방 데이터(dto)
+     */
+    @GetMapping("/clicked-chat/{chatroomId}")
+    public ClickedChatRoomDto returnClickedChatRoomData(@PathVariable Long chatroomId){
+        // chatRoomId를 통해 해당 채팅방 데이터 조회
+        ChatRoom clickedChatRoom = chatRoomService.findById(chatroomId);
+
+        // 없는 채팅방 요청 들어올 때 -> 예외처리
+        if (clickedChatRoom == null){
+            throw new ChatRoomNotExistException();
+        }
+
+        // 해당 chatRoom dto로 변환
+        return new ClickedChatRoomDto(clickedChatRoom);
+
+    }
+
+    @Data
+    static class ClickedChatRoomDto{
+        private Long chatRoomId;
+        private String title;
+        private String category;
+        private int maxCapacity;
+        private String storeName;
+        private String pickupPlaceName;
+        private double pickupPlaceXCoord;
+        private double pickupPlaceYCoord;
+
+        public ClickedChatRoomDto(ChatRoom chatRoom) {
+            this.chatRoomId = chatRoom.getId();
+            this.title = chatRoom.getTitle();
+            this.category = chatRoom.getCategory().getName();
+            this.maxCapacity = chatRoom.getMaxCapacity();
+            this.storeName = chatRoom.getStoreName();
+            this.pickupPlaceName = chatRoom.getPickupPlaceName();
             this.pickupPlaceXCoord = chatRoom.getPickupPlaceXCoord();
             this.pickupPlaceYCoord = chatRoom.getPickupPlaceYCoord();
         }

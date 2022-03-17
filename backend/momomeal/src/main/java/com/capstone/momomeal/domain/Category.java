@@ -6,13 +6,13 @@ public enum Category {
     , MIDNIGHTSNACK("MidnightSnack"), BOILEDPORK("BoiledPork"), CAFE("CafeAndDesert"),
     FASTFOOD("Fastfood"), ETC("Etc");
 
-    private String krName;
+    private String name;
 
-    Category(String krName) {
-        this.krName = krName;
+    Category(String name) {
+        this.name = name;
     }
 
-    public String getKrName() {
-        return krName;
+    public String getName() {
+        return name;
     }
 }
