@@ -34,16 +34,16 @@ public class ChatRoom extends BaseTimeEntity{
 
 
     public ChatRoom(Category category, String title, Long hostId, int maxCapacity,
-                    String storeName, String pickupPlaceName, double pickupPlaceCoordX,
-                    double pickupPlaceCoordY) {
+                    String storeName, String pickupPlaceName, double pickupPlaceXCoord,
+                    double pickupPlaceYCoord) {
         this.category = category;
         this.title = title;
         this.hostId = hostId;
         this.maxCapacity = maxCapacity;
         this.storeName = storeName;
         this.pickupPlaceName = pickupPlaceName;
-        this.pickupPlaceXCoord = pickupPlaceCoordX;
-        this.pickupPlaceYCoord = pickupPlaceCoordY;
+        this.pickupPlaceXCoord = pickupPlaceXCoord;
+        this.pickupPlaceYCoord = pickupPlaceYCoord;
     }
 
 }

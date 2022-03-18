@@ -1,6 +1,9 @@
 package com.capstone.momomeal.service;
 
+import com.capstone.momomeal.domain.ChatRoom;
 import com.capstone.momomeal.domain.JoinedChatRoom;
+import com.capstone.momomeal.domain.Member;
+import com.capstone.momomeal.domain.MemberStatus;
 import com.capstone.momomeal.repository.JoinedChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,4 +25,22 @@ public class JoinedChatRoomService {
         joinedChatRoomRepository.save(joinedChatRoom);
         return joinedChatRoom.getId();
     }
+
+
+    /**
+     * 참여한 채팅방 생성 메서드 - 호스트가 아닌 사용자가 해당 채팅방에 참여하는 메서드이다.
+     * @param member 참여 요청을 한 member
+     * @param chatRoom member가 참여하려는 chatRoom
+     * @return 생성한 joinedChatRoom id
+     */
+    @Transactional
+    public Long createJoinedChatRoom(Member member, ChatRoom chatRoom){
+        JoinedChatRoom joinedChatRoom = new JoinedChatRoom(chatRoom, MemberStatus.MEMBER);
+        joinedChatRoom.setMember(member);
+        save(joinedChatRoom);
+        return joinedChatRoom.getId();
+
+    }
+
+
 }
