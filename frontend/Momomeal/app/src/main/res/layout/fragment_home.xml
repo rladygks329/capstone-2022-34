@@ -13,7 +13,7 @@
         android:text="hello_home_fragment" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_home"
         android:src="@drawable/ic_fab_chatroom_add_24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,6 +21,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/orange_deep"
-        app:tint="@android:color/white" />
+        app:tint="@android:color/white"
+        android:enabled="true"
+        android:contentDescription="Crate Chat Button" />
 
 </FrameLayout>

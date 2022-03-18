@@ -1,13 +1,21 @@
 <resources>
     <string name="app_name">Momomeal</string>
+    
+<!-- MainActivity`s BottomNavigationView Text -->
     <string name="bnv_home_title">홈</string>
     <string name="bnv_chatroom_title">채팅</string>
     <string name="bnv_mypage_title">마이페이지</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+<!--    CreateChatFragment`s Text-->
+    <string name="toolbar_create_chat">채팅방 만들기</string>
+    <string name="tv_chat_title_text">제목</string>
+    <string name="tv_category_text">카테고리</string>
+    <string name="tv_max_capacity_text">인원 수</string>
+    <string name="tv_deliver_place_text">배달 가게</string>
+    <string name="tv_location_text">수령 장소</string>
+    <string name="btn_create_confirm_txt">생성하기</string>
 
-    <string name="appbar_create_chat">채팅방 만들기</string>
     <string name="prompt_email">이메일</string>
     <string name="prompt_password">비밀번호</string>
     <string name="view_login_signUp">아직 계정이 없으신가요?</string>

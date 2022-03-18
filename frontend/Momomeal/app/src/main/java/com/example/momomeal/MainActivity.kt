@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun changeFragment(fragment: Fragment) {
+    public fun changeFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fl_main_frag_container, fragment)

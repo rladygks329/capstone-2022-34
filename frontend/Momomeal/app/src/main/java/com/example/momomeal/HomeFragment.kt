@@ -19,9 +19,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
 
+    private val mainActivity = MainActivity()
+    private val createChatFragment = CreateChatFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,14 +34,18 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        binding.fab.setOnClickListener {
-//        }
+        binding = FragmentHomeBinding.inflate(layoutInflater)
+
 
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
-
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.fabHome.setOnClickListener {
+            mainActivity.changeFragment(createChatFragment)
+        }
+    }
 }

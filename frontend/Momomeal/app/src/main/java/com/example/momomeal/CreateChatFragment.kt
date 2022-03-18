@@ -1,59 +1,70 @@
 package com.example.momomeal
 
+import android.app.Activity
 import android.os.Bundle
+import android.view.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
+import com.example.momomeal.databinding.FragmentCreateChatBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CreateChatFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CreateChatFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var binding: FragmentCreateChatBinding
+    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        toolbar = binding.toolbarCreateChat
+
+        // Spinner Setting
+        setupCategorySpinner()
+        binding.spnChatCategory.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        setupMaxCapacitySpinner()
+        binding.spnChatMaxCapacity.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_create_chat, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateChatFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CreateChatFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun setupCategorySpinner() {
+        val categoryItem = resources.getStringArray(R.array.spn_categoty_array)
+        val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryItem)
+        binding.spnChatCategory.adapter = categoryAdapter
+    }
+
+    private fun setupMaxCapacitySpinner() {
+        val maxCapacityItem = resources.getStringArray(R.array.spn_max_capacity_array)
+        val maxCapacityAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, maxCapacityItem)
+        binding.spnChatMaxCapacity.adapter = maxCapacityAdapter
     }
 }
