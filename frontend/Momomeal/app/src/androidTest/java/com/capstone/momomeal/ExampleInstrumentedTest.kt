@@ -1,4 +1,4 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

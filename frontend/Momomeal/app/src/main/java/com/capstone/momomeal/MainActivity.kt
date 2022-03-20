@@ -1,16 +1,18 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.example.momomeal.databinding.ActivityMainBinding
+import com.capstone.momomeal.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 // 기획상으로는 이 화면에서 정렬되어있는 채팅방을 볼 수 있음.
 
 class MainActivity : AppCompatActivity() {
+    private val TAG = "MainActivity"
     private val mainBnv: BottomNavigationView by lazy {
         findViewById(R.id.bnv_main)
     }
@@ -32,9 +34,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     public fun changeFragment(fragment: Fragment) {
+        Log.d(TAG, "changeFragment Activated")
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.fl_main_frag_container, fragment)
+            .replace(R.id.fl_main_full_container, fragment)
             .commit()
     }
 }

@@ -1,12 +1,12 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.momomeal.databinding.FragmentHomeBinding
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.capstone.momomeal.databinding.FragmentHomeBinding
+import com.capstone.momomeal.feature.BaseFragment
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,10 +18,9 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() {
-    private lateinit var binding: FragmentHomeBinding
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
 
-    private val mainActivity = MainActivity()
+    private lateinit var mainActivity: MainActivity
     private val createChatFragment = CreateChatFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,18 +33,21 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeBinding.inflate(layoutInflater)
+        val retView = super.onCreateView(inflater, container, savedInstanceState)
 
-
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        mainActivity = (activity as MainActivity)
+        val transaction = mainActivity
+            .supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_main_full_container, createChatFragment)
+        binding.fabHome.setOnClickListener {
+//            mainActivity.changeFragment(createChatFragment)
+            transaction.commit()
+        }
+        return retView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.fabHome.setOnClickListener {
-            mainActivity.changeFragment(createChatFragment)
-        }
+
     }
 }

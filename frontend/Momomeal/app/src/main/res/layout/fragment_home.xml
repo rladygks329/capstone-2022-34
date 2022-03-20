@@ -23,6 +23,13 @@
         android:backgroundTint="@color/orange_deep"
         app:tint="@android:color/white"
         android:enabled="true"
+        android:clickable="true"
         android:contentDescription="Crate Chat Button" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
 </FrameLayout>

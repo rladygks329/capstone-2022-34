@@ -1,21 +1,18 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.Toolbar
-import com.example.momomeal.databinding.FragmentCreateChatBinding
+import com.capstone.momomeal.databinding.FragmentCreateChatBinding
+import com.capstone.momomeal.feature.BaseFragment
 
-class CreateChatFragment : Fragment() {
+class CreateChatFragment : BaseFragment<FragmentCreateChatBinding>(FragmentCreateChatBinding::inflate) {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var binding: FragmentCreateChatBinding
-    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,34 +23,33 @@ class CreateChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        toolbar = binding.toolbarCreateChat
-
+        val retView = super.onCreateView(inflater, container, savedInstanceState)
         // Spinner Setting
         setupCategorySpinner()
-        binding.spnChatCategory.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
+//        binding.spnChatCategory.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onNothingSelected(p0: AdapterView<*>?) {
+//                TODO("Not yet implemented")
+//            }
+//        }
 
         setupMaxCapacitySpinner()
-        binding.spnChatMaxCapacity.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-        }
+//        binding.spnChatMaxCapacity.onItemSelectedListener = object:AdapterView.OnItemSelectedListener {
+//            override fun onItemSelected(p0: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//                TODO("Not yet implemented")
+//            }
+//
+//            override fun onNothingSelected(p0: AdapterView<*>?) {
+//                TODO("Not yet implemented")
+//            }
+//        }
 
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_chat, container, false)
+        return retView
     }
 
     private fun setupCategorySpinner() {

@@ -1,4 +1,4 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
 import android.os.Bundle
 import android.view.MenuItem

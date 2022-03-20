@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/itemHome"
-        android:name="com.example.momomeal.HomeFragment"
+        android:name="com.capstone.momomeal.HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_itemHome_to_itemChatRoom"
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/itemChatRoom"
-        android:name="com.example.momomeal.ChatroomFragment"
+        android:name="com.capstone.momomeal.ChatroomFragment"
         tools:layout="@layout/fragment_chatroom" >
         <action
             android:id="@+id/action_itemChatRoom_to_itemHome"
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/itemMypage"
-        android:name="com.example.momomeal.MypageFragment"
+        android:name="com.capstone.momomeal.MypageFragment"
         tools:layout="@layout/fragment_mypage" >
         <action
             android:id="@+id/action_itemMypage_to_itemHome"
