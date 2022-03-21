@@ -5,6 +5,7 @@ import com.capstone.momomeal.service.ChatRoomService;
 import com.capstone.momomeal.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -127,8 +128,43 @@ public class ChatRoomListApiController {
         }
     }
 
-    
 
+    @GetMapping("/entered-chat-list/{testMemberId}")
+    public ResponseEntity returnEnteredChatRoomList(@PathVariable Long testMemberId){
+
+        Member member = memberService.findOne(testMemberId);
+        List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms();
+
+        List<ChatRoom> chatRooms = new ArrayList<>();
+        for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
+            chatRooms.add(joinedChatRoom.getChatRoom());
+        }
+
+        List<EnteredChatRoomListDto> result = new ArrayList<>();
+
+        if (chatRooms.size() > 1) { // 참여하고 있는 채팅방이 있을 때
+            // 참여하고 있는 채팅방 제외한 모든 채팅방 가져옴
+            result = chatRooms.stream()
+                    .map(c -> new EnteredChatRoomListDto(c))
+                    .collect(Collectors.toList());
+        }    // 참여하고 있는 채팅방이 없을 때 -> 빈 객체
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
+
+    }
+
+    @Data
+    @NoArgsConstructor
+    static class EnteredChatRoomListDto{
+        private Long chatRoomId;
+        private String title;
+
+        public EnteredChatRoomListDto(ChatRoom chatRoom) {
+            this.chatRoomId = chatRoom.getId();
+            this.title = chatRoom.getTitle();
+        }
+    }
 
 
 }
