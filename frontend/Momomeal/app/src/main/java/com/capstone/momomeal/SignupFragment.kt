@@ -1,4 +1,4 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
 import android.content.Context
 import android.os.Bundle
@@ -9,10 +9,8 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
-
 
 class SignupFragment : Fragment() {
     lateinit var registerActivity: RegisterActivity

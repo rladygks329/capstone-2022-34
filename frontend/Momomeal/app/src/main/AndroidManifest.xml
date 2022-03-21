@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.momomeal">
+    package="com.capstone.momomeal">
 
     <application
         android:allowBackup="true"
@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Momomeal">
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".RegisterActivity"/>
+        <activity android:name="com.capstone.momomeal.MainActivity"/>
+        <activity android:name="com.capstone.momomeal.RegisterActivity"/>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.capstone.momomeal.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

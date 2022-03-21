@@ -1,4 +1,4 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
 import org.junit.Test
 
