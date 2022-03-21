@@ -12,7 +12,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputLayout
 
-
 class SignupFragment : Fragment() {
     lateinit var registerActivity: RegisterActivity
 

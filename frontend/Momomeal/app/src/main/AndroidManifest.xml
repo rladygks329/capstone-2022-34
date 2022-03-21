@@ -9,10 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Momomeal">
-        <activity android:name="com.capstone.momomeal.LoginActivity"/>
+        <activity android:name="com.capstone.momomeal.MainActivity"/>
         <activity android:name="com.capstone.momomeal.RegisterActivity"/>
         <activity
-            android:name="com.capstone.momomeal.MainActivity"
+            android:name="com.capstone.momomeal.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
