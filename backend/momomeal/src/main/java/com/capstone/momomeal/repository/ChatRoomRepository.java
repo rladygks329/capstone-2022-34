@@ -19,6 +19,10 @@ public class ChatRoomRepository {
         em.persist(chatRoom);
     }
 
+    public ChatRoom findById(Long chatRoomId){
+        return em.find(ChatRoom.class, chatRoomId);
+    }
+
     public List<ChatRoom> findAll(){
         return em.createQuery("select cr from ChatRoom cr", ChatRoom.class)
                 .getResultList();

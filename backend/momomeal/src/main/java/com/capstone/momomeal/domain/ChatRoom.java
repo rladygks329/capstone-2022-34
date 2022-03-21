@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 public class ChatRoom extends BaseTimeEntity{
     @Id @GeneratedValue
     @Column(name = "chatroom_id")
