@@ -4,10 +4,9 @@ import com.capstone.momomeal.domain.*;
 import com.capstone.momomeal.service.ChatRoomService;
 import com.capstone.momomeal.service.JoinedChatRoomService;
 import com.capstone.momomeal.service.MemberService;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -52,14 +51,53 @@ public class ChatRoomApiController {
         }
     }
 
+    /**
+     * 사용자가 클릭한 채팅방 데이터(dto) 전송 api
+     * @param chatroomId 클릭한 채팅방 id
+     * @return 클릭한 채팅방 데이터(dto)
+     */
+    @GetMapping("/clicked-chat/{chatroomId}")
+    public ResponseEntity returnClickedChatRoomData(@PathVariable Long chatroomId){
+        // chatRoomId를 통해 해당 채팅방 데이터 조회
+        ChatRoom clickedChatRoom = chatRoomService.findById(chatroomId);
+
+        ClickedChatRoomDto result;
 
 
+        if (clickedChatRoom == null){   // 없는 채팅방 요청 -> 빈 값
+            result = new ClickedChatRoomDto();
+        } else{
+            result = new ClickedChatRoomDto(clickedChatRoom);   // 해당 chatRoom dto로 변환
+        }
 
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(result);
 
+    }
 
+    @Data
+    @NoArgsConstructor
+    static class ClickedChatRoomDto{
+        private Long chatRoomId;
+        private String title;
+        private String category;
+        private int maxCapacity;
+        private String storeName;
+        private String pickupPlaceName;
+        private double pickupPlaceXCoord;
+        private double pickupPlaceYCoord;
 
-
-
+        public ClickedChatRoomDto(ChatRoom chatRoom) {
+            this.chatRoomId = chatRoom.getId();
+            this.title = chatRoom.getTitle();
+            this.category = chatRoom.getCategory().getName();
+            this.maxCapacity = chatRoom.getMaxCapacity();
+            this.storeName = chatRoom.getStoreName();
+            this.pickupPlaceName = chatRoom.getPickupPlaceName();
+            this.pickupPlaceXCoord = chatRoom.getPickupPlaceXCoord();
+            this.pickupPlaceYCoord = chatRoom.getPickupPlaceYCoord();
+        }
+    }
 
     /**
      * 호스트가 아닌 사용자의 채팅방 요청 api

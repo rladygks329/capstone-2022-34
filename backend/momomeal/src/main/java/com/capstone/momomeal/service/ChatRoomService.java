@@ -53,6 +53,10 @@ public class ChatRoomService {
 
     }
 
+    public ChatRoom findById(Long id){
+        return chatRoomRepository.findById(id);
+    }
+
     public List<ChatRoom> findAll(){
         return chatRoomRepository.findAll();
     }
