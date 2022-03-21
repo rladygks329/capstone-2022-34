@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.capstone.func.Category
-import com.capstone.func.Chatroom
-import com.capstone.func.ChatroomAdapter
+import com.capstone.momomeal.feature.Category
+import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.feature.ChatroomAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

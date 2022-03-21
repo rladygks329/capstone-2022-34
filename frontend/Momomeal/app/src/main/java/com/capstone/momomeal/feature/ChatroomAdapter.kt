@@ -1,4 +1,4 @@
-package com.capstone.func
+package com.capstone.momomeal.feature
 
 import android.content.Context
 import android.view.LayoutInflater

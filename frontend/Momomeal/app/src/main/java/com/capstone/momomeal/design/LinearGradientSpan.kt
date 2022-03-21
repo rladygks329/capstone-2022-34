@@ -1,4 +1,4 @@
-package com.capstone.design
+package com.capstone.momomeal.design
 
 import android.graphics.LinearGradient
 import android.graphics.Shader

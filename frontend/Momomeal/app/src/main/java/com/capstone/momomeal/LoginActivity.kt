@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.text.set
 import androidx.core.text.toSpannable
-import com.capstone.design.LinearGradientSpan
+import com.capstone.momomeal.design.LinearGradientSpan
 import com.google.android.material.textfield.TextInputLayout
 
 
