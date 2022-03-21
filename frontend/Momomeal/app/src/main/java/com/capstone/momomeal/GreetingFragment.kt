@@ -1,7 +1,6 @@
-package com.example.momomeal
+package com.capstone.momomeal
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
@@ -11,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.fragment.app.Fragment
 
