@@ -57,5 +57,8 @@ public class ChatRoomService {
         return chatRoomRepository.findAll();
     }
 
+    public List<ChatRoom> findExceptParticipatedChatRoom(List<Long> participatedChatRoomIds){
+        return chatRoomRepository.findExceptParticipatedChatRoom(participatedChatRoomIds);
+    }
 
 }

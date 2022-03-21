@@ -15,4 +15,8 @@ public class JoinedChatRoomRepository {
     public void save(JoinedChatRoom joinedChatRoom){
         em.persist(joinedChatRoom);
     }
+
+    public void findJoinedChatRoomByMemberIdAndChatRoomId(Long memberId, Long chatRoomId){
+
+    }
 }

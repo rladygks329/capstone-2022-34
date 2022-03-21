@@ -1,11 +1,13 @@
 package com.capstone.momomeal.repository;
 
+import com.capstone.momomeal.domain.JoinedChatRoom;
 import com.capstone.momomeal.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -18,4 +20,6 @@ public class MemberRepository {
     public Member find(Long id) {
         return em.find(Member.class, id);
     }
+
+
 }

@@ -1,12 +1,15 @@
 package com.capstone.momomeal.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Cleanup;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class JoinedChatRoom {
 
     @Id @GeneratedValue
