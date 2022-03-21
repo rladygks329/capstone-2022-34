@@ -6,9 +6,21 @@
     app:startDestination="@id/itemHome">
 
     <fragment
+        android:id="@+id/createChat"
+        android:name="com.capstone.momomeal.CreateChatFragment"
+        tools:layout="@layout/fragment_create_chat">
+        <action
+            android:id="@+id/action_createChat_to_itemHome"
+            app:destination="@id/itemHome"/>
+    </fragment>
+
+    <fragment
         android:id="@+id/itemHome"
         android:name="com.capstone.momomeal.HomeFragment"
         tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_itemHome_to_createChat"
+            app:destination="@id/createChat"/>
         <action
             android:id="@+id/action_itemHome_to_itemChatRoom"
             app:destination="@id/itemChatRoom" />

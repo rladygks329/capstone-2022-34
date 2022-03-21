@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fl_main_full_container, fragment)
-
             .commit()
     }
 }
