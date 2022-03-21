@@ -7,6 +7,11 @@
     tools:context="com.capstone.momomeal.MainActivity">
 
     <FrameLayout
+        android:id="@+id/fl_main_full_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
         android:id="@+id/fl_main_frag_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
