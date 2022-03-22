@@ -35,4 +35,14 @@ public class ChatRoomRepository {
                 .getResultList();
 
     }
+
+    public int deleteById(Long chatRoomId){
+        int cnt = em.createQuery("delete from ChatRoom cr" +
+                        " where cr.id = :id")
+                .setParameter("id", chatRoomId)
+                .executeUpdate();// delete 되는 레코드 수
+        em.clear();
+        return cnt;
+
+    }
 }

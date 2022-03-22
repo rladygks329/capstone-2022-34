@@ -65,4 +65,9 @@ public class ChatRoomService {
         return chatRoomRepository.findExceptParticipatedChatRoom(participatedChatRoomIds);
     }
 
+    @Transactional
+    public int delete(Long chatRoomId){
+        return chatRoomRepository.deleteById(chatRoomId);
+    }
+
 }

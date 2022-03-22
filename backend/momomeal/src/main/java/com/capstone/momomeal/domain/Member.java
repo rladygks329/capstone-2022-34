@@ -2,6 +2,7 @@ package com.capstone.momomeal.domain;
 
 
 import lombok.Getter;
+import org.hibernate.mapping.Join;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -16,5 +17,16 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<JoinedChatRoom> joinedChatRooms = new ArrayList<>();
+
+    // Member에서 joinChatRoom 삭제
+    public void deleteJoinChatRoomFromMember(JoinedChatRoom joinedChatRoom){
+        joinedChatRooms.remove(joinedChatRoom);
+
+    }
+
+    public boolean belongsToMember(JoinedChatRoom joinedChatRoom){
+        return joinedChatRooms.contains(joinedChatRoom);
+    }
+
 
 }

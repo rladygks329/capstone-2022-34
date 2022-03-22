@@ -22,7 +22,7 @@ public class ChatRoomApiController {
     private final JoinedChatRoomService joinedChatRoomService;
 
     /**
-     * 채팅방 생성 요청 api
+     * 채팅방 생성 응답 api
      * @param requestDTO 안드로이드에서 받은 채팅방 데이터
      * @return 생성한 채팅방(ChatRoom) id값
      */
@@ -100,15 +100,16 @@ public class ChatRoomApiController {
     }
 
     /**
-     * 호스트가 아닌 사용자의 채팅방 요청 api
+     * 호스트가 아닌 사용자의 채팅방 참여 응답 api
      * 해당 채팅방 멤버에 해당 사용자 추가함
      */
-    @GetMapping("/chat/{memberId}/{chatroomId}")
-    public CreateJoinedChatRoomResponse enterChatRoom(@PathVariable Long memberId,
+    @GetMapping("/chat/{testMemberId}/{chatroomId}")
+    public CreateJoinedChatRoomResponse enterChatRoom(@PathVariable Long testMemberId,
                                                       @PathVariable Long chatroomId){
 
+
         // id값으로 회원 객체 가져오기
-        Member findMember = memberService.findOne(memberId);
+        Member findMember = memberService.findOne(testMemberId);
         // id값으로 채팅방 객체 가져오기
         ChatRoom findChatRoom = chatRoomService.findById(chatroomId);
 
@@ -128,5 +129,41 @@ public class ChatRoomApiController {
         private Long id;
     }
 
+    /**
+     * 채팅방 삭제 응답 api - 참여한 채팅방(JoinedChatRoom) 삭제 - 연관관계 모두 삭제해야 함
+     * @param chatroomId 삭제하려는 joinedChatRoom와 연관된 chatRoom id
+     * @return deleteCountDto: 삭제한 joinedChatRoom 레코드 수, 삭제한 chatRoom 레코드 수
+     */
+    @DeleteMapping("/deleted-chat/{chatroomId}/{testMemberId}")
+    public deleteCountDto deleteJoinedChatRoom(@PathVariable Long chatroomId,
+                                               @PathVariable Long testMemberId){
+
+        Member member = memberService.findOne(testMemberId);
+        ChatRoom chatRoom = chatRoomService.findById(chatroomId);
+        JoinedChatRoom toDeleteJoinedChatRoom = joinedChatRoomService
+                .findByMemberIdAndChatRoomId(member, chatRoom);
+
+        member.deleteJoinChatRoomFromMember(toDeleteJoinedChatRoom);
+
+        int cntDeletedJCRecord = joinedChatRoomService.delete(toDeleteJoinedChatRoom.getId());
+
+        // joinedChatRoom과 연관된 chatRoom없으면 chatRoom도 DB에서 삭제함
+        int cntDeleteCRecord = 0;
+        int cnt = joinedChatRoomService.countByChatRoom(chatRoom);
+        if (cnt == 0) {
+            cntDeleteCRecord = chatRoomService.delete(chatroomId);
+        }
+
+        return new deleteCountDto(cntDeletedJCRecord, cntDeleteCRecord);
+
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class deleteCountDto{
+        private int cntDeletedJoinedChatRoomRecord;
+        private int cntDeletedChatRoomRecord;
+
+    }
 
 }
