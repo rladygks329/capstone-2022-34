@@ -1,25 +1,52 @@
 package com.capstone.momomeal.service;
 
-
-import com.capstone.momomeal.domain.ChatRoom;
-import com.capstone.momomeal.domain.Member;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import com.capstone.momomeal.domain.Members;
+import com.capstone.momomeal.repository.MemberRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Optional;
 
-@Repository
-@RequiredArgsConstructor
-@Transactional
+@Slf4j
+@Transactional //JPA 사용할때 저장할때 필요한것이다
 public class MemberService {
-    private final EntityManager em;
 
-    public void save(Member member){
-        em.persist(member);
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
     }
 
-    public Member findOne(Long id){
-        return em.find(Member.class, id);
+    /**
+     * 회원 가입
+     * @param member
+     * @return
+     */
+    public String join(Members member){
+        // 같은 이름있는 중복 회원은 안됀다
+        log.info("member userID = {}",member.getUserid());
+        log.info("member = {}",memberRepository.findById(member.getUserid()));
+        if(memberRepository.findById(member.getUserid()) != null){
+            throw new IllegalStateException("중복 아이디 존재");
+        }
+        memberRepository.save(member);
+        return member.getUsername();
+    }
+
+    /**
+     * 맴버 검색
+     * @return
+     */
+    public List<Members> findAll(){
+        return memberRepository.findAll();
+    }
+
+    public Optional<Members> findOne(String userid){
+        return memberRepository.findById(userid);
+    }
+
+    public Optional<Members> Login(String userid, String pwd){
+        return memberRepository.findIdAndPwd(userid, pwd);
     }
 }
