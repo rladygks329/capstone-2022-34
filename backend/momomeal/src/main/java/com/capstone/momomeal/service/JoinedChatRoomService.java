@@ -2,13 +2,14 @@ package com.capstone.momomeal.service;
 
 import com.capstone.momomeal.domain.ChatRoom;
 import com.capstone.momomeal.domain.JoinedChatRoom;
-import com.capstone.momomeal.domain.Member;
 import com.capstone.momomeal.domain.MemberStatus;
+import com.capstone.momomeal.domain.Members;
 import com.capstone.momomeal.repository.JoinedChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class JoinedChatRoomService {
      * @param chatRoom member가 참여하려는 chatRoom
      * @return 생성한 joinedChatRoom id
      */
-    public Long createJoinedChatRoom(Member member, ChatRoom chatRoom){
+    public Long createJoinedChatRoom(Members member, ChatRoom chatRoom){
         JoinedChatRoom joinedChatRoom = new JoinedChatRoom(chatRoom, MemberStatus.MEMBER);
         joinedChatRoom.setMember(member);
         save(joinedChatRoom);
@@ -57,7 +58,7 @@ public class JoinedChatRoomService {
      * @return 삭제할 joinedChatRoom 객체
      */
     @Transactional(readOnly = true)
-    public JoinedChatRoom findByMemberIdAndChatRoomId(Member member, ChatRoom chatRoom){
+    public JoinedChatRoom findByMemberIdAndChatRoomId(Members member, ChatRoom chatRoom){
         return joinedChatRoomRepository.findByMemberIdAndChatRoomId(member, chatRoom);
     }
 

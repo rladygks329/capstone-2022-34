@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,16 +28,16 @@ public class ChatRoomListApiController {
      * @param categoryName 사용자가 선택한 카테고리명
      * @return 해당 카테고리에 해당하는 모든 채팅방 dto 리스트 Body에 담은 ResponseEntity
      */
-    @GetMapping("/chat-list/{categoryName}/{testMemberId}")
+    @GetMapping("/chat-list/{categoryName}/{memberId}")
     public ResponseEntity returnCategoryList(@PathVariable String categoryName,
-                                             @PathVariable Long testMemberId){
+                                             @PathVariable String memberId){
         // string -> Category enum 타입 변환
         TransStringToEnum te = new TransStringToEnum();
         Category selectedCategory = te.transferStringToEnum(categoryName);
 
 
         // 참여한 채팅 제외한 모든 채팅방
-        List<ChatRoom> chatRooms = getChatRoomsExceptParticipatedCharRooms(testMemberId);
+        List<ChatRoom> chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId);
 
 
         // 해당 카테고리의 dto만 뽑음
@@ -57,12 +58,12 @@ public class ChatRoomListApiController {
      * 사용자가 참여한 채팅방 제외한 모든 채팅방 데이터(dto) 전송 api
      * @return 모든 채팅방의 dto 리스트 Body에 담은 ResponseEntity
      */
-    @GetMapping("/chat-list/{testMemberId}")
-    public ResponseEntity returnAllList(@PathVariable Long testMemberId) {
+    @GetMapping("/chat-list/{memberId}")
+    public ResponseEntity returnAllList(@PathVariable String memberId) {
 
         // 모든 채팅방 가져옴
         // 참여한 채팅 제외한 모든 채팅방
-        List<ChatRoom> chatRooms = getChatRoomsExceptParticipatedCharRooms(testMemberId);
+        List<ChatRoom> chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId);
 
         // 모든 채팅방의 dto만 뽑음
         List<ChatRoomListDto> result = chatRooms.stream().map(c -> new ChatRoomListDto(c))
@@ -74,28 +75,31 @@ public class ChatRoomListApiController {
     }
 
     // 참여한 채팅 제외한 모든 채팅방 리턴
-    private List<ChatRoom> getChatRoomsExceptParticipatedCharRooms(Long testMemberId) {
-
-        // 사용자가 이미 참여한 채팅 거르기 위해 사용자가 참여한 채팅방 id(ChatRoomId)값이 필요
-        Member member = memberService.findOne(testMemberId);
-        List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms(); // 참여한 joinedChatRooms
-        List<Long> participatedChatRoomIds = new ArrayList<>();    // 참여한 chatRoomIds
-
-        for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
-            Long participatedChatRoomId = joinedChatRoom.getChatRoom().getId();
-            participatedChatRoomIds.add(participatedChatRoomId);
-        }   // end
+    private List<ChatRoom> getChatRoomsExceptParticipatedCharRooms(String testMemberId) {
 
         List<ChatRoom> chatRooms = new ArrayList<>();
+        // 사용자가 이미 참여한 채팅 거르기 위해 사용자가 참여한 채팅방 id(ChatRoomId)값이 필요
+        Optional<Members> getMember = memberService.findOne(testMemberId);
+        if (getMember.isPresent()){
+            Members member = getMember.get();
+            List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms(); // 참여한 joinedChatRooms
+            List<Long> participatedChatRoomIds = new ArrayList<>();    // 참여한 chatRoomIds
 
-        // 참여하고 있는 채팅방이 없을 때 -> 전체 채팅방 가져옴
-        if (participatedChatRoomIds.size() < 1) {
-            chatRooms = chatRoomService.findAll();
-        } else{     // 참여하고 있는 채팅방이 있을 때
-            // 참여하고 있는 채팅방 제외한 모든 채팅방 가져옴
-            chatRooms = chatRoomService.findExceptParticipatedChatRoom(participatedChatRoomIds);
+            for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
+                Long participatedChatRoomId = joinedChatRoom.getChatRoom().getId();
+                participatedChatRoomIds.add(participatedChatRoomId);
+            }   // end
+
+
+
+            // 참여하고 있는 채팅방이 없을 때 -> 전체 채팅방 가져옴
+            if (participatedChatRoomIds.size() < 1) {
+                chatRooms = chatRoomService.findAll();
+            } else{     // 참여하고 있는 채팅방이 있을 때
+                // 참여하고 있는 채팅방 제외한 모든 채팅방 가져옴
+                chatRooms = chatRoomService.findExceptParticipatedChatRoom(participatedChatRoomIds);
+            }
         }
-
 
         return chatRooms;
     }
@@ -129,25 +133,29 @@ public class ChatRoomListApiController {
     }
 
 
-    @GetMapping("/entered-chat-list/{testMemberId}")
-    public ResponseEntity returnEnteredChatRoomList(@PathVariable Long testMemberId){
-
-        Member member = memberService.findOne(testMemberId);
-        List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms();
-
-        List<ChatRoom> chatRooms = new ArrayList<>();
-        for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
-            chatRooms.add(joinedChatRoom.getChatRoom());
-        }
-
+    @GetMapping("/entered-chat-list/{memberId}")
+    public ResponseEntity returnEnteredChatRoomList(@PathVariable String memberId){
         List<EnteredChatRoomListDto> result = new ArrayList<>();
 
-        if (chatRooms.size() > 1) { // 참여하고 있는 채팅방이 있을 때
-            // 참여하고 있는 채팅방 제외한 모든 채팅방 가져옴
-            result = chatRooms.stream()
-                    .map(c -> new EnteredChatRoomListDto(c))
-                    .collect(Collectors.toList());
-        }    // 참여하고 있는 채팅방이 없을 때 -> 빈 객체
+        Optional<Members> getMember = memberService.findOne(memberId);
+        if (getMember.isPresent()){
+            Members member = getMember.get();
+            List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms();
+
+            List<ChatRoom> chatRooms = new ArrayList<>();
+            for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
+                chatRooms.add(joinedChatRoom.getChatRoom());
+            }
+
+            if (chatRooms.size() > 1) { // 참여하고 있는 채팅방이 있을 때
+                // 참여하고 있는 채팅방 제외한 모든 채팅방 가져옴
+                result = chatRooms.stream()
+                        .map(c -> new EnteredChatRoomListDto(c))
+                        .collect(Collectors.toList());
+            }    // 참여하고 있는 채팅방이 없을 때 -> 빈 객체
+
+        }
+
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);

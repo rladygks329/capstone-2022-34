@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -28,21 +29,27 @@ public class ChatRoomApiController {
      */
     @PostMapping("/chat")
     public CreateChatRoomResponse saveChatRoom(@RequestBody @Valid ChatRoomRequestDTO requestDTO) {
-
+        CreateChatRoomResponse result;
         // 현재 회원 데이터 가져오기
-        Member member = memberService.findOne(requestDTO.getHostId());
-        System.out.println("member: " + member.getId());
+        Optional<Members> getMember = memberService.findOne(requestDTO.getHostId());
 
-        // 채팅방 생성
-        Long createChatRoomId = chatRoomService.createChatRoom(member, requestDTO);
+        if (getMember.isPresent()){
+            Members member = getMember.get();
+            // 채팅방 생성
+            Long createChatRoomId = chatRoomService.createChatRoom(member, requestDTO);
+            result = new CreateChatRoomResponse(createChatRoomId);
+        } else{
+            result = new CreateChatRoomResponse();
+        }
 
-        return new CreateChatRoomResponse(createChatRoomId);
+        return result;
     }
 
     /**
      * 채팅방 생성 요청 처리 후 응답
      */
     @Data
+    @NoArgsConstructor
     static class CreateChatRoomResponse {
         private Long id;
 
@@ -103,21 +110,26 @@ public class ChatRoomApiController {
      * 호스트가 아닌 사용자의 채팅방 참여 응답 api
      * 해당 채팅방 멤버에 해당 사용자 추가함
      */
-    @GetMapping("/chat/{testMemberId}/{chatroomId}")
-    public CreateJoinedChatRoomResponse enterChatRoom(@PathVariable Long testMemberId,
+    @GetMapping("/chat/{memberId}/{chatroomId}")
+    public CreateJoinedChatRoomResponse enterChatRoom(@PathVariable String memberId,
                                                       @PathVariable Long chatroomId){
 
-
+        CreateJoinedChatRoomResponse result;
         // id값으로 회원 객체 가져오기
-        Member findMember = memberService.findOne(testMemberId);
+        Optional<Members> getMember = memberService.findOne(memberId);
         // id값으로 채팅방 객체 가져오기
         ChatRoom findChatRoom = chatRoomService.findById(chatroomId);
 
         // joinedChatRoom 생성
-        Long joinedChatRoomId = joinedChatRoomService.createJoinedChatRoom(findMember, findChatRoom);
+        if (getMember.isPresent()){
+            Members findMember = getMember.get();
+            Long joinedChatRoomId = joinedChatRoomService.createJoinedChatRoom(findMember, findChatRoom);
+            result = new CreateJoinedChatRoomResponse(joinedChatRoomId);
+        } else {
+            result = new CreateJoinedChatRoomResponse();
+        }
 
-        return new CreateJoinedChatRoomResponse(joinedChatRoomId);
-
+        return result;
     }
 
     /**
@@ -125,6 +137,7 @@ public class ChatRoomApiController {
      */
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     static class CreateJoinedChatRoomResponse {
         private Long id;
     }
@@ -134,32 +147,43 @@ public class ChatRoomApiController {
      * @param chatroomId 삭제하려는 joinedChatRoom와 연관된 chatRoom id
      * @return deleteCountDto: 삭제한 joinedChatRoom 레코드 수, 삭제한 chatRoom 레코드 수
      */
-    @DeleteMapping("/deleted-chat/{chatroomId}/{testMemberId}")
-    public deleteCountDto deleteJoinedChatRoom(@PathVariable Long chatroomId,
-                                               @PathVariable Long testMemberId){
+    @DeleteMapping("/deleted-chat/{memberId}/{chatroomId}")
+    public deleteCountDto deleteJoinedChatRoom(@PathVariable String memberId,
+                                               @PathVariable Long chatroomId){
+        deleteCountDto result;
 
-        Member member = memberService.findOne(testMemberId);
+        Optional<Members> getMember = memberService.findOne(memberId);
         ChatRoom chatRoom = chatRoomService.findById(chatroomId);
-        JoinedChatRoom toDeleteJoinedChatRoom = joinedChatRoomService
-                .findByMemberIdAndChatRoomId(member, chatRoom);
 
-        member.deleteJoinChatRoomFromMember(toDeleteJoinedChatRoom);
+        if (getMember.isPresent()){
+            Members member = getMember.get();
+            JoinedChatRoom toDeleteJoinedChatRoom = joinedChatRoomService
+                    .findByMemberIdAndChatRoomId(member, chatRoom);
 
-        int cntDeletedJCRecord = joinedChatRoomService.delete(toDeleteJoinedChatRoom.getId());
+            member.deleteJoinChatRoomFromMember(toDeleteJoinedChatRoom);
 
-        // joinedChatRoom과 연관된 chatRoom없으면 chatRoom도 DB에서 삭제함
-        int cntDeleteCRecord = 0;
-        int cnt = joinedChatRoomService.countByChatRoom(chatRoom);
-        if (cnt == 0) {
-            cntDeleteCRecord = chatRoomService.delete(chatroomId);
+            int cntDeletedJCRecord = joinedChatRoomService.delete(toDeleteJoinedChatRoom.getId());
+
+            // joinedChatRoom과 연관된 chatRoom없으면 chatRoom도 DB에서 삭제함
+            int cntDeleteCRecord = 0;
+            int cnt = joinedChatRoomService.countByChatRoom(chatRoom);
+            if (cnt == 0) {
+                cntDeleteCRecord = chatRoomService.delete(chatroomId);
+            }
+
+            result = new deleteCountDto(cntDeletedJCRecord, cntDeleteCRecord);
+
+        } else{
+            result = new deleteCountDto();
         }
 
-        return new deleteCountDto(cntDeletedJCRecord, cntDeleteCRecord);
+        return result;
 
     }
 
     @Data
     @AllArgsConstructor
+    @NoArgsConstructor
     static class deleteCountDto{
         private int cntDeletedJoinedChatRoomRecord;
         private int cntDeletedChatRoomRecord;

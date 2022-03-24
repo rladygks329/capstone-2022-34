@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,7 +34,7 @@ public class ChatRoomService {
      * @return 생성한 채팅방(ChatRoom) id값
      */
     @Transactional
-    public Long createChatRoom(Member member, ChatRoomRequestDTO requestDTO){
+    public Long createChatRoom(Members member, ChatRoomRequestDTO requestDTO){
         // string -> Category enum 타입 변환
         TransStringToEnum te = new TransStringToEnum();
         Category category = te.transferStringToEnum(requestDTO.getCategoryName());

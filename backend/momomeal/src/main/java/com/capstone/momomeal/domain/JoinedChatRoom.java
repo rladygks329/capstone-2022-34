@@ -17,8 +17,8 @@ public class JoinedChatRoom {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "userid")
+    private Members member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
@@ -38,7 +38,7 @@ public class JoinedChatRoom {
      * JoinedChatRoom의 member 세팅 && member의 JoinChatRoom List에 채팅방 추가
      * @param member 이 채팅방에 참여한 멤버
      */
-    public void setMember(Member member){
+    public void setMember(Members member){
         this.member = member;
         member.getJoinedChatRooms().add(this);
     }

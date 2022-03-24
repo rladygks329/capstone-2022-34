@@ -2,7 +2,7 @@ package com.capstone.momomeal.repository;
 
 import com.capstone.momomeal.domain.ChatRoom;
 import com.capstone.momomeal.domain.JoinedChatRoom;
-import com.capstone.momomeal.domain.Member;
+import com.capstone.momomeal.domain.Members;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +28,7 @@ public class JoinedChatRoomRepository{
 
     }
 
-    public JoinedChatRoom findByMemberIdAndChatRoomId(Member member, ChatRoom chatRoom){
+    public JoinedChatRoom findByMemberIdAndChatRoomId(Members member, ChatRoom chatRoom){
         return em.createQuery("select jcr from JoinedChatRoom jcr " +
                 "where jcr.member = :m and jcr.chatRoom = :cr", JoinedChatRoom.class)
                 .setParameter("m", member)

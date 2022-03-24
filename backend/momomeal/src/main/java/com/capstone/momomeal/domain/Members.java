@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -42,6 +44,19 @@ public class Members {
 
     @Column(name = "userrate")
     private Float userrate;
+
+    @OneToMany(mappedBy = "member")
+    private List<JoinedChatRoom> joinedChatRooms = new ArrayList<>();
+
+    // Member에서 joinChatRoom 삭제
+    public void deleteJoinChatRoomFromMember(JoinedChatRoom joinedChatRoom){
+        joinedChatRooms.remove(joinedChatRoom);
+
+    }
+
+    public boolean belongsToMember(JoinedChatRoom joinedChatRoom){
+        return joinedChatRooms.contains(joinedChatRoom);
+    }
 
     public Members(){}
 

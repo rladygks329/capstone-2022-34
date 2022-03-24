@@ -22,7 +22,7 @@ public class ChatRoom extends BaseTimeEntity{
     private Category category;
 
     private String title;
-    private Long hostId;
+    private String hostId;
     private int maxCapacity;
     private String storeName;
     private String pickupPlaceName;
@@ -33,7 +33,7 @@ public class ChatRoom extends BaseTimeEntity{
     }
 
 
-    public ChatRoom(Category category, String title, Long hostId, int maxCapacity,
+    public ChatRoom(Category category, String title, String hostId, int maxCapacity,
                     String storeName, String pickupPlaceName, double pickupPlaceXCoord,
                     double pickupPlaceYCoord) {
         this.category = category;
