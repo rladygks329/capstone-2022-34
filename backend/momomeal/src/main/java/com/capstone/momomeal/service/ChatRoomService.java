@@ -71,4 +71,9 @@ public class ChatRoomService {
         return chatRoomRepository.deleteById(chatRoomId);
     }
 
+    @Transactional
+    public List<ChatRoom> getSearchedChatRooms(String keyword){
+        return chatRoomRepository.findByKeyword(keyword);
+    }
+
 }

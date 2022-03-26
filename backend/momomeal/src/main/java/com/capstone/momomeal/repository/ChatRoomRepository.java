@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Repository
@@ -30,7 +31,7 @@ public class ChatRoomRepository {
 
     public List<ChatRoom> findExceptParticipatedChatRoom(List<Long> participatedChatRoomIds){
         return em.createQuery("select cr from ChatRoom cr" +
-                " where cr.id not in :ids")
+                " where cr.id not in :ids", ChatRoom.class)
                 .setParameter("ids", participatedChatRoomIds)
                 .getResultList();
 
@@ -44,5 +45,12 @@ public class ChatRoomRepository {
         em.clear();
         return cnt;
 
+    }
+
+    public List<ChatRoom> findByKeyword(String keyword){
+        return em.createQuery("select cr from ChatRoom cr " +
+                "where cr.title like concat('%',:keyword,'%')", ChatRoom.class)
+                .setParameter("keyword", keyword)
+                .getResultList();
     }
 }
