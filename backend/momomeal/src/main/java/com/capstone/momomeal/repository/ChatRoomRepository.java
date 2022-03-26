@@ -29,9 +29,24 @@ public class ChatRoomRepository {
                 .getResultList();
     }
 
+
+    public List<ChatRoom> findAllOrderByTime(){
+        return em.createQuery("select cr from ChatRoom cr " +
+                        "order by cr.createdDate desc", ChatRoom.class)
+                .getResultList();
+    }
+
     public List<ChatRoom> findExceptParticipatedChatRoom(List<Long> participatedChatRoomIds){
         return em.createQuery("select cr from ChatRoom cr" +
                 " where cr.id not in :ids", ChatRoom.class)
+                .setParameter("ids", participatedChatRoomIds)
+                .getResultList();
+
+    }
+    public List<ChatRoom> findExceptParticipatedChatRoomOrderByTime(List<Long> participatedChatRoomIds){
+        return em.createQuery("select cr from ChatRoom cr" +
+                        " where cr.id not in :ids " +
+                        "order by cr.createdDate desc", ChatRoom.class)
                 .setParameter("ids", participatedChatRoomIds)
                 .getResultList();
 
