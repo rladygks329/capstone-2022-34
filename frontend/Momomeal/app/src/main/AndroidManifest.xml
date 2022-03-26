@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Momomeal">
         <activity android:name="com.capstone.momomeal.MainActivity"/>
-        <activity android:name="com.capstone.momomeal.RegisterActivity"/>
         <activity
             android:name="com.capstone.momomeal.LoginActivity"
             android:exported="true">

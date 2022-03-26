@@ -1,14 +1,12 @@
 package com.capstone.momomeal
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
-import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import com.capstone.momomeal.feature.ChatroomAdapter
@@ -39,14 +37,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         savedInstanceState: Bundle?
     ): View? {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        
-        val recycle = retView?.findViewById<RecyclerView>(R.id.fragment_home_recycler)
+
         val chatroomadapter = ChatroomAdapter(requireContext(), chatroomList)
-        recycle?.adapter = chatroomadapter
+        binding.fragmentHomeRecycler.adapter = chatroomadapter
 
         mainActivity = (activity as MainActivity)
+        val transaction = mainActivity
+            .supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_main_full_container, createChatFragment)
         binding.fabHome.setOnClickListener {
-            mainActivity.findNavController(R.id.fr_main_navi_host).navigate(R.id.createChat)
+            transaction.commit()
         }
         return retView
     }

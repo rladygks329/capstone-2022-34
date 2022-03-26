@@ -16,21 +16,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:orientation="vertical">
-        <androidx.appcompat.widget.Toolbar
+        <TextView
+            android:id="@+id/fragment_home_edit_address"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-            <TextView
-                android:id="@+id/fragment_home_edit_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:textColor="@color/white"
-                android:text="서울특별시 성북구 길음동"
-                android:gravity="center_vertical"
-                android:textSize="14sp"
-                android:fontFamily="@font/lotte_mart_dream_bold"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"/>
-        </androidx.appcompat.widget.Toolbar>
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginHorizontal="16dp"
+            android:textColor="@color/white"
+            android:text="서울특별시 성북구 길음동"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:fontFamily="@font/lotte_mart_dream_bold"
+            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"/>
         <androidx.appcompat.widget.SearchView
             android:id="@+id/fragment_home_searchbar"
             android:layout_width="match_parent"
