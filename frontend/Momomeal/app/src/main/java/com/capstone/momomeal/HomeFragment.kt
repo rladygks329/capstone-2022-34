@@ -11,11 +11,11 @@ import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
-import com.capstone.momomeal.feature.ChatroomAdapter
+import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
-
+    private val TAG = "HomeFragment"
     private lateinit var mainActivity: MainActivity
     private val createChatFragment = CreateChatFragment()
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
@@ -55,11 +55,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.fragmentHomeRecycler.adapter = chatroomadapter
 
         mainActivity = (activity as MainActivity)
-        val transaction = mainActivity
-            .supportFragmentManager.beginTransaction()
-            .replace(R.id.fl_main_full_container, createChatFragment)
+//        val transaction = mainActivity
+//            .supportFragmentManager.beginTransaction()
+//            .replace(R.id.fl_main_full_container, createChatFragment)
         binding.fabHome.setOnClickListener {
-            transaction.commit()
+//            transaction.commit() // 이쪽이 제대로 작동함
+            val createChatFragment = CreateChatFragment()
+            createChatFragment.show(mainActivity.supportFragmentManager, createChatFragment.tag)
         }
         return retView
     }

@@ -1,4 +1,4 @@
-package com.capstone.momomeal.feature
+package com.capstone.momomeal.feature.adapter
 
 import android.content.Context
 import android.opengl.Visibility
@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.R
+import com.capstone.momomeal.feature.Category
+import com.capstone.momomeal.feature.Chatroom
 
 class ChatroomAdapter(val context: Context, val chatList: ArrayList<Chatroom>, val deletable :Int = View.GONE) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
 
