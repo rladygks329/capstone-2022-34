@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.databinding.FragmentCreateChatBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.BaseFragment
@@ -23,6 +24,7 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
     }
 
     override fun onCreateView(
@@ -52,27 +54,10 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
 //                TODO("Not yet implemented")
 //            }
 //        }
-
-
-//        try {
-//            val popup : Field =  binding.spnChatCategory.javaClass.getField("Popup")
-//            popup.isAccessible = true
-//
-//            val popupWindow : ListPopupWindow = popup.get(binding.spnChatCategory) as ListPopupWindow
-//
-//            popupWindow.height = 500.dp
-//        }
-//        catch (e : NoClassDefFoundError){
-//            Log.d(TAG, "NoClassDefFoundError")
-//        } catch (e : ClassCastException) {
-//            Log.d(TAG, "ClassCastException")
-//        } catch (e : NoSuchFieldException) {
-//            Log.d(TAG, "NoSuchFieldException")
-//        } catch (e : IllegalAccessException) {
-//            Log.d(TAG, "IllegalAccessException")
-//        }
-
-//        binding.spnChatCategory.setDropDownBackgroundResource(R.drawable.textfield_create_chat_normal)
+        // 뒤로 가는 버튼에 대한 클릭 함수
+        binding.btnBack.setOnClickListener {
+            dismiss()
+        }
 
         return retView
     }
