@@ -29,7 +29,7 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="12dp"
                 android:background="@drawable/ic_all_btn_back_24"
-                android:backgroundTint="@color/gray1"
+                app:backgroundTint="@color/gray1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
