@@ -1,22 +1,28 @@
 package com.capstone.momomeal
 
+import android.content.res.Resources
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.Toolbar
 import com.capstone.momomeal.databinding.FragmentCreateChatBinding
+import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.BaseFragment
+import java.lang.reflect.Field
 
-class CreateChatFragment : BaseFragment<FragmentCreateChatBinding>(FragmentCreateChatBinding::inflate) {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
+
+class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(FragmentCreateChatBinding::inflate) {
+    private val TAG = "CreateChatFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -48,19 +54,38 @@ class CreateChatFragment : BaseFragment<FragmentCreateChatBinding>(FragmentCreat
 //        }
 
 
-        // Inflate the layout for this fragment
+//        try {
+//            val popup : Field =  binding.spnChatCategory.javaClass.getField("Popup")
+//            popup.isAccessible = true
+//
+//            val popupWindow : ListPopupWindow = popup.get(binding.spnChatCategory) as ListPopupWindow
+//
+//            popupWindow.height = 500.dp
+//        }
+//        catch (e : NoClassDefFoundError){
+//            Log.d(TAG, "NoClassDefFoundError")
+//        } catch (e : ClassCastException) {
+//            Log.d(TAG, "ClassCastException")
+//        } catch (e : NoSuchFieldException) {
+//            Log.d(TAG, "NoSuchFieldException")
+//        } catch (e : IllegalAccessException) {
+//            Log.d(TAG, "IllegalAccessException")
+//        }
+
+//        binding.spnChatCategory.setDropDownBackgroundResource(R.drawable.textfield_create_chat_normal)
+
         return retView
     }
 
     private fun setupCategorySpinner() {
         val categoryItem = resources.getStringArray(R.array.spn_categoty_array)
-        val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categoryItem)
-        binding.spnChatCategory.adapter = categoryAdapter
+        val categoryAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, categoryItem)
+        binding.spnChatCategory.setAdapter(categoryAdapter)
     }
 
     private fun setupMaxCapacitySpinner() {
         val maxCapacityItem = resources.getStringArray(R.array.spn_max_capacity_array)
-        val maxCapacityAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, maxCapacityItem)
-        binding.spnChatMaxCapacity.adapter = maxCapacityAdapter
+        val maxCapacityAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, maxCapacityItem)
+        binding.spnChatMaxCapacity.setAdapter(maxCapacityAdapter)
     }
 }
