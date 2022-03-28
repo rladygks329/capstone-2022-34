@@ -1,45 +1,42 @@
 package com.capstone.momomeal
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.text.toSpannable
-import androidx.fragment.app.Fragment
+import com.capstone.momomeal.databinding.FragmentGreetingBinding
+import com.capstone.momomeal.feature.BaseFragment
 
-class GreetingFragment : Fragment() {
-    lateinit var registerActivity: RegisterActivity
-
+class GreetingFragment : BaseFragment<FragmentGreetingBinding>(FragmentGreetingBinding::inflate) {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        val view : View = inflater.inflate(R.layout.fragment_greeting, container, false)
+    ): View? {
+        val retView = super.onCreateView(inflater, container, savedInstanceState)
 
-        paint(view.findViewById<TextView>(R.id.fragment_greeting_txt))
-        view.findViewById<Button>(R.id.fragment_greeting_email).setOnClickListener{
-            registerActivity.changeFragment(SignupFragment())
+        paint(binding.fragmentGreetingTxt)
+        binding.fragmentGreetingEmail.setOnClickListener{
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.activity_login_fragment_container, SignupFragment())
+                .addToBackStack(null)
+                .commit()
         }
-        view.findViewById<TextView>(R.id.fragment_greeting_back).setOnClickListener{
-            registerActivity.finish()
+        binding.fragmentGreetingBack.setOnClickListener{
+            requireActivity().onBackPressed()
         }
-        return view
+        return retView
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        registerActivity = context as RegisterActivity
-    }
     private fun paint(view: TextView){
         val text = "혼자 해결하던 식사\n이제는 다 같이 먹자!"
-        val orange = ContextCompat.getColor(registerActivity, R.color.orange_deep)
+        val orange = ContextCompat.getColor(requireContext(), R.color.orange_deep)
         val spannable = text.toSpannable()
         spannable.setSpan(
             ForegroundColorSpan(orange),

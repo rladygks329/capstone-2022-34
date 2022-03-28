@@ -1,13 +1,14 @@
 package com.capstone.momomeal
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
-import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import com.capstone.momomeal.feature.ChatroomAdapter
@@ -17,6 +18,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     private lateinit var mainActivity: MainActivity
     private val createChatFragment = CreateChatFragment()
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
+        if (Address.resultCode == Activity.RESULT_OK) {
+            Address.data?.let {
+                binding.fragmentHomeEditAddress.text = it.getStringExtra("data")
+            }
+        }
+    }
     val chatroomList = arrayListOf<Chatroom>(
         //test
         Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, listOf(7,49,89)),
@@ -38,17 +46,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         savedInstanceState: Bundle?
     ): View? {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        
-        val recycle = retView.findViewById<RecyclerView>(R.id.fragment_home_recycler)
+
         val chatroomadapter = ChatroomAdapter(requireContext(), chatroomList)
-        recycle.adapter = chatroomadapter
+        binding.fragmentHomeEditAddress.setOnClickListener{
+            val intent = Intent(requireActivity().application, MyAddressActivity::class.java)
+            startForResult.launch(intent)
+        }
+        binding.fragmentHomeRecycler.adapter = chatroomadapter
 
         mainActivity = (activity as MainActivity)
         val transaction = mainActivity
             .supportFragmentManager.beginTransaction()
             .replace(R.id.fl_main_full_container, createChatFragment)
         binding.fabHome.setOnClickListener {
-//            mainActivity.changeFragment(createChatFragment)
             transaction.commit()
         }
         return retView
