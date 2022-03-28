@@ -22,7 +22,7 @@
             android:layout_height="?attr/actionBarSize"
             android:layout_marginHorizontal="16dp"
             android:textColor="@color/white"
-            android:text="서울특별시 성북구 길음동"
+            android:text="현재 위치를 입력해주세요"
             android:gravity="center_vertical"
             android:textSize="14sp"
             android:fontFamily="@font/lotte_mart_dream_bold"
