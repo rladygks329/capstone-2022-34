@@ -19,7 +19,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:backgroundTint="@color/white"
-                android:src="@drawable/ic_all_btn_back_24"
+                android:src="@drawable/ic_back_arrow_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +27,7 @@
             <androidx.appcompat.widget.SearchView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                app:closeIcon="@drawable/ic_baseline_clear_24"
+                app:closeIcon="@drawable/ic_x_mark_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/fragment_search_result_back"
                 app:layout_constraintTop_toTopOf="parent" />

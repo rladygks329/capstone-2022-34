@@ -20,7 +20,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="12dp"
-                android:background="@drawable/ic_all_btn_back_24"
+                android:background="@drawable/ic_back_arrow_24"
                 app:backgroundTint="@color/gray1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

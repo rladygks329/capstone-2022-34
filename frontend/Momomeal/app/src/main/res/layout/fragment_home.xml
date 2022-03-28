@@ -26,7 +26,7 @@
             android:gravity="center_vertical"
             android:textSize="14sp"
             android:fontFamily="@font/lotte_mart_dream_bold"
-            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"/>
+            android:drawableEnd="@drawable/ic_down_mark_24"/>
         <androidx.appcompat.widget.SearchView
             android:id="@+id/fragment_home_searchbar"
             android:layout_width="match_parent"
@@ -220,9 +220,9 @@
         android:layout_margin="16dp"
         android:backgroundTint="@color/orange_deep"
         android:clickable="true"
-        android:contentDescription="Crate Chat Button"
+        android:contentDescription="Create Chat Button"
         android:enabled="true"
-        android:src="@drawable/ic_fab_chatroom_add_24"
+        android:src="@drawable/ic_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@android:color/white" />
