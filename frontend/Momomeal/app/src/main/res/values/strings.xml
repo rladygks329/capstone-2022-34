@@ -2,9 +2,9 @@
     <string name="app_name">Momomeal</string>
 
     <!-- MainActivity`s BottomNavigationView Text -->
-    <string name="bnv_home_title">홈</string>
-    <string name="bnv_chatroom_title">채팅</string>
-    <string name="bnv_mypage_title">마이페이지</string>
+    <string name="home_title">홈</string>
+    <string name="chatroom_title">채팅</string>
+    <string name="mypage_title">마이페이지</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--    CreateChatFragment`s Text-->

@@ -14,8 +14,6 @@
         <activity
             android:name=".ChatActivity"
             android:exported="false" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".RegisterActivity" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">

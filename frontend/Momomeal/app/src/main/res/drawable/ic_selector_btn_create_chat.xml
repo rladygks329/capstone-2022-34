@@ -14,6 +14,5 @@ CreateChatFragment에 속해 있는 Spinner의 외형을 Custom하는 Selector�
     </item>
     <item android:state_checked="true"
         android:drawable="@drawable/ic_up_mark_24">
-
     </item>
 </selector>
