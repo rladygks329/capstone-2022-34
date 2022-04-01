@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="container">
+    <div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <h1>프로필</h1>: <th:block data-th-text="${member.getNickname}"></th:block>
+                    <h3>이미지</h3>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="review : ${reviewList}">
+                    <td th:text="${review.member.member_id}"></td>
+                    <td th:text="${review.review_text}"></td>
+                    <td th:text="${review.scope}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>>
+</html>
