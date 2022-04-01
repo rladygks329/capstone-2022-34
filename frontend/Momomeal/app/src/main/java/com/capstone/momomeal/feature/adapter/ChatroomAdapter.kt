@@ -13,7 +13,9 @@ import com.capstone.momomeal.R
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 
-class ChatroomAdapter(val context: Context, val chatList: ArrayList<Chatroom>, val deletable :Int = View.GONE) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
+class ChatroomAdapter
+    (val context: Context, val chatList: ArrayList<Chatroom>, val deletable :Int = View.GONE
+) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.view_chat_room,parent,false)
@@ -25,7 +27,6 @@ class ChatroomAdapter(val context: Context, val chatList: ArrayList<Chatroom>, v
         holder.bind(chatList[position])
     }
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
 
         private val title: TextView = view.findViewById(R.id.view_chat_room_title)
         private val description: TextView = view.findViewById(R.id.view_chat_room_description)

@@ -26,7 +26,7 @@
                 android:fontFamily="@font/roboto_bold"
                 android:text="@string/mypage_title"
                 android:textColor="@color/gray1"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -47,29 +47,29 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_mypage" >
-        
+        app:layout_constraintTop_toBottomOf="@id/toolbar_mypage">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_profile_holder"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tv_manner"
+            app:layout_constraintEnd_toStartOf="@id/til_user_name"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/til_user_name">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-
                 android:backgroundTint="@color/orange_deep"
+
+                android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/profile_img_circle"
                 app:srcCompat="@drawable/ic_back_arrow_24" />
 
@@ -79,13 +79,12 @@
                 android:layout_height="20dp"
                 android:scaleType="centerCrop"
                 android:tint="@color/gray4"
-                app:shapeAppearanceOverlay="@style/profile_img_circle"
-                app:srcCompat="@drawable/ic_camera_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-            
+                app:layout_constraintEnd_toEndOf="parent"
+                app:shapeAppearanceOverlay="@style/profile_img_circle"
+                app:srcCompat="@drawable/ic_camera_24" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-        
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/til_user_name"
@@ -95,8 +94,10 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="36dp"
             app:boxBackgroundColor="@color/white"
-            app:boxStrokeColor="@color/orange_deep"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:endIconDrawable="@drawable/ic_edit_24"
+            app:endIconMode="custom"
+            app:endIconTint="@color/gray4"
+            app:layout_constraintBottom_toTopOf="@+id/tv_manner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toEndOf="@id/cl_profile_holder"
@@ -106,13 +107,55 @@
                 android:id="@+id/et_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/mypage_title"
                 android:fontFamily="@font/roboto"
+                android:hint="@string/mypage_title"
                 android:inputType="text"
                 android:paddingStart="6dp"
-                android:paddingEnd="0dp"/>
-
+                android:paddingEnd="0dp"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tv_manner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/lotte_mart"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="3dp"
+            android:text="@string/tv_my_manner_point"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/cl_profile_holder" />
+
+        <ProgressBar
+            android:id="@+id/pb_manner"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="4dp"
+            android:layout_marginTop="8dp"
+            android:paddingHorizontal="16dp"
+            android:progressDrawable="@drawable/bg_progressbar_manner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_manner" />
+
+        <TextView
+            android:id="@+id/tv_manner_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:text="80점"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pb_manner" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="530dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
