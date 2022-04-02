@@ -15,6 +15,18 @@
         <action
             android:id="@+id/action_itemHome_to_itemMypage"
             app:destination="@id/itemMypage" />
+        <action
+            android:id="@+id/action_itemHome_to_searchHome"
+            app:destination="@+id/searchHome"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchHome"
+        android:name="com.capstone.momomeal.SearchResultFragment"
+        tools:layout="@layout/fragment_search_result">
+        <action
+            android:id="@+id/action_searchHome_to_itemHome"
+            app:destination="@id/itemHome" />
     </fragment>
 
     <fragment

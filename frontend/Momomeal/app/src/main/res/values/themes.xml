@@ -11,7 +11,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/orange_deep</item>
-        <item name="android:textColorHint">@color/teal</item>
+        <item name="android:textColorHint">@color/gray4</item>
         <!-- Customize your theme here. -->
 
 <!--        <item name="windowActionBar">false</item>-->
@@ -25,5 +25,13 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowCloseOnTouchOutside">false</item>
+    </style>
+
+    <style name="cursorTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorControlActivated">@color/orange_deep</item>
+        <item name="colorControlNormal">@color/gray4</item>
+        <item name="android:textSelectHandle">@color/orange_deep</item>
+        <item name="android:textColorHighlight">#4DFF8761</item>
+        <item name="autoCompleteTextViewStyle">@style/cursorColor</item>
     </style>
 </resources>

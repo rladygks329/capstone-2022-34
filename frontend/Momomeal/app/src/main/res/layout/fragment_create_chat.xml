@@ -34,7 +34,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
-                android:layout_width="81dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/toolbar_create_chat"
                 android:fontFamily="@font/roboto_bold"
@@ -103,9 +103,6 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                android:paddingBottom="5dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
@@ -116,13 +113,12 @@
                 app:layout_constraintEnd_toStartOf="@+id/til_max_capacity"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category" >
-
+                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category"
+                app:hintEnabled="false">
                 <AutoCompleteTextView
                     android:id="@+id/spn_chat_category"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#00000000"
                     android:dropDownHeight="200dp"
                     android:dropDownSelector="@drawable/bg_white_radius"
                     android:ellipsize="end"
@@ -145,10 +141,7 @@
                 android:id="@+id/til_max_capacity"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:paddingBottom="5dp"
-                app:boxStrokeWidth="0dp"
-                app:boxStrokeWidthFocused="0dp"
+                android:layout_marginEnd="8dp"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
@@ -156,6 +149,7 @@
                 android:background="@drawable/textfield_create_chat_normal"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:endIconDrawable="@drawable/ic_selector_btn_create_chat"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_chat_max_capacity"
                 app:layout_constraintStart_toEndOf="@+id/til_category">
