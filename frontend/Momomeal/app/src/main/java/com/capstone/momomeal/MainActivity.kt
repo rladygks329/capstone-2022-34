@@ -25,8 +25,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var bottomNavigationView : BottomNavigationView = findViewById(R.id.bnv_main)
-
-        NavigationUI.setupWithNavController(bottomNavigationView, findNavController(R.id.fr_main_navi_host))
+        var navController = findNavController(R.id.fr_main_navi_host)
+        NavigationUI.setupWithNavController(bottomNavigationView, navController)
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
+            when (destination.id){
+                R.id.itemHome  -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.itemChatRoom -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.itemMypage -> bottomNavigationView.visibility = View.VISIBLE
+                else ->  bottomNavigationView.visibility = View.GONE
+            }
+        }
         // BottomNavigationView의 OnClickListener
 //        mainBnv.setOnItemSelectedListener {
 //
@@ -42,12 +50,5 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .replace(R.id.fl_main_full_container, fragment)
             .commit()
-    }
-    public fun toggleBNV(){
-        if(mainBnv.visibility == View.VISIBLE){
-            mainBnv.visibility = View.GONE
-        }else{
-            mainBnv.visibility == View.VISIBLE
-        }
     }
 }
