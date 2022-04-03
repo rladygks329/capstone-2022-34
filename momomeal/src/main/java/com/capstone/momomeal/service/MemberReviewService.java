@@ -3,11 +3,14 @@ package com.capstone.momomeal.service;
 import com.capstone.momomeal.domain.MemberReview;
 import com.capstone.momomeal.repository.MemberReviewRepository;
 import java.util.List;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MemberReviewService {
     private final MemberReviewRepository memberReviewRepository;
 
@@ -21,9 +24,5 @@ public class MemberReviewService {
 
     public void addReview(MemberReview memberReview) {
         this.memberReviewRepository.saveReview(memberReview);
-    }
-
-    public MemberReviewService(final MemberReviewRepository memberReviewRepository) {
-        this.memberReviewRepository = memberReviewRepository;
     }
 }
