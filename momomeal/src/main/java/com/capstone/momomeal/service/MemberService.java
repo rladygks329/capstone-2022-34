@@ -5,6 +5,8 @@ import com.capstone.momomeal.domain.Members;
 import com.capstone.momomeal.repository.MemberRepository;
 import java.util.List;
 import java.util.Optional;
+
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class MemberService {
     private static final Logger log = LoggerFactory.getLogger(MemberService.class);
     private final MemberRepository memberRepository;
+
+    public Optional<Members> findById(Long user_id){
+        return memberRepository.findOne(user_id);
+    }
 
     public String join(Members member) {
         log.info("member email = {}", member.getEmail());
@@ -51,9 +58,5 @@ public class MemberService {
     )
     public Optional<Members> Login(String email, String pwd) {
         return this.memberRepository.findIdAndPwd(email, pwd);
-    }
-
-    public MemberService(final MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
     }
 }
