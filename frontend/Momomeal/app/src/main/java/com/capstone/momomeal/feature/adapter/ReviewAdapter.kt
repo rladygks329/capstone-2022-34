@@ -13,8 +13,8 @@ import com.capstone.momomeal.feature.Review
 
 class ReviewAdapter(
     val context: Context, val reviewList: ArrayList<Review>
-) : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewAdapter.ViewHolder {
+) : RecyclerView.Adapter<ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemReviewContentBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -22,17 +22,17 @@ class ReviewAdapter(
 
     override fun getItemCount(): Int = reviewList.size
 
-    override fun onBindViewHolder(holder: ReviewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(reviewList[position])
     }
+}
 
-    class ViewHolder(val binding: ItemReviewContentBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Review) {
-            binding.tvReviewContent.text = item.conReview
-            when (item.rateSign) {
-                Rate.Good -> binding.ivReviewContent.setImageResource(R.drawable.ic_good_sign)
-                Rate.Bad -> binding.ivReviewContent.setImageResource(R.drawable.ic_bad_sign)
-            }
+class ViewHolder(val binding: ItemReviewContentBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(item: Review) {
+        binding.tvReviewContent.text = item.conReview
+        when (item.rateSign) {
+            Rate.Good -> binding.ivReviewContent.setImageResource(R.drawable.ic_good_sign)
+            Rate.Bad -> binding.ivReviewContent.setImageResource(R.drawable.ic_bad_sign)
         }
     }
 }

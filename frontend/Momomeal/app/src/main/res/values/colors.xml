@@ -18,14 +18,12 @@
     <!-- 새로 지정한 색(외주 기준) -->
     <color name="orange_deep">#FF8761</color>
     <color name="orange_light">#FEBF61</color>
-    <color name="yellow_">#FFEA7B</color>
+    <color name="yellow">#FFEA7B</color>
     <color name="teal">#5CC0AE</color>
     
     <color name="darkPink">#FFFF4085</color>
     <color name="pink">#FFFFC9DD</color>
     <color name="green">#FF3CB1A3</color>
-
-    <color name="transparent">#00000000</color>
 
     <color name="spn_outline_color" xmlns:android="http://schemas.android.com/apk/res/android">
         <item android:state_focused="true"  android:color="@color/orange_deep"/>
