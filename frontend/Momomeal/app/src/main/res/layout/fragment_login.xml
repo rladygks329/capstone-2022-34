@@ -29,7 +29,7 @@
         android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="8dp"
         app:boxStrokeColor="@color/orange_deep"
-        app:endIconDrawable="@drawable/ic_baseline_check_24"
+        app:endIconDrawable="@drawable/ic_check_24"
         app:endIconMode="custom"
         app:layout_constraintBottom_toTopOf="@+id/fragment_login_password">
 
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/login_btn_background"
+        android:background="@drawable/bg_orange_deep_radius"
         android:fontFamily="@font/roboto_black"
         android:text="@string/btn_login_text"
         android:textColor="@color/white"
@@ -94,7 +94,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/login_btn_background"
+        android:background="@drawable/bg_orange_deep_radius"
         android:fontFamily="@font/roboto_black"
         android:text="@string/btn_login_kakao"
         android:textColor="@color/white"
