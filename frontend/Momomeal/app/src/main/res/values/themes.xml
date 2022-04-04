@@ -38,4 +38,5 @@
         <item name="android:textColorHighlight">#4DFF8761</item>
         <item name="autoCompleteTextViewStyle">@style/cursorColor</item>
     </style>
+  
 </resources>

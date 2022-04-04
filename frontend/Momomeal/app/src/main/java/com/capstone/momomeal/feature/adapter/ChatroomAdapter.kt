@@ -12,7 +12,10 @@ import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import kotlin.collections.ArrayList
 
-class ChatroomAdapter(val context: Context) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
+
+class ChatroomAdapter(
+  val context: Context
+) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
 
     private var dataSet = ArrayList<Chatroom>()
 
