@@ -12,31 +12,31 @@
 ### 3. 팀 소개
 ```markdown
 이름 :    장진우
-학번 :    20171694
+학번 :    ****1694
 역할 :    팀장, Frontend
 이메일 :  ss62104@kookmin.ac.kr
 ```
 ```markdown
 이름 :    강동우
-학번 :    20181565
+학번 :    ****1565
 역할 :    Backend
 이메일 :  backjui@kookmin.ac.kr
 ```
 ```markdown
 이름 :    김요한
-학번 :    20163097
+학번 :    ****3097
 역할 :    Frontend
 이메일 :  rladygks329@kookmin.ac.kr
 ```
 ```markdown
 이름 :    배지은
-학번 :    20190242
+학번 :    ****0242
 역할 :    디자인 전반
 이메일 :  qwldms25@kookmin.ac.kr
 ```
 ```markdown
 이름 :    정민지
-학번 :    20191662
+학번 :    ****1662
 역할 :    Backend
 이메일 :  mjjung@kookmin.ac.kr
 ```
