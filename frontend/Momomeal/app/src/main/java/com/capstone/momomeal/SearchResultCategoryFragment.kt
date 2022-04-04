@@ -28,8 +28,9 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
         }
         val title = arguments?.getString("category")
         binding.fragmentSearchResultCategoryTitle.text = title
-        val chatroomadapter = ChatroomAdapter(requireContext(), chatlist)
+        val chatroomadapter = ChatroomAdapter(requireContext())
         binding.fragmentSearchResultCategoryRecycle.adapter = chatroomadapter
+        chatroomadapter.replaceData(chatlist)
         return retView
     }
 }

@@ -57,7 +57,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         binding.fragmentHomeEditAddress.setOnClickListener{
             startForResult.launch(Intent(requireActivity().application, MyAddressActivity::class.java))
         }
-        binding.fragmentHomeRecycler.adapter = ChatroomAdapter(requireContext(), chatroomList)
+        val chatAdapter = ChatroomAdapter(requireContext())
+        binding.fragmentHomeRecycler.adapter = chatAdapter
+        chatAdapter.replaceData(chatroomList)
 
         mainActivity = (activity as MainActivity)
         binding.fabHome.setOnClickListener {
@@ -89,7 +91,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         val srFragment = SearchResultFragment()
         for(i in 0..row){
             val column: TableRow = table.getChildAt(i) as TableRow
-            for(j in 0..column.childCount-1){
+            for(j in 0 until column.childCount){
                 val tv : TextView = column.getChildAt(j) as TextView
                 tv.setOnClickListener{
                     val bundle = bundleOf("category" to tv.text.toString())

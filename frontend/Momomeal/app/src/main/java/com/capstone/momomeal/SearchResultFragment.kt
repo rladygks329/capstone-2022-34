@@ -27,9 +27,9 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
         binding.fragmentSearchResultBack.setOnClickListener{
             findNavController().popBackStack()
         }
-
-        val chatroomadapter = ChatroomAdapter(requireContext(), chatlist)
-        binding.fragmentSearchResultRecycle.adapter = chatroomadapter
+        val chatAdapter = ChatroomAdapter(requireContext())
+        binding.fragmentSearchResultRecycle.adapter = chatAdapter
+        chatAdapter.replaceData(chatlist)
         return retView
     }
 }
