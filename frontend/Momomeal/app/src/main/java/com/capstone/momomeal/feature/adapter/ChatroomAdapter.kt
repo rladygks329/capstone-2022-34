@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -53,7 +52,6 @@ class ChatroomAdapter(val context: Context) : RecyclerView.Adapter<ChatroomAdapt
         private val title: TextView = view.findViewById(R.id.view_chat_room_title)
         private val description: TextView = view.findViewById(R.id.view_chat_room_description)
         private val category_img: ImageView = view.findViewById(R.id.view_chat_room_img)
-        private val check: CheckBox = view.findViewById(R.id.view_chat_room_check)
 
         fun bind(item: Chatroom) {
             title.text = item.nameRoom
