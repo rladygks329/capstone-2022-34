@@ -1,10 +1,9 @@
 package com.capstone.momomeal
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.result.ActivityResultLauncher
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -26,8 +25,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         var bottomNavigationView : BottomNavigationView = findViewById(R.id.bnv_main)
-
-        NavigationUI.setupWithNavController(bottomNavigationView, findNavController(R.id.fr_main_navi_host))
+        var navController = findNavController(R.id.fr_main_navi_host)
+        NavigationUI.setupWithNavController(bottomNavigationView, navController)
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
+            when (destination.id){
+                R.id.itemHome  -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.itemChatRoom -> bottomNavigationView.visibility = View.VISIBLE
+                R.id.itemMypage -> bottomNavigationView.visibility = View.VISIBLE
+                else ->  bottomNavigationView.visibility = View.GONE
+            }
+        }
         // BottomNavigationView의 OnClickListener
 //        mainBnv.setOnItemSelectedListener {
 //

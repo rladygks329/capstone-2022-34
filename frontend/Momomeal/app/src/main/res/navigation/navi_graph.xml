@@ -15,6 +15,32 @@
         <action
             android:id="@+id/action_itemHome_to_itemMypage"
             app:destination="@id/itemMypage" />
+        <action
+            android:id="@+id/action_itemHome_to_searchHome"
+            app:destination="@+id/searchHome"/>
+        <action
+            android:id="@+id/action_itemHome_to_searchCategory"
+            app:destination="@id/searchCategory" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchHome"
+        android:name="com.capstone.momomeal.SearchResultFragment"
+        tools:layout="@layout/fragment_search_result">
+        <action
+            android:id="@+id/action_searchHome_to_itemHome"
+            app:destination="@id/itemHome"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchCategory"
+        android:name="com.capstone.momomeal.SearchResultCategoryFragment"
+        tools:layout="@layout/fragment_search_result_category">
+        <action
+            app:popUpToInclusive="true"
+            android:id="@+id/action_searchCategory_to_itemHome"
+            app:destination="@id/itemHome" />
     </fragment>
 
     <fragment
