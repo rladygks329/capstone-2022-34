@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">Momomeal</string>
-
+    
+    <!-- Temp Text -->
+    <string name="namesize_fill_text">Lorem</string>
+    <string name="short_fill_text">Lorem ipsum dolor sit amet</string>
+    
     <!-- MainActivity`s BottomNavigationView Text -->
-    <string name="bnv_home_title">홈</string>
-    <string name="bnv_chatroom_title">채팅</string>
-    <string name="bnv_mypage_title">마이페이지</string>
+    <string name="home_title">홈</string>
+    <string name="chatroom_title">채팅</string>
+    <string name="mypage_title">마이페이지</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--    CreateChatFragment`s Text-->
@@ -26,5 +30,8 @@
     <string name="view_signup_welcome">혼자 해결하던 식사\n이제는 다 같이 먹자!</string>
     <string name="btn_greeting_signup_email">이메일로 가입하기</string>
     <string name="view_greeting_check">이미 계정이 있으신가요?</string>
+    
+    <!-- MypageFragment`s Text -->
+    <string name="tv_my_manner_point">나의 매너지수는?</string>
 </resources>
 

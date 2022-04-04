@@ -12,7 +12,10 @@ import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import kotlin.collections.ArrayList
 
-class ChatroomAdapter(val context: Context) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
+
+class ChatroomAdapter(
+  val context: Context
+) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
 
     private var dataSet = ArrayList<Chatroom>()
 
@@ -47,7 +50,6 @@ class ChatroomAdapter(val context: Context) : RecyclerView.Adapter<ChatroomAdapt
         holder.bind(dataSet[position])
     }
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
 
         private val title: TextView = view.findViewById(R.id.view_chat_room_title)
         private val description: TextView = view.findViewById(R.id.view_chat_room_description)
