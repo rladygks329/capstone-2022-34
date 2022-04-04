@@ -29,6 +29,11 @@ data class Review (
     val dateReview: LocalDateTime,
 )
 
+data class Chat (
+    val uid: Int = 0,
+    val chatContent: String = "",
+)
+
 enum class Rate {
     Good, Bad,
 }
