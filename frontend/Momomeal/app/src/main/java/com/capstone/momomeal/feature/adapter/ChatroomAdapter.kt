@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.R
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
-import java.util.Collections
 import kotlin.collections.ArrayList
 
-class ChatroomAdapter(val context: Context,  val deletable :Int = View.GONE) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
+class ChatroomAdapter(val context: Context) : RecyclerView.Adapter<ChatroomAdapter.ViewHolder>()  {
 
     private var dataSet = ArrayList<Chatroom>()
 
@@ -59,7 +58,6 @@ class ChatroomAdapter(val context: Context,  val deletable :Int = View.GONE) : R
         fun bind(item: Chatroom) {
             title.text = item.nameRoom
             description.text = "수령지: " +  item.namePickupPlace //+ " * " + item.time...(not impl)
-            check.visibility = deletable
             when(item.category){
                 Category.Chicken -> category_img.setImageResource(R.drawable.ic_category_chicken)
                 Category.Pizza -> category_img.setImageResource(R.drawable.ic_category_pizza)
