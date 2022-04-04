@@ -5,7 +5,10 @@
       <map>
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable-v23/login_tv_background.xml" value="0.38229166666666664" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3776041666666667" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_chat_gray.xml" value="0.38229166666666664" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_chat_yellow.xml" value="0.38229166666666664" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_greeting.xml" value="0.3776041666666667" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_orange_deep_radius.xml" value="0.38229166666666664" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_progressbar_manner.xml" value="0.3776041666666667" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_white_radius.xml" value="0.38229166666666664" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/greeting_background.xml" value="0.365625" />
@@ -85,6 +88,10 @@
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_search_result.xml" value="0.20572916666666666" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_signup.xml" value="0.5" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_category_spinner.xml" value="0.75" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_my_msg.xml" value="0.36614583333333334" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_other_message.xml" value="1.0" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_other_msg.xml" value="0.36614583333333334" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_other_msg_full.xml" value="0.7083333333333334" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_review_content.xml" value="0.5" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_spinner_content.xml" value="0.33" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/view_chat_room.xml" value="0.1984375" />

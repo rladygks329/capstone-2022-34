@@ -2,6 +2,7 @@
     <string name="app_name">Momomeal</string>
     
     <!-- Temp Text -->
+    <string name="namesize_fill_text">Lorem</string>
     <string name="short_fill_text">Lorem ipsum dolor sit amet</string>
     
     <!-- MainActivity`s BottomNavigationView Text -->
