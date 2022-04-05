@@ -114,8 +114,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/til_max_capacity"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category"
-                app:hintEnabled="false">
+                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category">
                 <AutoCompleteTextView
                     android:id="@+id/spn_chat_category"
                     android:layout_width="match_parent"

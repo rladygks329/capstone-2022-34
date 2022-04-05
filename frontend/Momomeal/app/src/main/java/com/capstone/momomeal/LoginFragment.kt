@@ -85,7 +85,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private fun paintGradient(view: TextView){
         val text = "모두모아먹자!"
         val orange = ContextCompat.getColor(requireActivity(), R.color.orange_deep)
-        val yellow = ContextCompat.getColor(requireActivity(), R.color.yellow_)
+        val yellow = ContextCompat.getColor(requireActivity(), R.color.yellow)
         val green = ContextCompat.getColor(requireActivity(), R.color.green)
         val spannable = text.toSpannable()
         spannable[0..text.length-1] = LinearGradientSpan(text, text, orange, yellow)
