@@ -62,9 +62,13 @@ public class JoinedChatRoomService {
         return joinedChatRoomRepository.findByMemberIdAndChatRoomId(member, chatRoom);
     }
 
+    public List<JoinedChatRoom> findByChatRoom(ChatRoom chatRoom){
+        return joinedChatRoomRepository.findByChatRoom(chatRoom);
+    }
+
     public int countByChatRoom(ChatRoom chatRoom){
         int cnt = 0;
-        List byChatRoom = joinedChatRoomRepository.findByChatRoom(chatRoom);
+        List byChatRoom = findByChatRoom(chatRoom);
 
         if (byChatRoom != null) cnt = byChatRoom.size();
 

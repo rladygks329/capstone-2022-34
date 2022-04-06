@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -188,6 +189,34 @@ public class ChatRoomApiController {
         private int cntDeletedJoinedChatRoomRecord;
         private int cntDeletedChatRoomRecord;
 
+    }
+
+
+    @GetMapping("/entered-chat-info/{chatroomId}")
+    public chatRoomInfoDto returnChatRoomInfo(@PathVariable Long chatroomId){
+        ChatRoom chatRoom = chatRoomService.findById(chatroomId);
+
+        // 참여중인 채팅방과 연관된 joinedChatRooms
+        List<JoinedChatRoom> joinedChatRooms = joinedChatRoomService.findByChatRoom(chatRoom);
+
+        // 채팅방에 참여 중인 멤버의 이름 리스트
+        List <String> memberNameList = new ArrayList<>();
+
+        // joinedChatRooms에서 멤버의 이름 뽑아낸다.
+        for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
+            memberNameList.add(joinedChatRoom.getMember().getUsername());
+        }
+
+        return new chatRoomInfoDto(memberNameList, chatRoom.getStoreName(), chatRoom.getPickupPlaceName());
+
+    }
+
+    @Data
+    @AllArgsConstructor
+    static class chatRoomInfoDto{
+        private List<String> memberNames = new ArrayList<>();
+        private String storeName;
+        private String pickupPlaceName;
     }
 
 }
