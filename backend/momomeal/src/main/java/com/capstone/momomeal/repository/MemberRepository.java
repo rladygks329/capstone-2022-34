@@ -46,4 +46,5 @@ public class MemberRepository {
         List<Members> result = this.em.createQuery("select m from Members m", Members.class).getResultList();
         return result;
     }
+
 }
