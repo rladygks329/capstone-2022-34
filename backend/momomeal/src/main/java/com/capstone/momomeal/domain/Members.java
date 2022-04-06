@@ -1,140 +1,221 @@
 package com.capstone.momomeal.domain;
 
+import com.capstone.momomeal.domain.Status.RateStatus;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-@Setter
+@Entity
 @Getter
-@Entity //이제부터 JPA가 관리하는 entity가된다
+@Setter
 @Table(name = "members")
 public class Members {
-
-
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    // -> IDENTITY는 DB에서 자동적으로 생성해주는거(하지만 나는 할필요없다)
-    @NotNull
     @Id
-    @Column(name = "userid", nullable = false)
-    private String userid;
+    @GeneratedValue
+    @Column(name = "user_id", nullable = false)
+    private Long user_id;
 
     @NotNull
-    @Column(name = "pwd")
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
     private String pwd;
-
     @NotNull
-    @Column(name = "username") //DB의 컬럼명이랑 같게 해야한다
-    private String username;
-
-    @Column(name = "nickname")
-    private String nickname;
-
-    @Column(name = "age")
+    @Column(
+            name = "real_name"
+    )
+    private String realName;
+    @Column(
+            name = "age"
+    )
     private Integer age;
+    @Column(
+            name = "phone_number"
+    )
+    private String phone_number;
+    @Column(
+            name = "img_dc"
+    )
+    private String img;
+    @Column(
+            name = "user_rate"
+    )
+    private Float user_rate;
+    @OneToMany(
+            mappedBy = "member"
+    )
+    private List<JoinedChatRoom> joinedChatRooms = new ArrayList();
+    @OneToMany(
+            mappedBy = "member",
+            cascade = {CascadeType.ALL}
+    )
+    private List<MemberReview> memberReview;
+    @OneToMany(
+            mappedBy = "member",
+            cascade = {CascadeType.ALL}
+    )
+    private List<RecommendMenu> recommendMenu = new ArrayList();
 
-    @Column(name = "phonenumber")
-    private String phonenumber;
-
-    @Column(name = "homeaddress")
-    private String homeaddress;
-
-    @Column(name = "userrate")
-    private Float userrate;
-
-    @OneToMany(mappedBy = "member")
-    private List<JoinedChatRoom> joinedChatRooms = new ArrayList<>();
-
-    // Member에서 joinChatRoom 삭제
-    public void deleteJoinChatRoomFromMember(JoinedChatRoom joinedChatRoom){
-        joinedChatRooms.remove(joinedChatRoom);
-
+    public Members() {
     }
 
-    public boolean belongsToMember(JoinedChatRoom joinedChatRoom){
-        return joinedChatRooms.contains(joinedChatRoom);
+    public void addMemberReview(MemberReview memberReview) {
+        this.memberReview.add(memberReview);
+        memberReview.setMember(this);
     }
 
-    public Members(){}
-
-    public String getUserid() {
-        return userid;
+    public void addRecommendMenu(RecommendMenu recommendMenu) {
+        this.recommendMenu.add(recommendMenu);
+        recommendMenu.setMember(this);
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public static Members createMember(Members members, MemberReview... memberReview) {
+        Members member = new Members();
+        MemberReview[] var3 = memberReview;
+        int var4 = memberReview.length;
+
+        for(int var5 = 0; var5 < var4; ++var5) {
+            MemberReview review = var3[var5];
+            member.addMemberReview(review);
+        }
+
+        return members;
     }
 
-    public String getPwd() {
-        return pwd;
+    public List<MemberReview> returnReview(String member_id) {
+        List<MemberReview> resultList = new ArrayList();
+        Iterator var3 = this.memberReview.iterator();
+
+        while(var3.hasNext()) {
+            MemberReview review = (MemberReview)var3.next();
+            if (review.getMember().getEmail() == this.email) {
+                resultList.add(review);
+            }
+        }
+
+        return resultList;
     }
 
-    public void setPwd(String pwd) {
+    public int TotalRate() {
+        int default_rate = 50;
+        Iterator var2 = this.memberReview.iterator();
+
+        while(var2.hasNext()) {
+            MemberReview data = (MemberReview)var2.next();
+            if (data.getRate() == RateStatus.LIKE) {
+                ++default_rate;
+            } else {
+                --default_rate;
+            }
+        }
+
+        return default_rate;
+    }
+
+    public void deleteJoinChatRoomFromMember(JoinedChatRoom joinedChatRoom) {
+        this.joinedChatRooms.remove(joinedChatRoom);
+    }
+
+    public boolean belongsToMember(JoinedChatRoom joinedChatRoom) {
+        return this.joinedChatRooms.contains(joinedChatRoom);
+    }
+
+    public void setUser_id(final Long user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public void setPwd(final String pwd) {
         this.pwd = pwd;
     }
 
-    public String getUsername() {
-        return username;
+    public void setRealName(final String realName) {
+        this.realName = realName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
+    public void setAge(final Integer age) {
         this.age = age;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public void setPhone_number(final String phone_number) {
+        this.phone_number = phone_number;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setImg(final String img) {
+        this.img = img;
     }
 
-    public String getHomeaddress() {
-        return homeaddress;
+    public void setUser_rate(final Float user_rate) {
+        this.user_rate = user_rate;
     }
 
-    public void setHomeaddress(String homeaddress) {
-        this.homeaddress = homeaddress;
+    public void setJoinedChatRooms(final List<JoinedChatRoom> joinedChatRooms) {
+        this.joinedChatRooms = joinedChatRooms;
     }
 
-    public Float getUserrate() {
-        return userrate;
+    public void setMemberReview(final List<MemberReview> memberReview) {
+        this.memberReview = memberReview;
     }
 
-    public void setUserrate(Float userrate) {
-        this.userrate = userrate;
+    public void setRecommendMenu(final List<RecommendMenu> recommendMenu) {
+        this.recommendMenu = recommendMenu;
     }
 
-    @Override
+    public Long getUser_id() {
+        return this.user_id;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getPwd() {
+        return this.pwd;
+    }
+
+    public String getRealName() {
+        return this.realName;
+    }
+
+    public Integer getAge() {
+        return this.age;
+    }
+
+    public String getPhone_number() {
+        return this.phone_number;
+    }
+
+    public String getImg() {
+        return this.img;
+    }
+
+    public Float getUser_rate() {
+        return this.user_rate;
+    }
+
+    public List<JoinedChatRoom> getJoinedChatRooms() {
+        return this.joinedChatRooms;
+    }
+
+    public List<MemberReview> getMemberReview() {
+        return this.memberReview;
+    }
+
+    public List<RecommendMenu> getRecommendMenu() {
+        return this.recommendMenu;
+    }
+
     public String toString() {
-        return "Members{" +
-                "userid='" + userid + '\'' +
-                ", pwd='" + pwd + '\'' +
-                ", username='" + username + '\'' +
-                ", nickname='" + nickname + '\'' +
-                ", age=" + age +
-                ", phonenumber='" + phonenumber + '\'' +
-                ", homeaddress='" + homeaddress + '\'' +
-                ", userrate=" + userrate +
-                '}';
+        Long var10000 = this.getUser_id();
+        return "Members(user_id=" + var10000 + ", email=" + this.getEmail() + ", pwd=" + this.getPwd() + ", realName=" + this.getRealName() + ", age=" + this.getAge() + ", phone_number=" + this.getPhone_number() + ", img=" + this.getImg() + ", user_rate=" + this.getUser_rate() + ", joinedChatRooms=" + this.getJoinedChatRooms() + ", memberReview=" + this.getMemberReview() + ", recommendMenu=" + this.getRecommendMenu() + ")";
+
     }
 }

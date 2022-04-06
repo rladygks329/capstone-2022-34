@@ -24,7 +24,6 @@ public class ChatRoom extends BaseTimeEntity{
 
     @Enumerated(value = EnumType.STRING)
     private Category category;
-
     private String title;
     private String hostId;
     private int maxCapacity;
@@ -32,7 +31,6 @@ public class ChatRoom extends BaseTimeEntity{
     private String pickupPlaceName;
     private double pickupPlaceXCoord;
     private double pickupPlaceYCoord;
-
 
     public ChatRoom() {
     }
@@ -50,7 +48,6 @@ public class ChatRoom extends BaseTimeEntity{
         this.pickupPlaceXCoord = pickupPlaceXCoord;
         this.pickupPlaceYCoord = pickupPlaceYCoord;
     }
-
     // websocket-채팅
 //    public void handleActions(WebSocketSession session, Message message, MsgService msgService){
 //        if (message.getMessageType().equals(Message.MessageType.ENTER)) {
@@ -63,5 +60,4 @@ public class ChatRoom extends BaseTimeEntity{
 //    public <T> void sendMessage(T message, MsgService msgService) {
 //        sessions.parallelStream().forEach(session -> msgService.sendMessage(session, message));
 //    }
-
 }

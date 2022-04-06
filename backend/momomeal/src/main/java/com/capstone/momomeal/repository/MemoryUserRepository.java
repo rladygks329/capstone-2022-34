@@ -1,26 +1,32 @@
 package com.capstone.momomeal.repository;
 
-import com.capstone.momomeal.domain.UserVO;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
+import com.capstone.momomeal.domain.MemberForm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class MemoryUserRepository {
-    private final UserVO user = new UserVO();
+    private static final Logger log = LoggerFactory.getLogger(MemoryUserRepository.class);
+    static MemberForm memberForm = new MemberForm();
 
-    //로그인시 메모리에 저장
-    public void loginSuccess(String userId, String pwd,String userName){
-        user.setUserId(userId);
-        user.setPwd(pwd);
-        user.setUserName(userName);
-        user.setLogin(true);
-    }
-    //user Data 꺼내오기
-    public UserVO getUser(){
-        return user;
+    public MemoryUserRepository() {
     }
 
-    //로그인 확인
-    public boolean checkLogin(){
-        return user.isLogin();
+    public void loginSuccess(Long userId, String email, String pwd, String userName) {
+        memberForm.setUser_id(userId);
+        memberForm.setUserEmail(email);
+        memberForm.setPwd(pwd);
+        memberForm.setUserName(userName);
+        memberForm.setLogin(true);
+    }
+
+    public MemberForm getUser() {
+        return memberForm;
+    }
+
+    public boolean checkLogin() {
+        return memberForm.isLogin();
     }
 }

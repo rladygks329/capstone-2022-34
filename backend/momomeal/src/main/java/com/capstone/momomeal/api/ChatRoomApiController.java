@@ -46,6 +46,7 @@ public class ChatRoomApiController {
         return result;
     }
 
+
     /**
      * 채팅방 생성 요청 처리 후 응답
      */
@@ -105,6 +106,7 @@ public class ChatRoomApiController {
             this.pickupPlaceXCoord = chatRoom.getPickupPlaceXCoord();
             this.pickupPlaceYCoord = chatRoom.getPickupPlaceYCoord();
         }
+
     }
 
     /**
@@ -218,5 +220,4 @@ public class ChatRoomApiController {
         private String storeName;
         private String pickupPlaceName;
     }
-
 }

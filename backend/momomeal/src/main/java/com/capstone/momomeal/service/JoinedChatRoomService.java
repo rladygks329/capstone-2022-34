@@ -5,6 +5,7 @@ import com.capstone.momomeal.domain.JoinedChatRoom;
 import com.capstone.momomeal.domain.MemberStatus;
 import com.capstone.momomeal.domain.Members;
 import com.capstone.momomeal.repository.JoinedChatRoomRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 @Transactional
 public class JoinedChatRoomService {
     private final JoinedChatRoomRepository joinedChatRoomRepository;
+
 
     /**
      * 참여한 채팅방 저장 메서드
@@ -72,8 +74,7 @@ public class JoinedChatRoomService {
 
         if (byChatRoom != null) cnt = byChatRoom.size();
 
+
         return cnt;
     }
-
-
 }

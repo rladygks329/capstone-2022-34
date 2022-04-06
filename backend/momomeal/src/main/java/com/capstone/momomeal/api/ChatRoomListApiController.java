@@ -1,3 +1,4 @@
+
 package com.capstone.momomeal.api;
 
 import com.capstone.momomeal.domain.*;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 public class ChatRoomListApiController {
     private final ChatRoomService chatRoomService;
     private final MemberService memberService;
+
 
     /**
      * 사용자가 참여한 채팅방 제외한 해당 카테고리별 채팅방 데이터(dto) 전송 api
@@ -203,6 +205,4 @@ public class ChatRoomListApiController {
             this.title = chatRoom.getTitle();
         }
     }
-
-
 }
