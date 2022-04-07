@@ -10,7 +10,7 @@ import lombok.Data;
 public class ChatRoomRequestDTO {
     private String categoryName;
     private String title;
-    private String hostId;
+    private Long hostId;
     private int maxCapacity;
     private String storeName;
     private String pickupPlaceName;
