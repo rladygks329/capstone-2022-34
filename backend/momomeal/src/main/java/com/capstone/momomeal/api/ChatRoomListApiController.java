@@ -36,7 +36,7 @@ public class ChatRoomListApiController {
      */
     @GetMapping("/chat-list/{categoryName}/{memberId}/{type}")
     public ResponseEntity returnCategoryList(@PathVariable String categoryName,
-                                             @PathVariable String memberId,
+                                             @PathVariable Long memberId,
                                              @PathVariable String type){
         // string -> Category enum 타입 변환
         TransStringToEnum te = new TransStringToEnum();
@@ -74,7 +74,7 @@ public class ChatRoomListApiController {
      * @return 모든 채팅방의 dto 리스트 Body에 담은 ResponseEntity
      */
     @GetMapping("/chat-list/{memberId}/{type}")
-    public ResponseEntity returnAllList(@PathVariable String memberId,
+    public ResponseEntity returnAllList(@PathVariable Long memberId,
                                         @PathVariable String type) {
 
         // 모든 채팅방 가져옴
@@ -96,12 +96,12 @@ public class ChatRoomListApiController {
     }
 
     // 참여한 채팅 제외한 모든 채팅방 리턴
-    private List<ChatRoom> getChatRoomsExceptParticipatedCharRooms(String testMemberId,
+    private List<ChatRoom> getChatRoomsExceptParticipatedCharRooms(Long testMemberId,
                                                                    String type) {
 
         List<ChatRoom> chatRooms = new ArrayList<>();
         // 사용자가 이미 참여한 채팅 거르기 위해 사용자가 참여한 채팅방 id(ChatRoomId)값이 필요
-        Optional<Members> getMember = memberService.findOne(testMemberId);
+        Optional<Members> getMember = memberService.findById(testMemberId);
         if (getMember.isPresent()){
             Members member = getMember.get();
             List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms(); // 참여한 joinedChatRooms
@@ -166,10 +166,10 @@ public class ChatRoomListApiController {
 
 
     @GetMapping("/entered-chat-list/{memberId}")
-    public ResponseEntity returnEnteredChatRoomList(@PathVariable String memberId){
+    public ResponseEntity returnEnteredChatRoomList(@PathVariable Long memberId){
         List<EnteredChatRoomListDto> result = new ArrayList<>();
 
-        Optional<Members> getMember = memberService.findOne(memberId);
+        Optional<Members> getMember = memberService.findById(memberId);
         if (getMember.isPresent()){
             Members member = getMember.get();
             List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms();

@@ -32,7 +32,7 @@ public class ChatRoomApiController {
     public CreateChatRoomResponse saveChatRoom(@RequestBody @Valid ChatRoomRequestDTO requestDTO) {
         CreateChatRoomResponse result;
         // 현재 회원 데이터 가져오기
-        Optional<Members> getMember = memberService.findOne(requestDTO.getHostId());
+        Optional<Members> getMember = memberService.findById(requestDTO.getHostId());
 
         if (getMember.isPresent()){
             Members member = getMember.get();
@@ -114,12 +114,12 @@ public class ChatRoomApiController {
      * 해당 채팅방 멤버에 해당 사용자 추가함
      */
     @GetMapping("/chat/{memberId}/{chatroomId}")
-    public CreateJoinedChatRoomResponse enterChatRoom(@PathVariable String memberId,
+    public CreateJoinedChatRoomResponse enterChatRoom(@PathVariable Long memberId,
                                                       @PathVariable Long chatroomId){
 
         CreateJoinedChatRoomResponse result;
         // id값으로 회원 객체 가져오기
-        Optional<Members> getMember = memberService.findOne(memberId);
+        Optional<Members> getMember = memberService.findById(memberId);
         // id값으로 채팅방 객체 가져오기
         ChatRoom findChatRoom = chatRoomService.findById(chatroomId);
 
@@ -151,11 +151,11 @@ public class ChatRoomApiController {
      * @return deleteCountDto: 삭제한 joinedChatRoom 레코드 수, 삭제한 chatRoom 레코드 수
      */
     @DeleteMapping("/deleted-chat/{memberId}/{chatroomId}")
-    public deleteCountDto deleteJoinedChatRoom(@PathVariable String memberId,
+    public deleteCountDto deleteJoinedChatRoom(@PathVariable Long memberId,
                                                @PathVariable Long chatroomId){
         deleteCountDto result;
 
-        Optional<Members> getMember = memberService.findOne(memberId);
+        Optional<Members> getMember = memberService.findById(memberId);
         ChatRoom chatRoom = chatRoomService.findById(chatroomId);
 
         if (getMember.isPresent()){
@@ -206,7 +206,7 @@ public class ChatRoomApiController {
 
         // joinedChatRooms에서 멤버의 이름 뽑아낸다.
         for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
-            memberNameList.add(joinedChatRoom.getMember().getUsername());
+            memberNameList.add(joinedChatRoom.getMember().getRealName());
         }
 
         return new chatRoomInfoDto(memberNameList, chatRoom.getStoreName(), chatRoom.getPickupPlaceName());
