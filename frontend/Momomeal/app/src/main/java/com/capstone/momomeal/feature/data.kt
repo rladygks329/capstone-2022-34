@@ -1,5 +1,6 @@
 package com.capstone.momomeal.feature
 
+import java.time.LocalDateTime
 import java.util.*
 
 data class User(
@@ -23,10 +24,19 @@ data class Chatroom (
 
 data class Review (
     val idReview: Int = 0,
-    val ratePoint: Int = 0,
+    val rateSign: Rate,
     val conReview: String = "",
-    val dateReview: Date = Date(2022, 0,1)
+    val dateReview: LocalDateTime,
 )
+
+data class Chat (
+    val uid: Int = 0,
+    val chatContent: String = "",
+)
+
+enum class Rate {
+    Good, Bad,
+}
 
 enum class Category {
     Chicken, Pizza, Korean, Chinese, Japanese,

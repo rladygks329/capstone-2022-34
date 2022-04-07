@@ -3,17 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <ImageView
-        android:layout_margin="16dp"
         android:id="@+id/view_chat_room_img"
         android:layout_width="56dp"
         android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:background="@color/orange_deep"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_category_chicken"
-        app:tint="@color/white"
-        android:background="@color/orange_deep"/>
+        app:tint="@color/white" />
 
     <TextView
         android:id="@+id/view_chat_room_title"

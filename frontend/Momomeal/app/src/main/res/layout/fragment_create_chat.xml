@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateChatFragment">
+    android:tag="CreateChatFragment"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_create_chat"
@@ -13,7 +15,6 @@
         android:background="@color/white"
         android:contentInsetStart="0dp"
         android:contentInsetLeft="0dp"
-        app:contentInsetLeft="0dp"
         app:contentInsetStart="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -21,18 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_back"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginStart="12dp"
-                android:background="@drawable/ic_all_btn_back_24"
-                android:backgroundTint="@color/gray1"
+                android:background="@drawable/ic_back_arrow_24"
+                app:backgroundTint="@color/gray1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             <TextView
-                android:layout_width="81dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/toolbar_create_chat"
                 android:fontFamily="@font/roboto_bold"
@@ -93,19 +94,39 @@
                 android:fontFamily="@font/roboto"
                 android:text="@string/tv_category_text"
                 android:textColor="@color/gray1"
-                app:layout_constraintStart_toStartOf="@+id/spn_chat_category"
+                app:layout_constraintStart_toStartOf="@+id/til_category"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spn_chat_category"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_category"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginTop="2dp"
                 android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/spn_chat_max_capacity"
+                app:hintEnabled="false"
+                app:boxStrokeWidth="0dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                android:background="@drawable/textfield_create_chat_normal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:endIconDrawable="@drawable/ic_selector_btn_create_chat"
+                app:layout_constraintEnd_toStartOf="@+id/til_max_capacity"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category"
+                app:hintEnabled="false">
+                <AutoCompleteTextView
+                    android:id="@+id/spn_chat_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:dropDownHeight="200dp"
+                    android:dropDownSelector="@drawable/bg_white_radius"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="none"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tv_chat_max_capacity"
@@ -114,18 +135,37 @@
                 android:fontFamily="@font/roboto"
                 android:text="@string/tv_max_capacity_text"
                 android:textColor="@color/gray1"
-                app:layout_constraintStart_toStartOf="@+id/spn_chat_max_capacity"
+                app:layout_constraintStart_toStartOf="@+id/til_max_capacity"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Spinner
-                android:id="@+id/spn_chat_max_capacity"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_max_capacity"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                app:boxCornerRadiusBottomEnd="8dp"
+                app:boxCornerRadiusBottomStart="8dp"
+                app:boxCornerRadiusTopEnd="8dp"
+                app:boxCornerRadiusTopStart="8dp"
+                android:background="@drawable/textfield_create_chat_normal"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:endIconDrawable="@drawable/ic_selector_btn_create_chat"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/spn_chat_category"
-                app:layout_constraintTop_toBottomOf="@+id/tv_chat_max_capacity" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_chat_max_capacity"
+                app:layout_constraintStart_toEndOf="@+id/til_category">
+
+                <AutoCompleteTextView
+                    android:id="@+id/spn_chat_max_capacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:dropDownSelector="@drawable/bg_white_radius"
+                    android:inputType="none"
+                    android:fontFamily="@font/roboto"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAlignment="center" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,7 +216,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_chat_location" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_chat_craete_confirm"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -184,7 +224,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="56dp"
         android:text="@string/btn_create_confirm_txt"
-        android:background="@drawable/login_btn_background"
+        android:background="@drawable/bg_orange_deep_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
