@@ -1,17 +1,10 @@
 package com.capstone.momomeal.domain;
 
-import com.capstone.momomeal.service.MsgService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.web.socket.WebSocketSession;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
