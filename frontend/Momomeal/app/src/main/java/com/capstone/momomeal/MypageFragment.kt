@@ -15,7 +15,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     private val TAG = "MypageFragment"
 
     // For test.
-    private val tmpstr = getString(R.string.short_fill_text)
+    private val tmpstr = activity?.getString(R.string.short_fill_text)
 //    private val reviewList = arrayListOf<Review>(
 //        Review(1, Rate.Good, tmpstr, LocalDateTime.of(2022, 1, 1, 10, 31, 22))
 //    )
