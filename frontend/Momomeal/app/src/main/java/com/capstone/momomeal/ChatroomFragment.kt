@@ -2,6 +2,7 @@ package com.capstone.momomeal
 
 import android.graphics.*
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 
 
 class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomBinding::inflate) {
+    private val TAG = "ChatroomFragment"
     val chatroomList = arrayListOf<Chatroom>(
         //test
         Chatroom("예전 채팅 1 ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, listOf(7, 49, 89)),
@@ -25,13 +27,14 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         Chatroom("예전 채팅 6", 128, Category.Korean, 3, "성북구 길음1동 삼부아파트", 3.9, listOf(3, 29, 69)),
         Chatroom("예전 채팅 7", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, listOf(3, 29, 69)),
         Chatroom("예전 채팅 8", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, listOf(3, 29, 69))
-
     )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
         val chatAdapter = ChatroomAdapter(requireContext())
         with(binding){
