@@ -1,4 +1,4 @@
-<img src="/docs/logo.png"></img>
+<img src="./logo.png">
 
 ## 프로젝트 소개
 코로나로 인해 비대면이 주류가 되면서 배달 수요가 폭증하고 있습니다. 그와 동시에 최소주문금액과 배달비도 크게 늘어났습니다. 이러한 가격 상승은 혼자 사는 사람들에게는 부담스러울 수 밖에 없습니다.  
@@ -11,7 +11,7 @@ As non-face-to-face services become mainstream due to the COVID-19, the demand f
 In order to alleviate the burden of additional delivery costs, we intend to develop a service that helps people in the vicinity to jointly place an order for delivery through a category-based custom chat room.
 
 ## 소개 영상
-[![Video Label](img.youtube.com/vi/VveeCXIwtDE/maxresdefault.jpg)](https://www.youtube.com/watch?v=VveeCXIwtDE)
+[![모두모아한끼_Youtube](http://img.youtube.com/vi/VveeCXIwtDE/sddefault.jpg)](https://www.youtube.com/watch?v=VveeCXIwtDE)
 
 ## 디자인
 Figma를 통해 작업했습니다.
