@@ -11,7 +11,7 @@
     <string name="mypage_title">마이페이지</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--    CreateChatFragment`s Text-->
+    <!-- CreateChatFragment`s Text-->
     <string name="toolbar_create_chat">채팅방 만들기</string>
     <string name="tv_chat_title_text">제목</string>
     <string name="tv_category_text">카테고리</string>
@@ -33,5 +33,9 @@
 
     <!-- MypageFragment`s Text -->
     <string name="tv_my_manner_point">나의 매너지수는?</string>
+
+    <!-- ProfileFragment`s Text -->
+    <string name="profile_title">프로필</string>
+    <string name="btn_review_txt">평가하기</string>
 </resources>
 

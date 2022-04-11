@@ -71,12 +71,13 @@
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/textfield_dropdown_background.xml" value="0.38229166666666664" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/font/lotte_mart.xml" value="0.23020833333333332" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/font/roboto.xml" value="0.23020833333333332" />
-        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/activity_chat.xml" value="0.19739583333333333" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/activity_chat.xml" value="0.33" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/activity_main.xml" value="0.14" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/activity_myprofile.xml" value="0.25" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/content_myprofile.xml" value="0.21331521739130435" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_chat_drawer.xml" value="0.3645833333333333" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_chatroom.xml" value="0.67" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_create_chat.xml" value="0.5598650927487352" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_find_chatroom.xml" value="0.3515625" />
@@ -86,7 +87,7 @@
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_my_chatroom.xml" value="0.3515625" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_my_profile.xml" value="0.16979166666666667" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_mypage.xml" value="0.5" />
-        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_profile.xml" value="0.5" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_search_result.xml" value="0.20572916666666666" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_signup.xml" value="0.5" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/item_category_spinner.xml" value="0.75" />
