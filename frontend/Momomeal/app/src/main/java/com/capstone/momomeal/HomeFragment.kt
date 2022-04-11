@@ -3,6 +3,7 @@ package com.capstone.momomeal
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,6 +25,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val TAG = "HomeFragment"
     private lateinit var mainActivity: MainActivity
     private val createChatFragment = CreateChatFragment()
+    private val SearchResultFragment = SearchResultFragment()
+    private val SearchResultCategoryFragment = SearchResultCategoryFragment()
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
             if (Address.resultCode == Activity.RESULT_OK) {
@@ -46,12 +49,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // onCreate 이후 화면을 구성하는 코드
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("system","home Oncreate is called")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("system","home OncreateView is called")
         val retView = super.onCreateView(inflater, container, savedInstanceState)
 
         binding.fragmentHomeEditAddress.setOnClickListener{
@@ -78,7 +83,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun initSearch(search: SearchView) {
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                findNavController().navigate(R.id.action_itemHome_to_searchHome)
+                SearchResultFragment.show(mainActivity.supportFragmentManager, SearchResultFragment.tag)
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -86,17 +91,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         })
     }
+
     private fun initTable(table: TableLayout){
         val row = table.childCount-1
-        val srFragment = SearchResultFragment()
         for(i in 0..row){
             val column: TableRow = table.getChildAt(i) as TableRow
             for(j in 0 until column.childCount){
                 val tv : TextView = column.getChildAt(j) as TextView
                 tv.setOnClickListener{
                     val bundle = bundleOf("category" to tv.text.toString())
-                    srFragment.arguments = bundle
-                    findNavController().navigate(R.id.searchCategory, bundle)
+                    SearchResultCategoryFragment.arguments = bundle
+                    SearchResultCategoryFragment.show(mainActivity.supportFragmentManager, SearchResultCategoryFragment.tag)
                 }
             }
         }
