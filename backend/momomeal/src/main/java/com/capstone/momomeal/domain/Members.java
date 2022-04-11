@@ -46,6 +46,9 @@ public class Members {
             name = "user_rate"
     )
     private Float user_rate;
+
+    private double x_value;
+    private double y_value;
     @OneToMany(
             mappedBy = "member"
     )

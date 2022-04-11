@@ -51,6 +51,7 @@ public class ChatRoomListApiController {
             chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
         } else{
             // 시간 순
+            chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
         }
 
         // 해당 카테고리의 dto만 뽑음
@@ -83,7 +84,7 @@ public class ChatRoomListApiController {
         if (type.equals("time")){
             chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
         } else{
-
+            chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
         }
 
         // 모든 채팅방의 dto만 뽑음
@@ -120,6 +121,7 @@ public class ChatRoomListApiController {
                     chatRooms = chatRoomService.findAllOrderByTime();
                 } else {
                     // 거리 순 정렬
+                    chatRooms = chatRoomService.findAllOrderByDistance();
                 }
 
             } else{     // 참여하고 있는 채팅방이 있을 때
@@ -128,6 +130,7 @@ public class ChatRoomListApiController {
                     chatRooms = chatRoomService.findExceptParticipatedChatRoomOrderByTime(participatedChatRoomIds);
                 } else{
                     // 거리 순 정렬
+                    chatRooms = chatRoomService.findExceptParticipatedChatRoomOrderByDistance(participatedChatRoomIds);
                 }
 
             }
@@ -151,20 +154,22 @@ public class ChatRoomListApiController {
         private String title;
         private String pickupPlaceName;
         private LocalDateTime createdDate;
-        private double pickupPlaceXCoord;
-        private double pickupPlaceYCoord;
+        private int distance;
 
         public ChatRoomListDto(ChatRoom chatRoom) {
             this.id = chatRoom.getId();
             this.title = chatRoom.getTitle();
             this.pickupPlaceName = chatRoom.getPickupPlaceName();
             this.createdDate = chatRoom.getCreatedDate();
-            this.pickupPlaceXCoord = chatRoom.getPickupPlaceXCoord();
-            this.pickupPlaceYCoord = chatRoom.getPickupPlaceYCoord();
+            this.distance = chatRoom.getDistance();
         }
     }
 
-
+    /**
+     * 사용자가 참여하고 있는 채팅방 id, title 리턴 (채팅 아이콘 클릭하면 나오는 화면)
+     * @param memberId : 현재 사용자의 id
+     * @return ResponseEntity body : EnteredChatRoomListDto(chatroomId, title)
+     */
     @GetMapping("/entered-chat-list/{memberId}")
     public ResponseEntity returnEnteredChatRoomList(@PathVariable Long memberId){
         List<EnteredChatRoomListDto> result = new ArrayList<>();
