@@ -42,4 +42,5 @@ public class JoinedChatRoomRepository{
                 .setParameter("cr", chatRoom)
                 .getResultList();
     }
+
 }

@@ -62,13 +62,27 @@ public class ChatRoomService {
         return chatRoomRepository.findAll();
     }
 
+    public List<ChatRoom> findAllOrderByTime(){
+        return chatRoomRepository.findAllOrderByTime();
+    }
+
     public List<ChatRoom> findExceptParticipatedChatRoom(List<Long> participatedChatRoomIds){
         return chatRoomRepository.findExceptParticipatedChatRoom(participatedChatRoomIds);
     }
 
+    public List<ChatRoom> findExceptParticipatedChatRoomOrderByTime(List<Long> participatedChatRoomIds){
+        return chatRoomRepository.findExceptParticipatedChatRoomOrderByTime(participatedChatRoomIds);
+    }
+
+
     @Transactional
     public int delete(Long chatRoomId){
         return chatRoomRepository.deleteById(chatRoomId);
+    }
+
+    @Transactional
+    public List<ChatRoom> getSearchedChatRooms(String keyword){
+        return chatRoomRepository.findByKeyword(keyword);
     }
 
 }

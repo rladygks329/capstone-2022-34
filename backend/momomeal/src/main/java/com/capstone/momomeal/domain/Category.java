@@ -1,3 +1,4 @@
+
 package com.capstone.momomeal.domain;
 
 public enum Category {
@@ -13,6 +14,6 @@ public enum Category {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 }
