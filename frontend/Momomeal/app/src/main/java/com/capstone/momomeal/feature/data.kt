@@ -15,10 +15,11 @@ data class User(
 data class Chatroom (
     val nameRoom: String = "",
     val idChatroom: Int = 0,
-    val category: Category,
+    val category: Category = Category.Chicken,
     val maxCapacity: Int = 4,
     val namePickupPlace: String ="",
-    val coordPickupPlace: Double = 0.0,
+    val coordPickupPlaceX: Double = 0.0,
+    val coordPickupPlaceY: Double = 0.0,
     val listUid: List<Int> = listOf()
 )
 
