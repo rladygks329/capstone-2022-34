@@ -15,9 +15,11 @@ import kotlinx.coroutines.withContext
 // 데이터의 변경사항을 알려주는 라이브 데이터를 가지는 뷰모델
 class LoginViewModel : ViewModel() {
 
+    private val loginRepo = LoginRepository()
     // 변경가능한 Mutable 타입의 LiveData(구독가능 데이터)
     private val _loginEvent = MutableLiveData<Event<String>>()
     private val _user = MutableLiveData<User>()
+
 
     val user: LiveData<User>
         get() = _user
@@ -49,7 +51,7 @@ class LoginViewModel : ViewModel() {
 
     fun login(){
         viewModelScope.launch {
-            val user = LoginRepository.login(_email.value.toString(), _password.value.toString())
+            val user = loginRepo.login(_email.value.toString(), _password.value.toString())
             withContext(Main){
                 if(user != null){
                     _user.value = user!!
