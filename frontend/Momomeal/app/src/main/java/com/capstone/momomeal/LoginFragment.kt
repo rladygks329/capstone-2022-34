@@ -35,44 +35,46 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         savedInstanceState: Bundle?
     ): View?  {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        loginViewModel = ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
+        //init
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.viewModel = loginViewModel
         loginViewModel.setEmail(auto.getString("email","")!!)
         loginViewModel.setPassword(auto.getString("password","")!!)
         loginViewModel.setAuto(auto.getBoolean("active", false))
 
-        //init
         paintGradient(binding.fragmentLoginAppname)
-        binding.fragmentLoginSignUp.setOnClickListener{
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.activity_login_fragment_container, GreetingFragment())
-                .addToBackStack(null)
-                .commit()
-        }
         return retView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel.loginEvent.observe(viewLifecycleOwner, EventObserver<Boolean>{ result ->
-            if(result){
-                //데이터를 저장하고 시작한다.
-                val autoLoginEdit = auto.edit()
-                autoLoginEdit.putString("email", loginViewModel._email.value)
-                autoLoginEdit.putString("password", loginViewModel._password.value)
-                autoLoginEdit.putBoolean("active", loginViewModel._auto.value == true)
-                autoLoginEdit.commit()
-                startActivity(Intent(activity, MainActivity::class.java))
-                requireActivity().finish()
-            }else{
-                val msg = Toast.makeText(requireActivity().applicationContext, "로그인 실패", Toast.LENGTH_SHORT)
-                msg.show()
+        //viewlifecycleOwner가 oncreate에서 만들어지므로 onViewCreated에서 observer를 달아준다.
+        loginViewModel.loginEvent.observe(viewLifecycleOwner, EventObserver<String>{
+            when(it){
+                "Success" -> startMain()
+                "Fail" -> Toast.makeText(requireActivity().applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+                "moveGreeting" -> moveGreeting()
             }
         })
         if(auto.getBoolean("active", false)){
             loginViewModel.login()
         }
+    }
+    private fun startMain(){
+        val autoLoginEdit = auto.edit()
+        autoLoginEdit.putString("email", loginViewModel._email.value)
+        autoLoginEdit.putString("password", loginViewModel._password.value)
+        autoLoginEdit.putBoolean("active", loginViewModel._auto.value == true)
+        autoLoginEdit.commit()
+        startActivity(Intent(activity, MainActivity::class.java))
+        requireActivity().finish()
+    }
+    private fun moveGreeting(){
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.activity_login_fragment_container, GreetingFragment())
+            .addToBackStack(null)
+            .commit()
     }
     private fun paintGradient(view: TextView){
         val text = "모두모아먹자!"

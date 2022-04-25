@@ -11,23 +11,14 @@ import com.capstone.momomeal.feature.Event
 class LoginViewModel : ViewModel() {
 
     // 변경가능한 Mutable 타입의 LiveData
-    private val _loginEvent = MutableLiveData<Event<Boolean>>()
-    val loginEvent: LiveData<Event<Boolean>>
+    private val _loginEvent = MutableLiveData<Event<String>>()
+    val loginEvent: LiveData<Event<String>>
         get() = _loginEvent
 
     //아래 3가지 속성은 유저가 변경하는 데이터이므로 양방향 데이터 바인딩을 위해 private가 아니게 설정함
     val _email = MutableLiveData<String>()
     val _password = MutableLiveData<String>()
     val _auto = MutableLiveData<Boolean>()
-
-
-    // 무결성을 위한 Getter
-    val email : LiveData<String>
-        get() = _email
-    val password : LiveData<String>
-        get() = _password
-    val auto : LiveData<Boolean>
-        get() = _auto
 
     // 초기값
     init{
@@ -48,10 +39,14 @@ class LoginViewModel : ViewModel() {
     }
 
     fun login(){
-        Log.d("LoginViewModel: ", _email.value.toString())
-        Log.d("LoginViewModel: ", _password.value.toString())
-        val result  =  (_email.value == "user1234") && (_password.value == "1234")
-        _loginEvent.value = Event(result)
+        if( (_email.value == "user1234") && (_password.value == "1234") ){
+            _loginEvent.value = Event("Success")
+        }else{
+            _loginEvent.value = Event("Fail")
+        }
+    }
+    fun moveGreeting(){
+        _loginEvent.value = Event("moveGreeting")
     }
 
 }
