@@ -19,14 +19,14 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     private val TAG = "ChatroomFragment"
     val chatroomList = arrayListOf<Chatroom>(
         //test
-        Chatroom("예전 채팅 1 ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, listOf(7, 49, 89)),
-        Chatroom("예전 채팅 2", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 3", 128, Category.Snackbar, 3, "먹자골목", 3.9, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 4", 128, Category.CafeAndDesert, 3, "강남역 4번출구", 3.9, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 5", 128, Category.Pizza, 3, "마포대표 근처", 3.9, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 6", 128, Category.Korean, 3, "성북구 길음1동 삼부아파트", 3.9, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 7", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 8", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, listOf(3, 29, 69))
+        Chatroom("예전 채팅 1 ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, 1.1,listOf(7, 49, 89)),
+        Chatroom("예전 채팅 2", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, 1.1, listOf(3, 29, 69)),
+        Chatroom("예전 채팅 3", 128, Category.Snackbar, 3, "먹자골목", 3.9, 1.1, listOf(3, 29, 69)),
+        Chatroom("예전 채팅 4", 128, Category.CafeAndDesert, 3, "강남역 4번출구", 3.9, 1.1, listOf(3, 29, 69)),
+        Chatroom("예전 채팅 5", 128, Category.Pizza, 3, "마포대표 근처", 3.9, 1.1, listOf(3, 29, 69)),
+        Chatroom("예전 채팅 6", 128, Category.Korean, 3, "성북구 길음1동 삼부아파트", 3.9, 1.1, listOf(3, 29, 69)),
+        Chatroom("예전 채팅 7", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, 1.1, listOf(3, 29, 69)),
+        Chatroom("예전 채팅 8", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, 1.1, listOf(3, 29, 69))
     )
 
     override fun onCreateView(
