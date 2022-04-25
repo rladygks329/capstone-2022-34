@@ -1,3 +1,4 @@
+
 package com.capstone.momomeal.domain;
 
 public class TransStringToEnum {
@@ -44,6 +45,7 @@ public class TransStringToEnum {
                 break;
             default:
                 category = Category.ETC;
+
                 break;
         }
         return category;
