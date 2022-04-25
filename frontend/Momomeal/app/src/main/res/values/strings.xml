@@ -37,5 +37,10 @@
     <!-- ProfileFragment`s Text -->
     <string name="profile_title">프로필</string>
     <string name="btn_review_txt">평가하기</string>
+
+    <!-- ChatActivity`s Text -->
+    <string name="chat_info_text">채팅방 정보</string>
+    <string name="chat_member_text">대화 상대</string>
+    <string name="et_hint">메시지를 입력해주세요</string>
 </resources>
 
