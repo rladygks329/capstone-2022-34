@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.text.set
 import androidx.core.text.toSpannable
-import androidx.lifecycle.SavedStateViewModelFactory
 import androidx.lifecycle.ViewModelProvider
 import com.capstone.momomeal.databinding.FragmentLoginBinding
 import com.capstone.momomeal.design.LinearGradientSpan
