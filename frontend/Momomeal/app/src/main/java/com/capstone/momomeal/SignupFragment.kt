@@ -38,7 +38,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
             val confirm = binding.fragmentSignupConfirm.getEditText()?.getText().toString()
 
             if(checkArray[0].isChecked && checkArray[1].isChecked){
-                if(password.length > 0 && email.length>0 && name.length >0){
+                if(password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()){
                     if(password == confirm){
                         Toast.makeText(requireContext(), "비밀번호가 일치함", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(activity, MainActivity::class.java))
