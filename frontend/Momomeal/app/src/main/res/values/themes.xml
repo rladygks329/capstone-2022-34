@@ -38,5 +38,29 @@
         <item name="android:textColorHighlight">#4DFF8761</item>
         <item name="autoCompleteTextViewStyle">@style/cursorColor</item>
     </style>
+
+    <style name="text_field_1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray1</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="text_field_2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray1</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="sub_title_1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/gray1</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="sub_title_2">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray1</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
   
 </resources>

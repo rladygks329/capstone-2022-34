@@ -1,5 +1,6 @@
 package com.capstone.momomeal
 
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -57,6 +58,11 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
         // 뒤로 가는 버튼에 대한 클릭 함수
         binding.btnBack.setOnClickListener {
             dismiss()
+        }
+
+        binding.btnChatCraeteConfirm.setOnClickListener {
+            val intent = Intent(activity, ChatActivity::class.java)
+            startActivity(intent)
         }
 
         return retView
