@@ -58,11 +58,11 @@ public class Members {
             cascade = {CascadeType.ALL}
     )
     private List<MemberReview> memberReview;
-    @OneToMany(
-            mappedBy = "member",
-            cascade = {CascadeType.ALL}
-    )
-    private List<RecommendMenu> recommendMenu = new ArrayList();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recommend_category_id")
+    private RecommendCategory recommendCategory;
+
 
     public Members() {
     }
@@ -72,10 +72,6 @@ public class Members {
         memberReview.setMember(this);
     }
 
-    public void addRecommendMenu(RecommendMenu recommendMenu) {
-        this.recommendMenu.add(recommendMenu);
-        recommendMenu.setMember(this);
-    }
 
     public static Members createMember(Members members, MemberReview... memberReview) {
         Members member = new Members();
@@ -168,10 +164,9 @@ public class Members {
         this.memberReview = memberReview;
     }
 
-    public void setRecommendMenu(final List<RecommendMenu> recommendMenu) {
-        this.recommendMenu = recommendMenu;
+    public void setRecommendCategory(RecommendCategory recommendCategory){
+        this.recommendCategory = recommendCategory;
     }
-
     public Long getUser_id() {
         return this.user_id;
     }
@@ -212,13 +207,10 @@ public class Members {
         return this.memberReview;
     }
 
-    public List<RecommendMenu> getRecommendMenu() {
-        return this.recommendMenu;
-    }
 
     public String toString() {
         Long var10000 = this.getUser_id();
-        return "Members(user_id=" + var10000 + ", email=" + this.getEmail() + ", pwd=" + this.getPwd() + ", realName=" + this.getRealName() + ", age=" + this.getAge() + ", phone_number=" + this.getPhone_number() + ", img=" + this.getImg() + ", user_rate=" + this.getUser_rate() + ", joinedChatRooms=" + this.getJoinedChatRooms() + ", memberReview=" + this.getMemberReview() + ", recommendMenu=" + this.getRecommendMenu() + ")";
+        return "Members(user_id=" + var10000 + ", email=" + this.getEmail() + ", pwd=" + this.getPwd() + ", realName=" + this.getRealName() + ", age=" + this.getAge() + ", phone_number=" + this.getPhone_number() + ", img=" + this.getImg() + ", user_rate=" + this.getUser_rate() + ", joinedChatRooms=" + this.getJoinedChatRooms() + ", memberReview=" + this.getMemberReview() + ")";
 
     }
 }
