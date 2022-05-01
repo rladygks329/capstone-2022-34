@@ -1,5 +1,6 @@
 package com.capstone.momomeal
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,14 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
             activity.comebackHome()
         }
         val chatAdapter = ChatroomAdapter(requireContext())
+        chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val item = chatAdapter.getData(position)
+                val intent = Intent(activity, ChatActivity::class.java)
+                intent.putExtra("id", item.idChatroom)
+                startActivity(intent)
+            }
+        })
         binding.fragmentSearchResultRecycle.adapter = chatAdapter
         chatAdapter.replaceData(chatlist)
         return retView

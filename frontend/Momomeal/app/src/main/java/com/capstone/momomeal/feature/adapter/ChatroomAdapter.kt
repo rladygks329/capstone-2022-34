@@ -18,10 +18,13 @@ class ChatroomAdapter(
 ) : RecyclerView.Adapter<chatViewHolder>()  {
 
     private var dataSet = ArrayList<Chatroom>()
-
     fun replaceData( chatList: ArrayList<Chatroom>){
         dataSet = chatList
         notifyDataSetChanged()
+    }
+
+    fun getData(position: Int): Chatroom {
+        return dataSet[position]
     }
 
     fun removeData(position: Int) {
@@ -48,6 +51,18 @@ class ChatroomAdapter(
     override fun getItemCount(): Int = dataSet.size
     override fun onBindViewHolder(holder: chatViewHolder, position: Int) {
         holder.bind(dataSet[position])
+        holder.itemView.setOnClickListener {
+            itemClickListener.onClick(it, position)
+        }
+    }
+    //클릭 이벤트 인터페이스 만들기
+    interface OnItemClickListener {
+        fun onClick(v: View, position: Int)
+    }
+    private lateinit var itemClickListener : OnItemClickListener
+
+    fun setItemClickListener(itemClickListener: OnItemClickListener) {
+        this.itemClickListener = itemClickListener
     }
 }
 class chatViewHolder(view: View) : RecyclerView.ViewHolder(view) {

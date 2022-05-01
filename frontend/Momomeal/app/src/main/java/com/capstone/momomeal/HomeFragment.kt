@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -25,11 +26,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val TAG = "HomeFragment"
     private lateinit var mainActivity: MainActivity
     private val createChatFragment = CreateChatFragment()
-    private val SearchResultFragment = SearchResultFragment()
-    private val SearchResultCategoryFragment = SearchResultCategoryFragment()
+    private val scFrag = SearchResultFragment()
+    private val scCategoryFrag = SearchResultCategoryFragment()
+    private var hasPoint = false
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
             if (Address.resultCode == Activity.RESULT_OK) {
+                hasPoint = true
                 Address.data?.let {
                     binding.fragmentHomeEditAddress.text = it.getStringExtra("data")
                 }
@@ -63,6 +66,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             startForResult.launch(Intent(requireActivity().application, MyAddressActivity::class.java))
         }
         val chatAdapter = ChatroomAdapter(requireContext())
+        chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                if(hasPoint){
+                    val item = chatAdapter.getData(position)
+                    val intent = Intent(activity, ChatActivity::class.java)
+                    intent.putExtra("id", item.idChatroom)
+                    startActivity(intent)
+                }else{
+                    Toast.makeText(requireContext(), "주소를 설정해주세요", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+        })
         binding.fragmentHomeRecycler.adapter = chatAdapter
         chatAdapter.replaceData(chatroomList)
 
@@ -83,7 +99,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun initSearch(search: SearchView) {
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                mainActivity.moveSearch(SearchResultCategoryFragment)
+                if(hasPoint){
+                    mainActivity.moveSearch(scFrag)
+                }else{
+                    Toast.makeText(requireContext(), "주소를 설정해주세요", Toast.LENGTH_SHORT).show()
+                }
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -99,9 +119,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             for(j in 0 until column.childCount){
                 val tv : TextView = column.getChildAt(j) as TextView
                 tv.setOnClickListener{
-                    val bundle = bundleOf("category" to tv.text.toString())
-                    SearchResultCategoryFragment.arguments = bundle
-                    mainActivity.moveSearch(SearchResultFragment)
+                    if(hasPoint){
+                        val bundle = bundleOf("category" to tv.text.toString())
+                        scCategoryFrag.arguments = bundle
+                        mainActivity.moveSearch(scCategoryFrag)
+                    }else{
+                        Toast.makeText(requireContext(), "주소를 설정해주세요", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -109,9 +133,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
     //프레그먼트의 hide show가 호출될 때, 불리는 함수
     override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
         if(hidden){
             //update data
         }
-        super.onHiddenChanged(hidden)
     }
 }
