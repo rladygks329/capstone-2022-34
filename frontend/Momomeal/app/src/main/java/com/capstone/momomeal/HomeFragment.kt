@@ -83,7 +83,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun initSearch(search: SearchView) {
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                SearchResultFragment.show(mainActivity.supportFragmentManager, SearchResultFragment.tag)
+                mainActivity.moveSearch(SearchResultCategoryFragment)
                 return true
             }
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -101,9 +101,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 tv.setOnClickListener{
                     val bundle = bundleOf("category" to tv.text.toString())
                     SearchResultCategoryFragment.arguments = bundle
-                    SearchResultCategoryFragment.show(mainActivity.supportFragmentManager, SearchResultCategoryFragment.tag)
+                    mainActivity.moveSearch(SearchResultFragment)
                 }
             }
         }
+    }
+
+    //프레그먼트의 hide show가 호출될 때, 불리는 함수
+    override fun onHiddenChanged(hidden: Boolean) {
+        if(hidden){
+            //update data
+        }
+        super.onHiddenChanged(hidden)
     }
 }

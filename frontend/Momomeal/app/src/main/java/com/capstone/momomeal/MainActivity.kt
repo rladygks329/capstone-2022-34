@@ -2,6 +2,8 @@ package com.capstone.momomeal
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -59,6 +61,20 @@ class MainActivity : AppCompatActivity() {
     }
     companion object {
         private const val KEY_SELECTED_TAB = "selectedTab"
+    }
+
+    fun moveSearch(frag: Fragment){
+        mainBnv.visibility = View.GONE
+        val home = supportFragmentManager.findFragmentByTag("HomeFragment")
+        supportFragmentManager.beginTransaction()
+            .hide(home!!)
+            .add(R.id.fr_main_navi_host, frag)
+            .addToBackStack(null)
+            .commit()
+    }
+    fun comebackHome(){
+        mainBnv.visibility = View.VISIBLE
+        supportFragmentManager.popBackStack()
     }
 
     /*public fun changeFragment(fragment: Fragment) {

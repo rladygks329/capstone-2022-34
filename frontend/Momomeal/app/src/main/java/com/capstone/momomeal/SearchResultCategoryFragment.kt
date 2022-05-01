@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.databinding.FragmentSearchResultCategoryBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
+import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 
-class SearchResultCategoryFragment : BaseDialogFragment<FragmentSearchResultCategoryBinding>(
+class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBinding>(
     FragmentSearchResultCategoryBinding::inflate) {
 
     private val TAG = "SearchResultCategoryFragment"
@@ -23,7 +24,6 @@ class SearchResultCategoryFragment : BaseDialogFragment<FragmentSearchResultCate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
     }
 
     override fun onCreateView(
@@ -32,11 +32,12 @@ class SearchResultCategoryFragment : BaseDialogFragment<FragmentSearchResultCate
         savedInstanceState: Bundle?
     ): View? {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        binding.fragmentSearchResultCategoryBack.setOnClickListener{
-            dismiss()
-        }
         val title = arguments?.getString("category")
         binding.fragmentSearchResultCategoryTitle.text = title
+        binding.fragmentSearchResultCategoryBack.setOnClickListener{
+            val activity = requireActivity() as MainActivity
+            activity.comebackHome()
+        }
         val chatroomadapter = ChatroomAdapter(requireContext())
         binding.fragmentSearchResultCategoryRecycle.adapter = chatroomadapter
         chatroomadapter.replaceData(chatlist)
