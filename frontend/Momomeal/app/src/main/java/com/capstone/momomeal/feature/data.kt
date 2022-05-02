@@ -14,15 +14,21 @@ data class User(
     val listReview: List<Int> = listOf()
 ): Serializable
 
+data class User_Light(
+    val name: String = "",
+    val idUser: Int = 0,
+    val profileImgUrl: String = "",
+)
+
 data class Chatroom (
-    val nameRoom: String = "",
+    val nameRoom: String? = "",
     val idChatroom: Int = 0,
-    val category: Category = Category.Chicken,
-    val maxCapacity: Int = 4,
-    val namePickupPlace: String ="",
-    val coordPickupPlaceX: Double = 0.0,
-    val coordPickupPlaceY: Double = 0.0,
-    val listUid: List<Int> = listOf()
+    val category: Category? = Category.Chicken,
+    val maxCapacity: Int? = 4,
+    val namePickupPlace: String? ="",
+    val coordPickupPlaceX: Double? = 0.0,
+    val coordPickupPlaceY: Double? = 0.0,
+    val listUid: List<Int>? = listOf(),
 )
 
 data class Review (

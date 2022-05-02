@@ -20,6 +20,8 @@ class ChatroomAdapter(
 ) : RecyclerView.Adapter<chatViewHolder>()  {
 
     private var dataSet = ArrayList<Chatroom>()
+    private lateinit var itemClickListener : OnItemClickListener
+
     fun replaceData( chatList: ArrayList<Chatroom>){
         dataSet = chatList
         notifyDataSetChanged()
@@ -61,11 +63,11 @@ class ChatroomAdapter(
     interface OnItemClickListener {
         fun onClick(v: View, position: Int)
     }
-    private lateinit var itemClickListener : OnItemClickListener
 
     fun setItemClickListener(itemClickListener: OnItemClickListener) {
         this.itemClickListener = itemClickListener
     }
+    
 }
 class chatViewHolder(binding:  ViewChatRoomBinding) : RecyclerView.ViewHolder(binding.root) {
 
