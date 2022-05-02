@@ -20,6 +20,7 @@ import com.capstone.momomeal.databinding.FragmentLoginBinding
 import com.capstone.momomeal.design.LinearGradientSpan
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.EventObserver
+import com.capstone.momomeal.feature.User
 import com.capstone.momomeal.viewmodel.LoginViewModel
 
 
@@ -55,19 +56,21 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             }
         })
         loginViewModel.user.observe(viewLifecycleOwner, Observer {
-            startMain()
+            startMain(it)
         })
         if(auto.getBoolean("active", false)){
             loginViewModel.login()
         }
     }
-    private fun startMain(){
+    private fun startMain(user: User){
         val autoLoginEdit = auto.edit()
         autoLoginEdit.putString("email", loginViewModel.email)
         autoLoginEdit.putString("password", loginViewModel.password)
         autoLoginEdit.putBoolean("active", loginViewModel.auto)
         autoLoginEdit.commit()
-        startActivity(Intent(activity, MainActivity::class.java))
+        val intent = Intent(activity, MainActivity::class.java)
+        intent.putExtra("user", user)
+        startActivity(intent)
         requireActivity().finish()
     }
     private fun moveGreeting(){

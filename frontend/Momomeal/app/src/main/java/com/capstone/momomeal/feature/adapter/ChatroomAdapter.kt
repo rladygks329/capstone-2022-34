@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.R
+import com.capstone.momomeal.databinding.ViewChatRoomBinding
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import kotlin.collections.ArrayList
@@ -45,8 +47,8 @@ class ChatroomAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chatViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.view_chat_room,parent,false)
-        return chatViewHolder(view)
+        val binding = ViewChatRoomBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return chatViewHolder(binding)
     }
     override fun getItemCount(): Int = dataSet.size
     override fun onBindViewHolder(holder: chatViewHolder, position: Int) {
@@ -65,11 +67,11 @@ class ChatroomAdapter(
         this.itemClickListener = itemClickListener
     }
 }
-class chatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class chatViewHolder(binding:  ViewChatRoomBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val title: TextView = view.findViewById(R.id.view_chat_room_title)
-    private val description: TextView = view.findViewById(R.id.view_chat_room_description)
-    private val category_img: ImageView = view.findViewById(R.id.view_chat_room_img)
+    private val title: TextView = binding.viewChatRoomTitle
+    private val description: TextView = binding.viewChatRoomDescription
+    private val category_img: ImageView = binding.viewChatRoomImg
 
     fun bind(item: Chatroom) {
         title.text = item.nameRoom
