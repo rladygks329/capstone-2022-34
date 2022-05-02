@@ -1,5 +1,6 @@
 package com.capstone.momomeal
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,11 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.databinding.FragmentSearchResultCategoryBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
+import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 
-class SearchResultCategoryFragment : BaseDialogFragment<FragmentSearchResultCategoryBinding>(
+class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBinding>(
     FragmentSearchResultCategoryBinding::inflate) {
 
     private val TAG = "SearchResultCategoryFragment"
@@ -23,7 +25,6 @@ class SearchResultCategoryFragment : BaseDialogFragment<FragmentSearchResultCate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
     }
 
     override fun onCreateView(
@@ -32,14 +33,23 @@ class SearchResultCategoryFragment : BaseDialogFragment<FragmentSearchResultCate
         savedInstanceState: Bundle?
     ): View? {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        binding.fragmentSearchResultCategoryBack.setOnClickListener{
-            dismiss()
-        }
         val title = arguments?.getString("category")
         binding.fragmentSearchResultCategoryTitle.text = title
-        val chatroomadapter = ChatroomAdapter(requireContext())
-        binding.fragmentSearchResultCategoryRecycle.adapter = chatroomadapter
-        chatroomadapter.replaceData(chatlist)
+        binding.fragmentSearchResultCategoryBack.setOnClickListener{
+            val activity = requireActivity() as MainActivity
+            activity.comebackHome()
+        }
+        val chatAdapter = ChatroomAdapter(requireContext())
+        chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val item = chatAdapter.getData(position)
+                val intent = Intent(activity, ChatActivity::class.java)
+                intent.putExtra("id", item.idChatroom)
+                startActivity(intent)
+            }
+        })
+        binding.fragmentSearchResultCategoryRecycle.adapter = chatAdapter
+        chatAdapter.replaceData(chatlist)
         return retView
     }
 }

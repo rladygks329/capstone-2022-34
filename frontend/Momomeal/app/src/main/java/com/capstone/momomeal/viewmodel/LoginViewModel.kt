@@ -7,9 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.capstone.momomeal.feature.Event
 import com.capstone.momomeal.feature.LoginRepository
 import com.capstone.momomeal.feature.User
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 // 데이터의 변경사항을 알려주는 라이브 데이터를 가지는 뷰모델
@@ -26,39 +24,21 @@ class LoginViewModel : ViewModel() {
     val loginEvent: LiveData<Event<String>>
         get() = _loginEvent
 
-    //아래 3가지 속성은 유저가 변경하는 데이터이므로 양방향 데이터 바인딩을 위해 private가 아니게 설정함
     val _email = MutableLiveData<String>()
-    val _password = MutableLiveData<String>()
-    val _auto = MutableLiveData<Boolean>()
 
-    // 초기값
-    init{
-        _email.value = ""
-        _password.value = ""
-        _auto.value = false
-    }
-
-    // setter method
-    fun setEmail(email : String){
-        _email.value = email
-    }
-    fun setPassword(password : String){
-        _password.value = password
-    }
-    fun setAuto(Auto : Boolean){
-        _auto.value = Auto
-    }
+    // 아래 3가지 속성은 유저가 변경하는 데이터이므로 양방향 데이터 바인딩을 위해 private가 아니게 설정함
+    // 유저 인풋에 따라 변경되는 이벤트가 없으므로 livedata로 선언하지 않았음
+    var email: String = ""
+    var password: String = ""
+    var auto : Boolean = false
 
     fun login(){
         viewModelScope.launch {
-            val user = loginRepo.login(_email.value.toString(), _password.value.toString())
-            withContext(Main){
-                if(user != null){
-                    _user.value = user!!
-                    _loginEvent.value = Event("Success")
-                }else{
-                    _loginEvent.value = Event("Fail")
-                }
+            val user = loginRepo.login(email, password)
+            if(user == null){
+                _loginEvent.value = Event("Fail")
+            }else{
+                _user.value = user!!
             }
         }
     }

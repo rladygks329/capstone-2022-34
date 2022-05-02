@@ -48,6 +48,5 @@ class ChatActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-    fun
+    
 }
