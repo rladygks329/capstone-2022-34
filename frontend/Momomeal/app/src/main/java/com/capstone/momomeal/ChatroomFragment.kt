@@ -12,6 +12,7 @@ import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.feature.adapter.ChatAdapter
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 
 
@@ -42,6 +43,11 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
             fragmentChatroomRecycle.adapter = chatAdapter
         }
         chatAdapter.replaceData(chatroomList)
+        chatAdapter.setItemClickListener(object: ChatroomAdapter.OnItemClickEventListener{
+            override fun onItemClick(v: View, position: Int) {
+                TODO("Not yet implemented")
+            }
+        })
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback (
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT
