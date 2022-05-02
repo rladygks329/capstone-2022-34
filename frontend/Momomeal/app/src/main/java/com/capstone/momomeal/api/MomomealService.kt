@@ -7,7 +7,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object MomomealService {
-    private const val MOMOMEAL_URL = "http://172.30.1.17:8000/"
+    private const val MOMOMEAL_Local_URL = "http://10.0.2.2:8080/"
+    private const val MOMOMEAL_AWS_URL = "3.39.60.56:8080"
+
     private val gson : Gson by lazy {
         GsonBuilder()
             .registerTypeAdapter(Chatroom::class.java, DeserializeChatroom())
@@ -16,7 +18,7 @@ object MomomealService {
     private val retrofit : Retrofit by lazy {
         Retrofit
             .Builder()
-            .baseUrl(MOMOMEAL_URL)
+            .baseUrl(MOMOMEAL_Local_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }

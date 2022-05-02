@@ -1,5 +1,6 @@
 package com.capstone.momomeal
 
+import android.content.Intent
 import android.graphics.*
 import android.os.Bundle
 import android.util.Log
@@ -8,27 +9,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
-import com.capstone.momomeal.feature.adapter.ChatAdapter
+import com.capstone.momomeal.feature.MyChat
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomBinding::inflate) {
     private val TAG = "ChatroomFragment"
-    val chatroomList = arrayListOf<Chatroom>(
-        //test
-        Chatroom("예전 채팅 1 ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, 1.1,listOf(7, 49, 89)),
-        Chatroom("예전 채팅 2", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 3", 128, Category.Snackbar, 3, "먹자골목", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 4", 128, Category.CafeAndDesert, 3, "강남역 4번출구", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 5", 128, Category.Pizza, 3, "마포대표 근처", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 6", 128, Category.Korean, 3, "성북구 길음1동 삼부아파트", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 7", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("예전 채팅 8", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, 1.1, listOf(3, 29, 69))
-    )
+
+    val chatAdapter: ChatroomAdapter by lazy {
+        ChatroomAdapter(requireContext())
+    }
+    val chatroomList = arrayListOf<Chatroom>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,17 +35,21 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
 
         Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
-        val chatAdapter = ChatroomAdapter(requireContext())
+
+        chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val item = chatAdapter.getData(position)
+                val intent = Intent(activity, ChatActivity::class.java)
+                intent.putExtra("id", item.idChatroom)
+                startActivity(intent)
+            }
+        })
         with(binding){
             fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
             fragmentChatroomRecycle.adapter = chatAdapter
         }
+        updateMyChatRoom()
         chatAdapter.replaceData(chatroomList)
-        chatAdapter.setItemClickListener(object: ChatroomAdapter.OnItemClickEventListener{
-            override fun onItemClick(v: View, position: Int) {
-                TODO("Not yet implemented")
-            }
-        })
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback (
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT
@@ -110,5 +112,37 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         }
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.fragmentChatroomRecycle)
         return retview
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if(!hidden){
+            updateMyChatRoom()
+        }
+    }
+
+    fun updateMyChatRoom(){
+        val momomeal = MomomealService.momomealAPI
+        val mainActivity = requireActivity() as MainActivity
+
+        momomeal.getEnteredChatroom(mainActivity.user.idUser).enqueue(object: Callback<List<MyChat>>{
+            override fun onResponse(call: Call<List<MyChat>>, response: Response<List<MyChat>>) {
+                Log.d("retrofit", response?.body().toString())
+                if(response.isSuccessful.not()){
+                    return
+                }
+                response.body()?.let{
+                    chatroomList.clear()
+                    //body가 있다면 그안에는 bestSellerDto가 들어있을것
+                    it.forEach{ mychat->
+                       chatroomList.add(mychat.toChatroom())
+                    }
+                    chatAdapter.replaceData(chatroomList)
+                }
+            }
+            override fun onFailure(call: Call<List<MyChat>>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+        })
     }
 }

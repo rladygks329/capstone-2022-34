@@ -73,7 +73,6 @@ class ChatActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
     fun initStomp() {
         stompClient.lifecycle()
 //            .subscribeOn(Schedulers.io())

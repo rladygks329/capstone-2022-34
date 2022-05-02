@@ -1,6 +1,9 @@
 package com.capstone.momomeal.api
 
+import com.capstone.momomeal.dto.LoginForm
+import com.capstone.momomeal.dto.LoginResponse
 import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.feature.MyChat
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -14,14 +17,14 @@ interface MomomealAPI {
     fun getCategoryChatroom(
         @Path("categoryName") categoryName: String,
         @Path("memberId") memberId: Int,
-        @Path("type") type:String,
-    ): Call<Chatroom>
+        @Path("type") type:String
+    ): Call<List<Chatroom>>
 
     @GET("/chat-list/{memberId}/{type}")
     fun getAllChatroom(
        @Path("memberId") memberId:Int,
        @Path("type") type:String
-    ): Call<Chatroom>
+   ): Call<List<Chatroom>>
 
     @GET("/clicked-chat/{chatroomId}")
     fun getChatroomInfo(
@@ -36,7 +39,7 @@ interface MomomealAPI {
     @GET("/entered-chat-list/{memberId}")
     fun getEnteredChatroom(
        @Path("memberId") memberId:Int
-    ): Call<Chatroom>
+   ): Call<List<MyChat>>
 
     @DELETE("/deleted-chat/{memberId}/{chatroomId}")
     fun deleteChatroom(
@@ -47,11 +50,15 @@ interface MomomealAPI {
     @GET("/searched-chat-list/{keyword}")
     fun getSearchChatroom(
        @Path("keyword") keyword:String
-    ): Call<Chatroom>
+   ): Call<List<Chatroom>>
 
     @GET("/entered-chat-info/{chatroomId}")
     fun getEnteredChatInfo(
        @Path("chatroomId") chatroomId: Long
     ) : Call<Chatroom>
 
+    @POST("/login.do")
+    fun login(
+        loginForm: LoginForm
+    ) : Call<LoginResponse>
 }
