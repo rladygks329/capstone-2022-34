@@ -1,5 +1,6 @@
 package com.capstone.momomeal.api;
 
+import com.capstone.momomeal.domain.Category;
 import com.capstone.momomeal.domain.ChatRoom;
 import com.capstone.momomeal.service.ChatRoomService;
 import lombok.AllArgsConstructor;
@@ -38,13 +39,15 @@ public class SearchApiController {
         private String pickupPlaceName;
         private LocalDateTime createdDate;
         private int distance;
+        private Category category;
 
         public ChatRoomListDto(ChatRoom chatRoom) {
             this.id = chatRoom.getId();
             this.title = chatRoom.getTitle();
             this.pickupPlaceName = chatRoom.getPickupPlaceName();
             this.createdDate = chatRoom.getCreatedDate();
-            this.distance = getDistance();
+            this.distance = chatRoom.getDistance();
+            this.category = chatRoom.getCategory();
         }
     }
 }

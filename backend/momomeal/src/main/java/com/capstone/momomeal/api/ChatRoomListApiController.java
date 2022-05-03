@@ -147,23 +147,6 @@ public class ChatRoomListApiController {
         private T data;
     }
 
-    @Data
-    @AllArgsConstructor
-    static class ChatRoomListDto{
-        private Long id;
-        private String title;
-        private String pickupPlaceName;
-        private LocalDateTime createdDate;
-        private int distance;
-
-        public ChatRoomListDto(ChatRoom chatRoom) {
-            this.id = chatRoom.getId();
-            this.title = chatRoom.getTitle();
-            this.pickupPlaceName = chatRoom.getPickupPlaceName();
-            this.createdDate = chatRoom.getCreatedDate();
-            this.distance = chatRoom.getDistance();
-        }
-    }
 
     /**
      * 사용자가 참여하고 있는 채팅방 id, title 리턴 (채팅 아이콘 클릭하면 나오는 화면)
@@ -204,10 +187,12 @@ public class ChatRoomListApiController {
     static class EnteredChatRoomListDto{
         private Long chatRoomId;
         private String title;
+        private String category;
 
         public EnteredChatRoomListDto(ChatRoom chatRoom) {
             this.chatRoomId = chatRoom.getId();
             this.title = chatRoom.getTitle();
+            this.category = chatRoom.getCategory().getName();
         }
     }
 }
