@@ -1,6 +1,8 @@
 package com.capstone.momomeal.feature
 
+import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
+import java.io.Serializable
 import java.util.*
 
 data class User(
@@ -10,17 +12,23 @@ data class User(
     val profileImgUrl: String = "",
     val totalRate: Int = 50,
     val listReview: List<Int> = listOf()
+): Serializable
+
+data class User_Light(
+    val name: String = "",
+    val idUser: Int = 0,
+    val profileImgUrl: String = "",
 )
 
 data class Chatroom (
-    val nameRoom: String = "",
+    val nameRoom: String? = "",
     val idChatroom: Int = 0,
-    val category: Category = Category.Chicken,
-    val maxCapacity: Int = 4,
-    val namePickupPlace: String ="",
-    val coordPickupPlaceX: Double = 0.0,
-    val coordPickupPlaceY: Double = 0.0,
-    val listUid: List<Int> = listOf()
+    val category: Category? = Category.Chicken,
+    val maxCapacity: Int? = 4,
+    val namePickupPlace: String? ="",
+    val coordPickupPlaceX: Double? = 0.0,
+    val coordPickupPlaceY: Double? = 0.0,
+    val listUid: List<Int>? = listOf(),
 )
 
 data class Review (
@@ -45,7 +53,24 @@ enum class Category {
     Fastfood,
 }
 
-val fakeUser = User("김요한", 0, "rladygks329@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3))
+data class MyChat(
+    @SerializedName("chatRoomId") val id : Int,
+    @SerializedName("title") val title : String
+){
+    fun toChatroom() : Chatroom {
+        return Chatroom(nameRoom = title, idChatroom = id)
+    }
+}
+
+data class LoginForm(
+    @SerializedName("email") val email: String,
+    @SerializedName("pwd") val password: String
+)
+data class LoginResponse(
+    @SerializedName("check") val check : Int
+)
+
+val fakeUser = User("김요한", 4, "rladygks329@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3))
 
 val fakeUsers = listOf(
     User("김미나", 1, "mina123@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3)),

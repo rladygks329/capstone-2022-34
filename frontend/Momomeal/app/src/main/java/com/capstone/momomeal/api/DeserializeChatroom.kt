@@ -5,6 +5,8 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import java.lang.reflect.Type
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class DeserializeChatroom : JsonDeserializer<Chatroom> {
     override fun deserialize(
@@ -17,7 +19,10 @@ class DeserializeChatroom : JsonDeserializer<Chatroom> {
         val id = jsonObject["id"].asInt
         val title = jsonObject["title"].asString
         val pickupPlaceName = jsonObject["pickupPlaceName"].asString
-        val createdDate = jsonObject["createdDate"].asString
+        val createdDate : LocalDateTime = LocalDateTime.parse(
+            jsonObject["createdDate"].asString,
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        ) // Change to LocalDateTime(str to ldt)
         val pickupPlaceXCoord = jsonObject["pickupPlaceXCoord"].asDouble
         val pickupPlaceYCoord = jsonObject["pickupPlaceYCoord"].asDouble
         return Chatroom(

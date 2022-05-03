@@ -40,7 +40,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
             if(checkArray[0].isChecked && checkArray[1].isChecked){
                 if(password.isNotEmpty() && email.isNotEmpty() && name.isNotEmpty()){
                     if(password == confirm){
-                        Toast.makeText(requireContext(), "비밀번호가 일치함", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "회원가입 성공", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(activity, MainActivity::class.java))
                         requireActivity().finish()
                         //email, name password -> server

@@ -10,28 +10,39 @@ import com.capstone.momomeal.databinding.ItemOtherMsgFullBinding
 import com.capstone.momomeal.feature.Chat
 
 class ChatAdapter(
-    val context: Context, val chatList: ArrayList<Chat>
+//    val context: Context,
+    val chatList: ArrayList<Chat>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         TODO("Not yet implemented")
+
     }
 
     override fun getItemCount(): Int = chatList.size
 
     override fun getItemViewType(position: Int): Int {
-        return super.getItemViewType(position)
+        return when
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         TODO("Not yet implemented")
     }
+
+    companion object {
+        private const val OTHER_MSG_FULL = 0
+        private const val OTHER_MSG = 1
+        private const val MY_MSG = 2
+    }
 }
 
 
 class OtherMsgFullViewHolder(
-    val binding: ItemOtherMsgFullBinding
+    private val binding: ItemOtherMsgFullBinding
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(item: Chat) {
+        binding.tvOtherMsgFull.text = item.chatContent
+        binding.tvOtherName
     }
 }
 
