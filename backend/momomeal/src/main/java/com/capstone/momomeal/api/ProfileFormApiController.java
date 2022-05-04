@@ -32,7 +32,7 @@ public class ProfileFormApiController {
 
         Optional<Members> c_member = memberService.findById(user_id);
         if(c_member.equals(null)){
-            returnData.put("fail",0);
+            returnData.put("check",0);
             return  returnData;
         }
         Members member = c_member.get();
@@ -54,7 +54,7 @@ public class ProfileFormApiController {
 
         Optional<Members> c_member = memberService.findById(user_id);
         if(c_member.equals(null)){
-            returnData.put("fail",0);
+            returnData.put("check",0);
             return  returnData;
         }
         Members member = c_member.get();
