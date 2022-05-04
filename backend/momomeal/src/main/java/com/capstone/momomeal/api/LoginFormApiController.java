@@ -51,7 +51,9 @@ public class LoginFormApiController {
         Optional<Members> members = memberService.Login(member.getEmail(), member.getPwd());
         if(members == null){
             returnMap.put("check",0);
+            returnMap.put("member",null);
         }else{
+            returnMap.put("check",1);
             returnMap.put("member",member);
         }
         return returnMap;
