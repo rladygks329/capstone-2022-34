@@ -22,7 +22,7 @@ class ChatAdapter(
     override fun getItemCount(): Int = chatList.size
 
     override fun getItemViewType(position: Int): Int {
-        return when
+        return super.getItemViewType(position)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

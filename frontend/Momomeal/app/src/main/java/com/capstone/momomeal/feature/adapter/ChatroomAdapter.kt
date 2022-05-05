@@ -17,7 +17,7 @@ import kotlin.collections.ArrayList
 
 class ChatroomAdapter(
   val context: Context
-) : RecyclerView.Adapter<chatViewHolder>()  {
+) : RecyclerView.Adapter<ChatRoomViewHolder>()  {
 
     private var dataSet = ArrayList<Chatroom>()
     private lateinit var itemClickListener : OnItemClickListener
@@ -48,12 +48,12 @@ class ChatroomAdapter(
         notifyItemMoved(fromPos, toPos)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): chatViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatRoomViewHolder {
         val binding = ViewChatRoomBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return chatViewHolder(binding)
+        return ChatRoomViewHolder(binding)
     }
     override fun getItemCount(): Int = dataSet.size
-    override fun onBindViewHolder(holder: chatViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ChatRoomViewHolder, position: Int) {
         holder.bind(dataSet[position])
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
@@ -69,7 +69,7 @@ class ChatroomAdapter(
     }
     
 }
-class chatViewHolder(binding:  ViewChatRoomBinding) : RecyclerView.ViewHolder(binding.root) {
+class ChatRoomViewHolder(binding:  ViewChatRoomBinding) : RecyclerView.ViewHolder(binding.root) {
 
     private val title: TextView = binding.viewChatRoomTitle
     private val description: TextView = binding.viewChatRoomDescription
