@@ -10,10 +10,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.dto.MyChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.Chatroom
-import com.capstone.momomeal.feature.MyChat
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -125,8 +125,8 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         val momomeal = MomomealService.momomealAPI
         val mainActivity = requireActivity() as MainActivity
 
-        momomeal.getEnteredChatroom(mainActivity.user.idUser).enqueue(object: Callback<List<MyChat>>{
-            override fun onResponse(call: Call<List<MyChat>>, response: Response<List<MyChat>>) {
+        momomeal.getEnteredChatroom(mainActivity.user.idUser).enqueue(object: Callback<List<MyChatRoomDTO>>{
+            override fun onResponse(call: Call<List<MyChatRoomDTO>>, response: Response<List<MyChatRoomDTO>>) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
@@ -140,7 +140,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                     chatAdapter.replaceData(chatroomList)
                 }
             }
-            override fun onFailure(call: Call<List<MyChat>>, t: Throwable) {
+            override fun onFailure(call: Call<List<MyChatRoomDTO>>, t: Throwable) {
                 Log.e("retrofit", t.toString())
             }
         })

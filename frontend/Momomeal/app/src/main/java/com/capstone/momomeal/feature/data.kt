@@ -3,7 +3,6 @@ package com.capstone.momomeal.feature
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
 import java.io.Serializable
-import java.util.*
 
 data class User(
     val name: String = "",
@@ -53,19 +52,8 @@ enum class Category {
     Fastfood,
 }
 
-data class MyChat(
-    @SerializedName("chatRoomId") val id : Int,
-    @SerializedName("title") val title : String
-){
-    fun toChatroom() : Chatroom {
-        return Chatroom(nameRoom = title, idChatroom = id)
-    }
-}
 
-data class LoginForm(
-    @SerializedName("email") val email: String,
-    @SerializedName("pwd") val password: String
-)
+
 data class LoginResponse(
     @SerializedName("check") val check : Int
 )

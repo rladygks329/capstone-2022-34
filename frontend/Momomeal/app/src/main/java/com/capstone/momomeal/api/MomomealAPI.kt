@@ -1,9 +1,10 @@
 package com.capstone.momomeal.api
 
-import com.capstone.momomeal.dto.LoginForm
-import com.capstone.momomeal.dto.LoginResponse
+import com.capstone.momomeal.data.dto.LoginForm
+import com.capstone.momomeal.data.dto.MyChatRoomDTO
+import com.capstone.momomeal.data.dto.RegisterForm
+import com.capstone.momomeal.feature.LoginResponse
 import com.capstone.momomeal.feature.Chatroom
-import com.capstone.momomeal.feature.MyChat
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -39,7 +40,7 @@ interface MomomealAPI {
     @GET("/entered-chat-list/{memberId}")
     fun getEnteredChatroom(
        @Path("memberId") memberId:Int
-   ): Call<List<MyChat>>
+   ): Call<List<MyChatRoomDTO>>
 
     @DELETE("/deleted-chat/{memberId}/{chatroomId}")
     fun deleteChatroom(
@@ -59,6 +60,12 @@ interface MomomealAPI {
 
     @POST("/login.do")
     fun login(
-        loginForm: LoginForm
+        @Body params: HashMap<String, String>
     ) : Call<LoginResponse>
+
+    @POST("/createAccount.do")
+    fun register(
+        @Body params: RegisterForm
+    ) :Call<LoginResponse>
+
 }
