@@ -1,6 +1,6 @@
 package com.capstone.momomeal.api
 
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Chatroom
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit

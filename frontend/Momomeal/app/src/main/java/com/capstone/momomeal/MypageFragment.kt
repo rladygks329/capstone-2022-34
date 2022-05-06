@@ -1,15 +1,11 @@
 package com.capstone.momomeal
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.capstone.momomeal.databinding.FragmentMypageBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Rate
-import com.capstone.momomeal.feature.Review
-import java.time.LocalDateTime
 
 class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding::inflate) {
     private val TAG = "MypageFragment"
