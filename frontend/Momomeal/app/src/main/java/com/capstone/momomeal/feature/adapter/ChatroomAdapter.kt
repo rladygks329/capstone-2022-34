@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.R
 import com.capstone.momomeal.databinding.ViewChatRoomBinding
-import com.capstone.momomeal.feature.Category
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Category
+import com.capstone.momomeal.data.Chatroom
 import kotlin.collections.ArrayList
 
 

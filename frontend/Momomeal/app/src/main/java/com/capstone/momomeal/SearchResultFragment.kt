@@ -11,10 +11,9 @@ import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.dto.SearchChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentSearchResultBinding
-import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Category
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Category
+import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call
 import retrofit2.Callback

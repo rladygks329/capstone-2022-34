@@ -1,6 +1,5 @@
 package com.capstone.momomeal
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.capstone.momomeal.databinding.ActivityMainBinding
 import com.capstone.momomeal.feature.BottomNavigator
 import com.capstone.momomeal.feature.MainTab
-import com.capstone.momomeal.feature.User
+import com.capstone.momomeal.data.User
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -29,8 +28,8 @@ class MainActivity : AppCompatActivity() {
             ?: throw IllegalStateException("the container MUST contain a fragment at least one")
         navHostFragment.findNavController()
     }
-    val user: User by lazy {
-        intent.getSerializableExtra("user") as User
+    public val myInfo: User by lazy {
+        intent.getParcelableExtra<User>("user") as User
     }
     var searchKeyword: String = ""
     companion object {
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             ?.let {
                 mainBnv.selectedItemId = it
             }
-        Log.d("main",user.name)
+        Log.d("main",myInfo.name)
 
     }
 

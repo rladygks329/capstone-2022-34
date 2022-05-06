@@ -1,5 +1,6 @@
 package com.capstone.momomeal.repository;
 
+import com.capstone.momomeal.domain.Category;
 import com.capstone.momomeal.domain.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Query;
@@ -82,4 +83,13 @@ public class ChatRoomRepository {
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
+
+    public List<ChatRoom> findByCategoryIn(List<Category> categories, List<Long> participatedChatRoomIds){
+        return em.createQuery("select cr from ChatRoom cr " +
+                "where cr.category in (:categories) and cr.id not in (:ids)", ChatRoom.class)
+                .setParameter("categories", categories)
+                .setParameter("ids", participatedChatRoomIds)
+                .getResultList();
+    }
+
 }

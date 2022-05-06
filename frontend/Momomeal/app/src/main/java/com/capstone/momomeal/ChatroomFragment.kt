@@ -13,8 +13,11 @@ import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.dto.MyChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Chatroom
+import com.capstone.momomeal.data.MyChat
+import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import com.capstone.momomeal.data.fakeUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,7 +27,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     private val TAG = "ChatroomFragment"
 
     val momomeal = MomomealService.momomealAPI
-    val chatAdapter: ChatroomAdapter by lazy {
+    val chatroomAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
     }
     val chatroomList = arrayListOf<Chatroom>()
@@ -37,16 +40,18 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
 
-        chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
+        chatroomAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
-                val item = chatAdapter.getData(position)
+                val chatroomInfo = chatroomAdapter.getData(position)
+                val myInfoLight = User_light((activity as MainActivity).myInfo)
                 val intent = Intent(activity, ChatActivity::class.java)
-                intent.putExtra("id", item.idChatroom)
+                intent.putExtra("chatroominfo", chatroomInfo) // Chatroom information
+                intent.putExtra("myinfo", myInfoLight)
                 startActivity(intent)
             }
         })
         binding.fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
-        binding.fragmentChatroomRecycle.adapter = chatAdapter
+        binding.fragmentChatroomRecycle.adapter = chatroomAdapter
         updateMyChatRoom()
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback (
@@ -61,7 +66,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                chatAdapter.removeData(viewHolder.layoutPosition)
+                chatroomAdapter.removeData(viewHolder.layoutPosition)
 
                 val mainactivity = requireActivity() as MainActivity
                 momomeal.deleteChatroom(
@@ -152,7 +157,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                     it.forEach{ mychat->
                        chatroomList.add(mychat.toChatroom())
                     }
-                    chatAdapter.replaceData(chatroomList)
+                    chatroomAdapter.replaceData(chatroomList)
                 }
             }
             override fun onFailure(call: Call<List<MyChatRoomDTO>>, t: Throwable) {
