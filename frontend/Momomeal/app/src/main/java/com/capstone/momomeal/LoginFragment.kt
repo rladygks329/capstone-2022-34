@@ -20,7 +20,7 @@ import com.capstone.momomeal.databinding.FragmentLoginBinding
 import com.capstone.momomeal.design.LinearGradientSpan
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.EventObserver
-import com.capstone.momomeal.feature.User
+import com.capstone.momomeal.data.User
 import com.capstone.momomeal.viewmodel.LoginViewModel
 
 

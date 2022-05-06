@@ -1,18 +1,15 @@
 package com.capstone.momomeal.feature.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.R
 import com.capstone.momomeal.databinding.ItemReviewContentBinding
-import com.capstone.momomeal.feature.Rate
-import com.capstone.momomeal.feature.Review
+import com.capstone.momomeal.data.Rate
+import com.capstone.momomeal.data.Review
 
 class ReviewAdapter(
-    val context: Context, val reviewList: ArrayList<Review>
+    val reviewList: ArrayList<Review>
 ) : RecyclerView.Adapter<ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemReviewContentBinding.inflate(

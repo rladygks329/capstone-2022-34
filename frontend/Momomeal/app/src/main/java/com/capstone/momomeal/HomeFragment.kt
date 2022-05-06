@@ -14,12 +14,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Category
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Category
+import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import kotlin.math.log
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
@@ -137,5 +137,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         if(hidden){
             //update data
         }
+    }
+
+    fun onclicker(s : String) {
+        Log.d(TAG, s)
     }
 }

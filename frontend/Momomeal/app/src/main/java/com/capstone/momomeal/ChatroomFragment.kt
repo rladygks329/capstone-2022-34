@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Chatroom
-import com.capstone.momomeal.feature.MyChat
+import com.capstone.momomeal.data.Chatroom
+import com.capstone.momomeal.data.MyChat
+import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import com.capstone.momomeal.data.fakeUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +25,7 @@ import retrofit2.Response
 class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomBinding::inflate) {
     private val TAG = "ChatroomFragment"
 
-    val chatAdapter: ChatroomAdapter by lazy {
+    val chatroomAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
     }
     val chatroomList = arrayListOf<Chatroom>()
@@ -36,20 +38,22 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
 
-        chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
+        chatroomAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
-                val item = chatAdapter.getData(position)
+                val chatroomInfo = chatroomAdapter.getData(position)
+                val myInfoLight = User_light((activity as MainActivity).myInfo)
                 val intent = Intent(activity, ChatActivity::class.java)
-                intent.putExtra("id", item.idChatroom)
+                intent.putExtra("chatroominfo", chatroomInfo) // Chatroom information
+                intent.putExtra("myinfo", myInfoLight)
                 startActivity(intent)
             }
         })
         with(binding){
             fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
-            fragmentChatroomRecycle.adapter = chatAdapter
+            fragmentChatroomRecycle.adapter = chatroomAdapter
         }
         updateMyChatRoom()
-        chatAdapter.replaceData(chatroomList)
+        chatroomAdapter.replaceData(chatroomList)
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback (
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT
@@ -61,12 +65,12 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
             ): Boolean {
                 val fromPos: Int = viewHolder.adapterPosition
                 val toPos: Int = target.adapterPosition
-                chatAdapter.swapData(fromPos, toPos)
+                chatroomAdapter.swapData(fromPos, toPos)
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                chatAdapter.removeData(viewHolder.layoutPosition)
+                chatroomAdapter.removeData(viewHolder.layoutPosition)
             }
             override fun onChildDraw(
                 c: Canvas,
@@ -125,7 +129,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         val momomeal = MomomealService.momomealAPI
         val mainActivity = requireActivity() as MainActivity
 
-        momomeal.getEnteredChatroom(mainActivity.user.idUser).enqueue(object: Callback<List<MyChat>>{
+        momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<MyChat>>{
             override fun onResponse(call: Call<List<MyChat>>, response: Response<List<MyChat>>) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
@@ -137,7 +141,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                     it.forEach{ mychat->
                        chatroomList.add(mychat.toChatroom())
                     }
-                    chatAdapter.replaceData(chatroomList)
+                    chatroomAdapter.replaceData(chatroomList)
                 }
             }
             override fun onFailure(call: Call<List<MyChat>>, t: Throwable) {

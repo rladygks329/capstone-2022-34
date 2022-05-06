@@ -2,9 +2,7 @@ package com.capstone.momomeal.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.capstone.momomeal.feature.Chat
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.capstone.momomeal.data.Chat
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 
