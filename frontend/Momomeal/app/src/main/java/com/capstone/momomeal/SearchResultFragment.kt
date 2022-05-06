@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.dto.SearchChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentSearchResultBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call

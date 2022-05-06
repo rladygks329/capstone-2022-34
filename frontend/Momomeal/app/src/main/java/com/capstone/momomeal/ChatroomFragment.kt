@@ -14,10 +14,8 @@ import com.capstone.momomeal.data.dto.MyChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Chatroom
-import com.capstone.momomeal.data.MyChat
 import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
-import com.capstone.momomeal.data.fakeUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -70,7 +68,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
 
                 val mainactivity = requireActivity() as MainActivity
                 momomeal.deleteChatroom(
-                    mainactivity.user.idUser, chatroomList[viewHolder.layoutPosition-1].idChatroom
+                    mainactivity.myInfo.idUser, chatroomList[viewHolder.layoutPosition-1].idChatroom
                 ).enqueue( object: Callback<HashMap<String, Int>>{
                     override fun onResponse(
                         call: Call<HashMap<String, Int>>,
@@ -146,7 +144,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
 
         val mainActivity = requireActivity() as MainActivity
 
-        momomeal.getEnteredChatroom(mainActivity.user.idUser).enqueue(object: Callback<List<MyChatRoomDTO>>{
+        momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<MyChatRoomDTO>>{
             override fun onResponse(call: Call<List<MyChatRoomDTO>>, response: Response<List<MyChatRoomDTO>>) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){

@@ -1,8 +1,8 @@
 package com.capstone.momomeal.api
 
+import com.capstone.momomeal.data.Chatroom
+import com.capstone.momomeal.data.LoginResponse
 import com.capstone.momomeal.data.dto.*
-import com.capstone.momomeal.data.dto.LoginResponse
-import com.capstone.momomeal.feature.Chatroom
 import retrofit2.Call
 import retrofit2.http.*
 

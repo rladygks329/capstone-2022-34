@@ -4,7 +4,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
-import java.io.Serializable
 
 @Parcelize
 data class User(
@@ -71,7 +70,7 @@ data class LoginResponse(
     @SerializedName("check") val check : Int
 )
 
-val fakeUser = User("김요한", 4, "rladygks329@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3))
+val fakeUser = User("김요한", 9, "rladygks329@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3))
 
 val fakeUsers = listOf(
     User("김미나", 1, "mina123@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3)),

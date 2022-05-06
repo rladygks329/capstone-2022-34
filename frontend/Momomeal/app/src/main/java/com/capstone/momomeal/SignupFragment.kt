@@ -9,10 +9,10 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.LoginResponse
 import com.capstone.momomeal.data.dto.RegisterForm
 import com.capstone.momomeal.databinding.FragmentSignupBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

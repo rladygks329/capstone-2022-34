@@ -1,6 +1,6 @@
 package com.capstone.momomeal.data.dto
 
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Chatroom
 import com.google.gson.annotations.SerializedName
 
 data class MyChatRoomDTO(

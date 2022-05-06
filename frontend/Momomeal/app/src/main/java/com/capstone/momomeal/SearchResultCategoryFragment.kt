@@ -65,7 +65,7 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
         return retView
     }
     private fun getCategoryChatRoom( s: String){
-        momomeal.getCategoryChatroom( selectedCategory, mainActivity.user.idUser, s)
+        momomeal.getCategoryChatroom( selectedCategory, mainActivity.myInfo.idUser, s)
             .enqueue( object : Callback<List<SearchChatRoomDTO>> {
             override fun onResponse(
                 call: Call<List<SearchChatRoomDTO>>,
