@@ -2,26 +2,37 @@ package com.capstone.momomeal
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.dto.SearchChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentSearchResultCategoryBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.Category
 import com.capstone.momomeal.feature.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBinding>(
     FragmentSearchResultCategoryBinding::inflate) {
 
     private val TAG = "SearchResultCategoryFragment"
-    val chatlist = arrayListOf<Chatroom>(
-        //test
-        Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, 1.1, listOf(7, 49, 89)),
-        Chatroom("밤 12시에 족발 먹을 사람 있니?", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, 1.1, listOf(3, 29, 69))
-    )
+    val momomeal = MomomealService.momomealAPI
+    val chatlist = arrayListOf<Chatroom>()
+    var selectedCategory = ""
+    val chatAdapter: ChatroomAdapter by lazy {
+        ChatroomAdapter(requireContext())
+    }
+    val mainActivity: MainActivity by lazy {
+       requireActivity() as MainActivity
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +44,15 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
         savedInstanceState: Bundle?
     ): View? {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        val title = arguments?.getString("category")
-        binding.fragmentSearchResultCategoryTitle.text = title
-        binding.fragmentSearchResultCategoryBack.setOnClickListener{
-            val activity = requireActivity() as MainActivity
-            activity.comebackHome()
-        }
-        val chatAdapter = ChatroomAdapter(requireContext())
+
+        selectedCategory = arguments?.getString("EngCategory")!!
+
+        binding.fragmentSearchResultCategoryTitle.text = arguments?.getString("category")
+        binding.fragmentSearchResultCategoryRecycle.adapter = chatAdapter
+        binding.fragmentSearchResultCategoryBack.setOnClickListener{ mainActivity.comebackHome() }
+        binding.fragmentSearchResultCategoryTimechip.setOnClickListener { getCategoryChatRoom("time") }
+        binding.fragmentSearchResultCategoryDistancechip.setOnClickListener { getCategoryChatRoom("distance") }
+
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = chatAdapter.getData(position)
@@ -48,8 +61,29 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
                 startActivity(intent)
             }
         })
-        binding.fragmentSearchResultCategoryRecycle.adapter = chatAdapter
-        chatAdapter.replaceData(chatlist)
+        //초기 값을 가져온다
+        getCategoryChatRoom("time")
         return retView
+    }
+    private fun getCategoryChatRoom( s: String){
+        momomeal.getCategoryChatroom( selectedCategory, mainActivity.user.idUser, s)
+            .enqueue( object : Callback<List<SearchChatRoomDTO>> {
+            override fun onResponse(
+                call: Call<List<SearchChatRoomDTO>>,
+                response: Response<List<SearchChatRoomDTO>>
+            ) {
+                Log.d("retrofit", response?.body().toString())
+                if(response.isSuccessful.not()){ return }
+                response.body()?.let{
+                    chatlist.clear()
+                    it.forEach{ SearchChatRoom-> chatlist.add(SearchChatRoom.toChatroom()) }
+                    chatAdapter.replaceData(chatlist)
+                }
+            }
+
+            override fun onFailure(call: Call<List<SearchChatRoomDTO>>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+        })
     }
 }

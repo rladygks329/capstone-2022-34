@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
     val user: User by lazy {
         intent.getSerializableExtra("user") as User
     }
+    var searchKeyword: String = ""
+    companion object {
+        private const val KEY_SELECTED_TAB = "selectedTab"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +64,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("main",user.name)
 
     }
-    companion object {
-        private const val KEY_SELECTED_TAB = "selectedTab"
-    }
+
 
 
     fun moveSearch(frag: Fragment){

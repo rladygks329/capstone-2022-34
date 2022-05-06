@@ -14,7 +14,6 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.feature.Category
@@ -48,6 +47,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         Chatroom("먹고 죽자", 128, Category.Korean, 3, "성북구 길음1동 삼부아파트", 3.9, 1.1, listOf(3, 29, 69)),
         Chatroom("중국집 시켜먹을 사람 컴", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, 1.1, listOf(3, 29, 69))
     )
+    val chatAdapter: ChatroomAdapter by lazy {
+        ChatroomAdapter(requireContext())
+    }
 
     // onCreate 이후 화면을 구성하는 코드
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,11 +63,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     ): View? {
         Log.d("system","home OncreateView is called")
         val retView = super.onCreateView(inflater, container, savedInstanceState)
+        mainActivity = (activity as MainActivity)
 
         binding.fragmentHomeEditAddress.setOnClickListener{
             startForResult.launch(Intent(requireActivity().application, MyAddressActivity::class.java))
         }
-        val chatAdapter = ChatroomAdapter(requireContext())
+        binding.fabHome.setOnClickListener {
+            createChatFragment.show(mainActivity.supportFragmentManager, createChatFragment.tag)
+        }
+        binding.fragmentHomeRecycler.adapter = chatAdapter
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 if(hasPoint){
@@ -79,13 +85,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
             }
         })
-        binding.fragmentHomeRecycler.adapter = chatAdapter
         chatAdapter.replaceData(chatroomList)
 
-        mainActivity = (activity as MainActivity)
-        binding.fabHome.setOnClickListener {
-            createChatFragment.show(mainActivity.supportFragmentManager, createChatFragment.tag)
-        }
         initSearch(binding.fragmentHomeSearchbar)
         initTable(binding.fragmentHomeCategoryTable)
         return retView
@@ -99,7 +100,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private fun initSearch(search: SearchView) {
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if(hasPoint){
+                if(hasPoint && query != null){
+                    val bundle = bundleOf("SearchKeyword" to query!!)
+                    scFrag.arguments = bundle
                     mainActivity.moveSearch(scFrag)
                 }else{
                     Toast.makeText(requireContext(), "주소를 설정해주세요", Toast.LENGTH_SHORT).show()
@@ -121,6 +124,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 tv.setOnClickListener{
                     if(hasPoint){
                         val bundle = bundleOf("category" to tv.text.toString())
+                        bundle.putString("EngCategory", it.tag.toString())
                         scCategoryFrag.arguments = bundle
                         mainActivity.moveSearch(scCategoryFrag)
                     }else{
@@ -134,7 +138,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     //프레그먼트의 hide show가 호출될 때, 불리는 함수
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if(hidden){
+        if(!hidden){
             //update data
         }
     }

@@ -23,6 +23,7 @@ import retrofit2.Response
 class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomBinding::inflate) {
     private val TAG = "ChatroomFragment"
 
+    val momomeal = MomomealService.momomealAPI
     val chatAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
     }
@@ -44,12 +45,9 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 startActivity(intent)
             }
         })
-        with(binding){
-            fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
-            fragmentChatroomRecycle.adapter = chatAdapter
-        }
+        binding.fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
+        binding.fragmentChatroomRecycle.adapter = chatAdapter
         updateMyChatRoom()
-        chatAdapter.replaceData(chatroomList)
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback (
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT
@@ -59,14 +57,31 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                val fromPos: Int = viewHolder.adapterPosition
-                val toPos: Int = target.adapterPosition
-                chatAdapter.swapData(fromPos, toPos)
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 chatAdapter.removeData(viewHolder.layoutPosition)
+
+                val mainactivity = requireActivity() as MainActivity
+                momomeal.deleteChatroom(
+                    mainactivity.user.idUser, chatroomList[viewHolder.layoutPosition-1].idChatroom
+                ).enqueue( object: Callback<HashMap<String, Int>>{
+                    override fun onResponse(
+                        call: Call<HashMap<String, Int>>,
+                        response: Response<HashMap<String, Int>>
+                    ) {
+                        if(response.isSuccessful.not()){
+                            return
+                        }
+                        Log.d("retrofit", response?.body().toString())
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, Int>>, t: Throwable) {
+                        Log.e("retrofit", t.toString())
+                    }
+                })
+
             }
             override fun onChildDraw(
                 c: Canvas,
@@ -111,6 +126,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
             }
         }
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.fragmentChatroomRecycle)
+
         return retview
     }
 
@@ -122,7 +138,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     }
 
     fun updateMyChatRoom(){
-        val momomeal = MomomealService.momomealAPI
+
         val mainActivity = requireActivity() as MainActivity
 
         momomeal.getEnteredChatroom(mainActivity.user.idUser).enqueue(object: Callback<List<MyChatRoomDTO>>{
@@ -133,7 +149,6 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 }
                 response.body()?.let{
                     chatroomList.clear()
-                    //body가 있다면 그안에는 bestSellerDto가 들어있을것
                     it.forEach{ mychat->
                        chatroomList.add(mychat.toChatroom())
                     }
