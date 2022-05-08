@@ -22,5 +22,6 @@ public class ChatRoomListDto {
         this.createdDate = chatRoom.getCreatedDate();
         this.distance = chatRoom.getDistance();
         this.category = chatRoom.getCategory().getName();
+
     }
 }

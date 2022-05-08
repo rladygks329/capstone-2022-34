@@ -26,13 +26,13 @@ public class ChatRoomListApiController {
 
 
     /**
-     * 사용자가 참여한 채팅방 제외한 해당 카테고리별 채팅방 데이터(dto) 전송 api
+     * 사용자가 참여한 채팅방 제외한 해당 카테고리별 채팅방 데이터 전송 api
      * @param categoryName 사용자가 선택한 카테고리명
      * @param memberId 현재 접속한 사용자 id
      * @param type 시간 순 or 거리 순
      *             시간 순 - 채팅 생성일이 느린 순으로
      *             거리 순 - 현재 사용자의 위치와 가까운 수령장소를 가진 채팅방이 우선순위
-     * @return 해당 카테고리에 해당하는 모든 채팅방 dto 리스트 Body에 담은 ResponseEntity
+     * @return 해당 카테고리에 해당하는 모든 채팅방 리스트 Body에 담은 ResponseEntity
      */
     @GetMapping("/chat-list/{categoryName}/{memberId}/{type}")
     public ResponseEntity returnCategoryList(@PathVariable String categoryName,
@@ -54,10 +54,9 @@ public class ChatRoomListApiController {
             chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
         }
 
-        // 해당 카테고리의 dto만 뽑음
-        List<ChatRoomListDto> result = chatRooms.stream()
+        // 해당 카테고리의 채팅방만 뽑음
+        List<ChatRoom> result = chatRooms.stream()
                                         .filter(c -> c.getCategory().equals(selectedCategory))
-                                        .map(c -> new ChatRoomListDto(c))
                                         .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -67,12 +66,12 @@ public class ChatRoomListApiController {
 
 
     /**
-     * 사용자가 참여한 채팅방 제외한 모든 채팅방 데이터(dto) 전송 api
+     * 사용자가 참여한 채팅방 제외한 모든 채팅방 데이터 전송 api
      * @param memberId 현재 접속한 사용자 id
      * @param type 시간 순 or 거리 순
      *             시간 순 - 채팅 생성일이 느린 순으로
      *             거리 순 - 현재 사용자의 위치와 가까운 수령장소를 가진 채팅방이 우선순위
-     * @return 모든 채팅방의 dto 리스트 Body에 담은 ResponseEntity
+     * @return 모든 채팅방 리스트 Body에 담은 ResponseEntity
      */
     @GetMapping("/chat-list/{memberId}/{type}")
     public ResponseEntity returnAllList(@PathVariable Long memberId,
@@ -87,12 +86,8 @@ public class ChatRoomListApiController {
             chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
         }
 
-        // 모든 채팅방의 dto만 뽑음
-        List<ChatRoomListDto> result = chatRooms.stream().map(c -> new ChatRoomListDto(c))
-                .collect(Collectors.toList());
-
         return ResponseEntity.status(HttpStatus.OK)
-                .body(result);
+                .body(chatRooms);
 
     }
 
@@ -149,9 +144,9 @@ public class ChatRoomListApiController {
 
 
     /**
-     * 사용자가 참여하고 있는 채팅방 id, title 리턴 (채팅 아이콘 클릭하면 나오는 화면)
+     * 사용자가 참여하고 있는 채팅방 데이터 리턴 (채팅 아이콘 클릭하면 나오는 화면)
      * @param memberId : 현재 사용자의 id
-     * @return ResponseEntity body : EnteredChatRoomListDto(chatroomId, title)
+     * @return ResponseEntity body : 사용자가 참여하고 있는 채팅방 리스트
      */
     @GetMapping("/entered-chat-list/{memberId}")
     public ResponseEntity returnEnteredChatRoomList(@PathVariable Long memberId){
@@ -176,7 +171,6 @@ public class ChatRoomListApiController {
 
         }
 
-
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
 
@@ -185,14 +179,25 @@ public class ChatRoomListApiController {
     @Data
     @NoArgsConstructor
     static class EnteredChatRoomListDto{
-        private Long chatRoomId;
+        private Long id;
+        private Category category;
         private String title;
-        private String category;
+        private Long hostId;
+        private int maxCapacity;
+        private String storeName;
+        private String pickupPlaceName;
+        private int distance;
 
         public EnteredChatRoomListDto(ChatRoom chatRoom) {
-            this.chatRoomId = chatRoom.getId();
+            this.id = chatRoom.getId();
+            this.category = chatRoom.getCategory();
             this.title = chatRoom.getTitle();
-            this.category = chatRoom.getCategory().getName();
+            this.hostId = chatRoom.getHostId();
+            this.maxCapacity = chatRoom.getMaxCapacity();
+            this.storeName = chatRoom.getStoreName();
+            this.pickupPlaceName = chatRoom.getPickupPlaceName();
+            this.distance = chatRoom.getDistance();
         }
     }
+
 }

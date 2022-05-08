@@ -91,52 +91,52 @@ public class ChatRoomApiController {
         }
     }
 
-    /**
-     * 사용자가 클릭한 채팅방 데이터(dto) 전송 api
-     * @param chatroomId 클릭한 채팅방 id
-     * @return 클릭한 채팅방 데이터(dto)
-     */
-    @GetMapping("/clicked-chat/{chatroomId}")
-    public ResponseEntity returnClickedChatRoomData(@PathVariable Long chatroomId){
-        // chatRoomId를 통해 해당 채팅방 데이터 조회
-        ChatRoom clickedChatRoom = chatRoomService.findById(chatroomId);
-
-        ClickedChatRoomDto result;
-
-
-        if (clickedChatRoom == null){   // 없는 채팅방 요청 -> 빈 값
-            result = new ClickedChatRoomDto();
-        } else{
-            result = new ClickedChatRoomDto(clickedChatRoom);   // 해당 chatRoom dto로 변환
-        }
-
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(result);
-
-    }
-
-    @Data
-    @NoArgsConstructor
-    static class ClickedChatRoomDto{
-        private Long chatRoomId;
-        private String title;
-        private String category;
-        private int maxCapacity;
-        private String storeName;
-        private String pickupPlaceName;
-        private int distance;
-
-        public ClickedChatRoomDto(ChatRoom chatRoom) {
-            this.chatRoomId = chatRoom.getId();
-            this.title = chatRoom.getTitle();
-            this.category = chatRoom.getCategory().getName();
-            this.maxCapacity = chatRoom.getMaxCapacity();
-            this.storeName = chatRoom.getStoreName();
-            this.pickupPlaceName = chatRoom.getPickupPlaceName();
-            this.distance = chatRoom.getDistance();
-        }
-
-    }
+//    /**
+//     * 사용자가 클릭한 채팅방 데이터(dto) 전송 api
+//     * @param chatroomId 클릭한 채팅방 id
+//     * @return 클릭한 채팅방 데이터(dto)
+//     */
+//    @GetMapping("/clicked-chat/{chatroomId}")
+//    public ResponseEntity returnClickedChatRoomData(@PathVariable Long chatroomId){
+//        // chatRoomId를 통해 해당 채팅방 데이터 조회
+//        ChatRoom clickedChatRoom = chatRoomService.findById(chatroomId);
+//
+//        ClickedChatRoomDto result;
+//
+//
+//        if (clickedChatRoom == null){   // 없는 채팅방 요청 -> 빈 값
+//            result = new ClickedChatRoomDto();
+//        } else{
+//            result = new ClickedChatRoomDto(clickedChatRoom);   // 해당 chatRoom dto로 변환
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(result);
+//
+//    }
+//
+//    @Data
+//    @NoArgsConstructor
+//    static class ClickedChatRoomDto{
+//        private Long chatRoomId;
+//        private String title;
+//        private String category;
+//        private int maxCapacity;
+//        private String storeName;
+//        private String pickupPlaceName;
+//        private int distance;
+//
+//        public ClickedChatRoomDto(ChatRoom chatRoom) {
+//            this.chatRoomId = chatRoom.getId();
+//            this.title = chatRoom.getTitle();
+//            this.category = chatRoom.getCategory().getName();
+//            this.maxCapacity = chatRoom.getMaxCapacity();
+//            this.storeName = chatRoom.getStoreName();
+//            this.pickupPlaceName = chatRoom.getPickupPlaceName();
+//            this.distance = chatRoom.getDistance();
+//        }
+//
+//    }
 
     /**
      * 호스트가 아닌 사용자의 채팅방 참여 응답 api
