@@ -103,4 +103,9 @@ public class ChatRoomService {
         return chatRoomRepository.findByKeyword(keyword);
     }
 
+    @Transactional
+    public List<ChatRoom> getSearchedAndExceptParticipatedChatRooms(String keyword, List<Long> participatedChatRoomIds){
+        return chatRoomRepository.findExceptParticipatedByKeyword(keyword, participatedChatRoomIds);
+    }
+
 }
