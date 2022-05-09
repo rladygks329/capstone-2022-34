@@ -222,31 +222,40 @@ public class ChatRoomApiController {
 
     }
 
+    /**
+     * 채팅방을 클릭하면, 해당 채팅방에 참여하고 있는 멤버의 정보 리턴하는 함수
+     * @param chatroomId  해당 채팅방의 id값
+     * @return  해당 채팅방에 참여하고 있는 멤버의 정보
+     */
 
     @GetMapping("/entered-chat-info/{chatroomId}")
-    public chatRoomInfoDto returnChatRoomInfo(@PathVariable Long chatroomId){
+    public ResponseEntity returnChatRoomInfo(@PathVariable Long chatroomId){
         ChatRoom chatRoom = chatRoomService.findById(chatroomId);
 
         // 참여중인 채팅방과 연관된 joinedChatRooms
         List<JoinedChatRoom> joinedChatRooms = joinedChatRoomService.findByChatRoom(chatRoom);
 
-        // 채팅방에 참여 중인 멤버의 이름 리스트
-        List <String> memberNameList = new ArrayList<>();
+        // 채팅방에 참여 중인 멤버의 데이터 리스트
+        List <chatRoomInfoDto> memberInfoList = new ArrayList<>();
 
-        // joinedChatRooms에서 멤버의 이름 뽑아낸다.
+        // joinedChatRooms에서 멤버 뽑아낸다.
         for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
-            memberNameList.add(joinedChatRoom.getMember().getRealName());
+            Members member = joinedChatRoom.getMember();
+            memberInfoList.add(new chatRoomInfoDto(member.getUser_id(), member.getRealName(),
+                    member.getImg()));
         }
 
-        return new chatRoomInfoDto(memberNameList, chatRoom.getStoreName(), chatRoom.getPickupPlaceName());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(memberInfoList);
 
     }
 
     @Data
     @AllArgsConstructor
     static class chatRoomInfoDto{
-        private List<String> memberNames = new ArrayList<>();
-        private String storeName;
-        private String pickupPlaceName;
+        private Long userId;
+        private String name;
+        private String img;
+
     }
 }
