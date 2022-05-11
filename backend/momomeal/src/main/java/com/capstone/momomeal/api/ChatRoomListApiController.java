@@ -52,21 +52,30 @@ public class ChatRoomListApiController {
             // 참여한 채팅 제외한 모든 채팅방
             List<ChatRoom> chatRooms = new ArrayList<>();
 
-            // type에 따라 채팅방 우선순위 달라짐
-            if (type.equals("time")){
-                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
-            } else{
-                // 거리 순
-                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
-            }
             double memberX = member.getX_value();
             double memberY = member.getY_value();
 
-            // 해당 카테고리의 채팅방만 뽑음
-            result = chatRooms.stream()
-                    .filter(c -> c.getCategory().equals(selectedCategory))
-                    .map(c -> new ChatRoomListDto(c, memberX, memberY))
-                    .collect(Collectors.toList());
+            // type에 따라 채팅방 우선순위 달라짐
+            if (type.equals("time")){
+                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
+
+                // 해당 카테고리의 채팅방만 뽑고 DTO로 변경
+                result = chatRooms.stream()
+                        .filter(c -> c.getCategory().equals(selectedCategory))
+                        .map(c -> new ChatRoomListDto(c, memberX, memberY))
+                        .collect(Collectors.toList());
+            } else{
+                // 거리 순
+                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
+
+                // 해당 카테고리의 채팅방만 뽑고, DTO로 변경하고, 거리 순으로 오름차순 정렬함
+                result = chatRooms.stream()
+                        .filter(c -> c.getCategory().equals(selectedCategory))
+                        .map(c -> new ChatRoomListDto(c, memberX, memberY))
+                        .sorted(Comparator.comparing(ChatRoomListDto::getDistance))
+                        .collect(Collectors.toList());
+            }
+
         }
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -100,11 +109,15 @@ public class ChatRoomListApiController {
 
             if (type.equals("time")){
                 chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
+
+                // 채팅방 DTO로 변경
                 result = chatRooms.stream()
                         .map(c -> new ChatRoomListDto(c, memberX, memberY))
                         .collect(Collectors.toList());
             } else{
                 chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
+
+                // 채팅방 DTO로 변경하고, 거리 순으로 오름차순 정렬함
                 result = chatRooms.stream()
                         .map(c -> new ChatRoomListDto(c, memberX, memberY))
                         .sorted(Comparator.comparing(ChatRoomListDto::getDistance))
@@ -133,7 +146,6 @@ public class ChatRoomListApiController {
                 Long participatedChatRoomId = joinedChatRoom.getChatRoom().getId();
                 participatedChatRoomIds.add(participatedChatRoomId);
             }   // end
-
 
 
             // 참여하고 있는 채팅방이 없을 때 -> 전체 채팅방 가져옴
