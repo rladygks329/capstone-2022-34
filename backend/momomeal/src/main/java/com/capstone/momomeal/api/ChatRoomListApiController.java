@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -26,38 +27,47 @@ public class ChatRoomListApiController {
 
 
     /**
-     * 사용자가 참여한 채팅방 제외한 해당 카테고리별 채팅방 데이터 전송 api
+     * 사용자가 참여한 채팅방 제외한 해당 카테고리별 채팅방 데이터(DTO) 전송 api
      * @param categoryName 사용자가 선택한 카테고리명
      * @param memberId 현재 접속한 사용자 id
      * @param type 시간 순 or 거리 순
      *             시간 순 - 채팅 생성일이 느린 순으로
      *             거리 순 - 현재 사용자의 위치와 가까운 수령장소를 가진 채팅방이 우선순위
-     * @return 해당 카테고리에 해당하는 모든 채팅방 리스트 Body에 담은 ResponseEntity
+     * @return 해당 카테고리에 해당하는 모든 채팅방 DTO 리스트 Body에 담은 ResponseEntity
      */
     @GetMapping("/chat-list/{categoryName}/{memberId}/{type}")
     public ResponseEntity returnCategoryList(@PathVariable String categoryName,
                                              @PathVariable Long memberId,
                                              @PathVariable String type){
+
+        List<ChatRoomListDto> result = new ArrayList<>();
+
         // string -> Category enum 타입 변환
         TransStringToEnum te = new TransStringToEnum();
         Category selectedCategory = te.transferStringToEnum(categoryName);
 
+        Optional<Members> getMember = memberService.findById(memberId);
+        if (getMember.isPresent()){
+            Members member = getMember.get();
+            // 참여한 채팅 제외한 모든 채팅방
+            List<ChatRoom> chatRooms = new ArrayList<>();
 
-        // 참여한 채팅 제외한 모든 채팅방
-        List<ChatRoom> chatRooms = new ArrayList<>();
+            // type에 따라 채팅방 우선순위 달라짐
+            if (type.equals("time")){
+                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
+            } else{
+                // 거리 순
+                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
+            }
+            double memberX = member.getX_value();
+            double memberY = member.getY_value();
 
-        // type에 따라 채팅방 우선순위 달라짐
-        if (type.equals("time")){
-            chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
-        } else{
-            // 시간 순
-            chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
+            // 해당 카테고리의 채팅방만 뽑음
+            result = chatRooms.stream()
+                    .filter(c -> c.getCategory().equals(selectedCategory))
+                    .map(c -> new ChatRoomListDto(c, memberX, memberY))
+                    .collect(Collectors.toList());
         }
-
-        // 해당 카테고리의 채팅방만 뽑음
-        List<ChatRoom> result = chatRooms.stream()
-                                        .filter(c -> c.getCategory().equals(selectedCategory))
-                                        .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
@@ -66,12 +76,12 @@ public class ChatRoomListApiController {
 
 
     /**
-     * 사용자가 참여한 채팅방 제외한 모든 채팅방 데이터 전송 api
+     * 사용자가 참여한 채팅방 제외한 모든 채팅방 데이터(DTO) 전송 api
      * @param memberId 현재 접속한 사용자 id
      * @param type 시간 순 or 거리 순
      *             시간 순 - 채팅 생성일이 느린 순으로
      *             거리 순 - 현재 사용자의 위치와 가까운 수령장소를 가진 채팅방이 우선순위
-     * @return 모든 채팅방 리스트 Body에 담은 ResponseEntity
+     * @return 모든 채팅방 DTO 리스트 Body에 담은 ResponseEntity
      */
     @GetMapping("/chat-list/{memberId}/{type}")
     public ResponseEntity returnAllList(@PathVariable Long memberId,
@@ -80,15 +90,31 @@ public class ChatRoomListApiController {
         // 모든 채팅방 가져옴
         // 참여한 채팅 제외한 모든 채팅방
         List<ChatRoom> chatRooms = new ArrayList<>();
-        if (type.equals("time")){
-            chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
-        } else{
-            chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
+        List<ChatRoomListDto> result = new ArrayList<>();
+        Optional<Members> getMember = memberService.findById(memberId);
+        if (getMember.isPresent()){
+            Members member = getMember.get();
+
+            double memberX = member.getX_value();
+            double memberY = member.getY_value();
+
+            if (type.equals("time")){
+                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "time");
+                result = chatRooms.stream()
+                        .map(c -> new ChatRoomListDto(c, memberX, memberY))
+                        .collect(Collectors.toList());
+            } else{
+                chatRooms = getChatRoomsExceptParticipatedCharRooms(memberId, "distance");
+                result = chatRooms.stream()
+                        .map(c -> new ChatRoomListDto(c, memberX, memberY))
+                        .sorted(Comparator.comparing(ChatRoomListDto::getDistance))
+                        .collect(Collectors.toList());
+            }
+
+
         }
-
         return ResponseEntity.status(HttpStatus.OK)
-                .body(chatRooms);
-
+                .body(result);
     }
 
     // 참여한 채팅 제외한 모든 채팅방 리턴
@@ -116,7 +142,7 @@ public class ChatRoomListApiController {
                     chatRooms = chatRoomService.findAllOrderByTime();
                 } else {
                     // 거리 순 정렬
-                    chatRooms = chatRoomService.findAllOrderByDistance();
+                    chatRooms = chatRoomService.findAll();
                 }
 
             } else{     // 참여하고 있는 채팅방이 있을 때
@@ -125,7 +151,7 @@ public class ChatRoomListApiController {
                     chatRooms = chatRoomService.findExceptParticipatedChatRoomOrderByTime(participatedChatRoomIds);
                 } else{
                     // 거리 순 정렬
-                    chatRooms = chatRoomService.findExceptParticipatedChatRoomOrderByDistance(participatedChatRoomIds);
+                    chatRooms = chatRoomService.findExceptParticipatedChatRoom(participatedChatRoomIds);
                 }
 
             }
@@ -144,28 +170,31 @@ public class ChatRoomListApiController {
 
 
     /**
-     * 사용자가 참여하고 있는 채팅방 데이터 리턴 (채팅 아이콘 클릭하면 나오는 화면)
+     * 사용자가 참여하고 있는 채팅방 데이터(DTO) 리턴 (채팅 아이콘 클릭하면 나오는 화면)
      * @param memberId : 현재 사용자의 id
-     * @return ResponseEntity body : 사용자가 참여하고 있는 채팅방 리스트
+     * @return ResponseEntity body : 사용자가 참여하고 있는 채팅방 DTO 리스트
      */
     @GetMapping("/entered-chat-list/{memberId}")
     public ResponseEntity returnEnteredChatRoomList(@PathVariable Long memberId){
-        List<EnteredChatRoomListDto> result = new ArrayList<>();
+        List<ChatRoomListDto> result = new ArrayList<>();
 
         Optional<Members> getMember = memberService.findById(memberId);
         if (getMember.isPresent()){
             Members member = getMember.get();
             List<JoinedChatRoom> joinedChatRooms = member.getJoinedChatRooms();
-
             List<ChatRoom> chatRooms = new ArrayList<>();
+
             for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
                 chatRooms.add(joinedChatRoom.getChatRoom());
             }
 
-            if (chatRooms.size() > 1) { // 참여하고 있는 채팅방이 있을 때
+            if (chatRooms.size() > 0) { // 참여하고 있는 채팅방이 있을 때
+                double memberX = member.getX_value();
+                double memberY = member.getY_value();
+
                 // 참여하고 있는 채팅방 제외한 모든 채팅방 가져옴
                 result = chatRooms.stream()
-                        .map(c -> new EnteredChatRoomListDto(c))
+                        .map(c -> new ChatRoomListDto(c, memberX, memberY))
                         .collect(Collectors.toList());
             }    // 참여하고 있는 채팅방이 없을 때 -> 빈 객체
 
@@ -174,30 +203,6 @@ public class ChatRoomListApiController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(result);
 
-    }
-
-    @Data
-    @NoArgsConstructor
-    static class EnteredChatRoomListDto{
-        private Long id;
-        private Category category;
-        private String title;
-        private Long hostId;
-        private int maxCapacity;
-        private String storeName;
-        private String pickupPlaceName;
-        private int distance;
-
-        public EnteredChatRoomListDto(ChatRoom chatRoom) {
-            this.id = chatRoom.getId();
-            this.category = chatRoom.getCategory();
-            this.title = chatRoom.getTitle();
-            this.hostId = chatRoom.getHostId();
-            this.maxCapacity = chatRoom.getMaxCapacity();
-            this.storeName = chatRoom.getStoreName();
-            this.pickupPlaceName = chatRoom.getPickupPlaceName();
-            this.distance = chatRoom.getDistance();
-        }
     }
 
 }

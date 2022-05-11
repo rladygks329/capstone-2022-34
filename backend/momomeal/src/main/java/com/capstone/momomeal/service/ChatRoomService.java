@@ -35,14 +35,15 @@ public class ChatRoomService {
      * @return 생성한 채팅방(ChatRoom) id값
      */
     @Transactional
-    public Long createChatRoom(Members member, ChatRoomRequestDTO requestDTO, int distance){
+    public Long createChatRoom(Members member, ChatRoomRequestDTO requestDTO){
         // string -> Category enum 타입 변환
         TransStringToEnum te = new TransStringToEnum();
         Category category = te.transferStringToEnum(requestDTO.getCategoryName());
 
         // 채팅방 생성
         ChatRoom chatRoom = new ChatRoom(category, requestDTO.getTitle(), requestDTO.getHostId(),
-                requestDTO.getMaxCapacity(), requestDTO.getStoreName(), requestDTO.getPickupPlaceName(), distance);
+                requestDTO.getMaxCapacity(), requestDTO.getStoreName(), requestDTO.getPickupPlaceName(),
+                requestDTO.getPickupPlaceXCoord(), requestDTO.getPickupPlaceYCoord());
 
         save(chatRoom);
 
