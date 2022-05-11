@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capstone.momomeal.feature.Event
 import com.capstone.momomeal.feature.LoginRepository
-import com.capstone.momomeal.feature.User
+import com.capstone.momomeal.data.User
 import kotlinx.coroutines.launch
 
 

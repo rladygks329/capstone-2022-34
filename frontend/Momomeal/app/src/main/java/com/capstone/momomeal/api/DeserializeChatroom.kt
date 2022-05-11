@@ -1,6 +1,6 @@
 package com.capstone.momomeal.api
 
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Chatroom
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
