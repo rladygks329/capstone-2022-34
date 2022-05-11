@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="32dp"
+    android:background="@color/white">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/fragment_research_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:contentInsetStart="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
+                android:text="설문조사"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/fragment_research_description1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="관심있는 카테고리 형식을 선택하세요"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_research_toolbar" />
+
+    <TextView
+        android:id="@+id/fragment_research_description2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="최소 3개, 최대 5개까지 선택할 수 있습니다."
+        app:layout_constraintTop_toBottomOf="@+id/fragment_research_description1" />
+
+    <TableLayout
+        android:id="@+id/fragment_research_table"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_research_submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_research_description2">
+
+        <TableRow
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="한식"
+                android:textOff="한식"
+                android:src= "@drawable/ic_category_korean"
+                app:drawableStartCompat="@drawable/ic_category_korean"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Korean"/>
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="중식"
+                android:textOff="중식"
+                app:drawableStartCompat="@drawable/ic_category_chinese"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Chinese"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="일식"
+                android:textOff="일식"
+                app:drawableStartCompat="@drawable/ic_category_japanese"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Japanese"/>
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="양식"
+                android:textOff="양식"
+                app:drawableStartCompat="@drawable/ic_category_western"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Western"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="패스트푸드"
+                android:textOff="패스트푸드"
+                app:drawableStartCompat="@drawable/ic_category_fastfood"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Fastfood"/>
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="치킨"
+                android:textOff="치킨"
+                app:drawableStartCompat="@drawable/ic_category_chicken"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Chicken"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="피자"
+                android:textOff="피자"
+                app:drawableStartCompat="@drawable/ic_category_pizza"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Pizza"/>
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="분식"
+                android:textOff="분식"
+                app:drawableStartCompat="@drawable/ic_category_snackbar"
+                app:drawableTint="@color/orange_deep"
+                android:tag="Snackbar"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="족발/보쌈"
+                android:textOff="족발/보쌈"
+                app:drawableStartCompat="@drawable/ic_category_boiledpork"
+                app:drawableTint="@color/orange_deep"
+                android:tag="BoiledPork"/>
+            <ToggleButton
+                style="@style/researchTv"
+                android:textOn="카페/디저트"
+                android:textOff="카페/디저트"
+                app:drawableStartCompat="@drawable/ic_category_cafe_desert"
+                app:drawableTint="@color/orange_deep"
+                android:tag="CafeAndDesert"/>
+        </TableRow>
+        <TableRow
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:weightSum="1">
+            <ToggleButton
+                style="@style/researchTv.odd"
+                android:layout_weight="0.48"
+                android:textOn="야식"
+                android:textOff="야식"
+                app:drawableStartCompat="@drawable/ic_category_midnightsnack"
+                app:drawableTint="@color/orange_deep"
+                android:tag="MidnightSnack"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/fragment_research_submit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_orange_deep_radius"
+        android:text="제출하기"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

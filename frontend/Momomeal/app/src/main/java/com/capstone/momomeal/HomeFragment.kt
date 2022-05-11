@@ -28,7 +28,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val createChatFragment = CreateChatFragment()
     private val scFrag = SearchResultFragment()
     private val scCategoryFrag = SearchResultCategoryFragment()
-    private var hasPoint = false
+    private val researchFragment = ResearchFragment()
+    private var hasPoint = true
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
             if (Address.resultCode == Activity.RESULT_OK) {
