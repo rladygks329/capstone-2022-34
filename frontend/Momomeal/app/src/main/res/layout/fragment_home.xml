@@ -59,6 +59,7 @@
                 android:textColor="@color/black"
                 android:textSize="11sp"
                 android:text="한식"
+                android:tag="Korean"
                 android:layout_weight="0.2"
                 />
             <TextView

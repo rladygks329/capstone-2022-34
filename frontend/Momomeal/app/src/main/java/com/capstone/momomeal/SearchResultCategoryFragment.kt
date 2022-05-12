@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.databinding.FragmentSearchResultCategoryBinding
-import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Category
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Category
+import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 
 class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBinding>(
