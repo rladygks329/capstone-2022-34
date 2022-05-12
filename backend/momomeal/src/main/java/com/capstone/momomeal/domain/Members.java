@@ -156,6 +156,10 @@ public class Members {
         this.user_rate = user_rate;
     }
 
+    public void setX_value(double x_value) {this.x_value = x_value;}
+
+    public void setY_value(double y_value) {this.y_value = y_value; }
+
     public void setJoinedChatRooms(final List<JoinedChatRoom> joinedChatRooms) {
         this.joinedChatRooms = joinedChatRooms;
     }
@@ -198,6 +202,10 @@ public class Members {
     public Float getUser_rate() {
         return this.user_rate;
     }
+
+    public double getX_value() {return x_value; }
+
+    public double getY_value() {return y_value; }
 
     public List<JoinedChatRoom> getJoinedChatRooms() {
         return this.joinedChatRooms;
