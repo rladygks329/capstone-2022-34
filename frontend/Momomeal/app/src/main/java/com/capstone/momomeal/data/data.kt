@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
+import java.util.*
 
 @Parcelize
 data class User(
@@ -36,17 +37,30 @@ data class User_light(
 
 @Parcelize
 data class Chatroom (
-    val nameRoom: String? = "",
-    val idChatroom: Int = 0,
-    val category: Category? = Category.Chicken,
+    val idChatroom: Long = 0,
+    val category: Category = Category.Chicken,
+    val nameRoom: String = "",
     val maxCapacity: Int? = 4,
-    val namePickupPlace: String? ="",
-    val nameStore:String? = "",
+    val nameStore: String = "",
+    val namePickupPlace: String ="",
+    val createdDate: LocalDateTime = LocalDateTime.now(),
     val coordPickupPlaceX: Double? = 0.0,
     val coordPickupPlaceY: Double? = 0.0,
     val listUid: List<Int>? = listOf(),
 ) : Parcelable
-
+/*
+"id": 33,
+"category": "WESTERN",
+"title": "파스타 먹을 사람",
+"hostId": 3,----
+"maxCapacity": 4,
+"storeName": "빠네 파스타 전문점",
+"pickupPlaceName": "스파오티",
+"distance": 400843,
+"createdDate": "2022-05-12T18:43:28.660192"
+}
+]
+* */
 data class Review (
     val idReview: Int = 0,
     val rateSign: Rate,

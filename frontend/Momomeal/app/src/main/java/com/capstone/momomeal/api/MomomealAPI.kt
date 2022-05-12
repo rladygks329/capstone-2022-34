@@ -17,7 +17,7 @@ interface MomomealAPI {
         @Path("categoryName") categoryName: String,
         @Path("memberId") memberId: Int,
         @Path("type") type:String
-    ): Call<List<SearchChatRoomDTO>>
+    ): Call<List<Chatroom>>
 
     @GET("/chat-list/{memberId}/{type}")
     fun getAllChatroom(
@@ -32,24 +32,26 @@ interface MomomealAPI {
 
     @GET("/chat/{memberId}/{chatroomId}")
     fun enterChatroom(
-
-    )
+        @Path("memberId") memberId: Int,
+        @Path("chatroomId") chatroomId: Long
+    ): Call<HashMap<String, Int>>
 
     @GET("/entered-chat-list/{memberId}")
     fun getEnteredChatroom(
        @Path("memberId") memberId:Int
-   ): Call<List<MyChatRoomDTO>>
+   ): Call<List<Chatroom>>
 
     @DELETE("/deleted-chat/{memberId}/{chatroomId}")
     fun deleteChatroom(
        @Path("memberId") memberId: Int,
-       @Path("chatroomId") chatroomId: Int
+       @Path("chatroomId") chatroomId: Long
     ): Call<HashMap<String, Int>>
 
-    @GET("/searched-chat-list/{keyword}")
+    @GET("/searched-chat-list/{keyword}/{memberId}")
     fun getSearchChatroom(
-       @Path("keyword") keyword:String
-   ): Call<List<SearchChatRoomDTO>>
+       @Path("keyword") keyword:String,
+       @Path("memberId") memberId: Int
+   ): Call<List<Chatroom>>
 
     @GET("/entered-chat-info/{chatroomId}")
     fun getEnteredChatInfo(

@@ -41,8 +41,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             }
         }
     val chatroomList = arrayListOf<Chatroom>(
-        //test
-        Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", "교촌",3.3, 1.1, listOf(7, 49, 89)),
     )
     val chatAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())

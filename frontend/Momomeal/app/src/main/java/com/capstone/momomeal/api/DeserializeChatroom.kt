@@ -1,5 +1,7 @@
 package com.capstone.momomeal.api
 
+import android.util.Log
+import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
@@ -16,41 +18,46 @@ class DeserializeChatroom : JsonDeserializer<Chatroom> {
     ): Chatroom {
         val jsonObject = json?.asJsonObject ?: throw NullPointerException("Response Json String is null")
 
-        val id = jsonObject["id"].asInt
+        val id = jsonObject["id"].asLong
         val title = jsonObject["title"].asString
         val pickupPlaceName = jsonObject["pickupPlaceName"].asString
+        val maxCapacity = jsonObject["maxCapacity"].asInt
+        val storeName = jsonObject["storeName"].asString
         val createdDate : LocalDateTime = LocalDateTime.parse(
             jsonObject["createdDate"].asString,
-            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
         ) // Change to LocalDateTime(str to ldt)
-        val pickupPlaceXCoord = jsonObject["pickupPlaceXCoord"].asDouble
-        val pickupPlaceYCoord = jsonObject["pickupPlaceYCoord"].asDouble
+
+        val chatroomCategory : Category
+        val category = jsonObject["category"].asString
+        when(category){
+            "CHICKEN"-> chatroomCategory = Category.Chicken
+            "PIZZA"-> chatroomCategory = Category.Pizza
+            "KOREAN"-> chatroomCategory = Category.Korean
+            "CHINESE"-> chatroomCategory = Category.Chinese
+            "JAPANESE"-> chatroomCategory = Category.Japanese
+            "WESTERN"-> chatroomCategory = Category.Western
+            "SNACKBAR"-> chatroomCategory = Category.Snackbar
+            "MIDNIGHTSNACK"-> chatroomCategory = Category.MidnightSnack
+            "BOILEDPORK"-> chatroomCategory = Category.BoiledPork
+            "CAFEANDDESERT"-> chatroomCategory = Category.CafeAndDesert
+            "FASTFOOD"-> chatroomCategory = Category.Fastfood
+            else -> chatroomCategory = Category.Chicken
+        }
         return Chatroom(
-            nameRoom = title,
-            idChatroom = id,
-            namePickupPlace = pickupPlaceName,
-            coordPickupPlaceX = pickupPlaceXCoord,
-            coordPickupPlaceY = pickupPlaceYCoord
+            id, chatroomCategory, title, maxCapacity, storeName, pickupPlaceName, createdDate
         )
     }
 }
 /*
-* [
-    {
-		"id": 1L,
-        "title": "test1",
-        "pickupPlaceName": "국민대학교",
-        "createdDate": "2022-03-15T01:33:41",
-		"pickupPlaceXCoord": 37.6,
-		"pickupPlaceYCoord": 126.9
-    },
-    {
-		"id": 2L,
-        "title": "test2",
-        "pickupPlaceName": "국민대학교 기숙사 후문",
-        "createdDate": "2022-03-15T14:59:03",
-		"pickupPlaceXCoord": 37.6,
-		"pickupPlaceYCoord": 126.9
-    }
-* ]
-* */
+{
+    id": 33,
+    "category": "WESTERN",
+    "title": "파스타 먹을 사람",
+    "hostId": 3,
+    "maxCapacity": 4,
+    "storeName": "빠네 파스타 전문점",
+    "pickupPlaceName": "스파오티",
+    "createdDate": "2022-05-12T18:43:28.660192"
+}
+*/

@@ -1,19 +1,14 @@
 package com.capstone.momomeal
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
-import com.capstone.momomeal.data.dto.SearchChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentSearchResultCategoryBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call
@@ -24,10 +19,8 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
     FragmentSearchResultCategoryBinding::inflate) {
 
     private val TAG = "SearchResultCategoryFragment"
-    private val chatInfoFrag = ChatInfoFragment()
 
     val momomeal = MomomealService.momomealAPI
-    val chatlist = arrayListOf<Chatroom>()
     var selectedCategory = ""
     val chatAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
@@ -58,6 +51,7 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
 
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
+                val chatInfoFrag = ChatInfoFragment()
                 val item = chatAdapter.getData(position)
                 chatInfoFrag.arguments = bundleOf(
                     "User" to mainActivity.myInfo!!,
@@ -72,21 +66,19 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
     }
     private fun getCategoryChatRoom( s: String){
         momomeal.getCategoryChatroom( selectedCategory, mainActivity.myInfo.idUser, s)
-            .enqueue( object : Callback<List<SearchChatRoomDTO>> {
+            .enqueue( object : Callback<List<Chatroom>> {
             override fun onResponse(
-                call: Call<List<SearchChatRoomDTO>>,
-                response: Response<List<SearchChatRoomDTO>>
+                call: Call<List<Chatroom>>,
+                response: Response<List<Chatroom>>
             ) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){ return }
                 response.body()?.let{
-                    chatlist.clear()
-                    it.forEach{ SearchChatRoom-> chatlist.add(SearchChatRoom.toChatroom()) }
-                    chatAdapter.replaceData(chatlist)
+                    chatAdapter.replaceData(ArrayList<Chatroom>(it))
                 }
             }
 
-            override fun onFailure(call: Call<List<SearchChatRoomDTO>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
                 Log.e("retrofit", t.toString())
             }
         })
