@@ -28,6 +28,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val createChatFragment = CreateChatFragment()
     private val scFrag = SearchResultFragment()
     private val scCategoryFrag = SearchResultCategoryFragment()
+    private val chatInfoFrag = ChatInfoFragment()
     private val researchFragment = ResearchFragment()
     private var hasPoint = true
     private val startForResult =
@@ -41,13 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     val chatroomList = arrayListOf<Chatroom>(
         //test
-        Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, 1.1, listOf(7, 49, 89)),
-        Chatroom("밤 12시에 족발 먹을 사람 있니?", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("분식 먹을 돼지만", 128, Category.Snackbar, 3, "먹자골목", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("스타벅스 새로나온 케이크 먹자", 128, Category.CafeAndDesert, 3, "강남역 4번출구", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("배고픈데 잠이 오니?", 128, Category.Pizza, 3, "마포대표 근처", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("먹고 죽자", 128, Category.Korean, 3, "성북구 길음1동 삼부아파트", 3.9, 1.1, listOf(3, 29, 69)),
-        Chatroom("중국집 시켜먹을 사람 컴", 128, Category.Chinese, 3, "인천 차이나타운", 3.9, 1.1, listOf(3, 29, 69))
+        Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", "교촌",3.3, 1.1, listOf(7, 49, 89)),
     )
     val chatAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
@@ -78,13 +73,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             override fun onClick(v: View, position: Int) {
                 if(hasPoint){
                     val item = chatAdapter.getData(position)
-                    val intent = Intent(activity, ChatActivity::class.java)
-                    intent.putExtra("id", item.idChatroom)
-                    startActivity(intent)
+                    chatInfoFrag.arguments = bundleOf(
+                        "User" to mainActivity.myInfo!!,
+                        "Chatroom" to item
+                    )
+                    chatInfoFrag.show(mainActivity.supportFragmentManager, chatInfoFrag.tag)
                 }else{
                     Toast.makeText(requireContext(), "주소를 설정해주세요", Toast.LENGTH_SHORT).show()
                 }
-
             }
         })
         chatAdapter.replaceData(chatroomList)

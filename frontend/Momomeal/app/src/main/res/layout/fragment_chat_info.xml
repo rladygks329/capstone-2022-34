@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -132,7 +133,7 @@
             app:layout_constraintTop_toBottomOf="@+id/framgent_chat_info_max" />
 
         <TextView
-            android:id="@+id/framgent_chat_info_pickupp"
+            android:id="@+id/framgent_chat_info_pickup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -153,14 +154,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_chat_info_text" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/fragment_chat_info_enter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="32dp"
         android:fontFamily="@font/roboto_black"
+        android:background="@drawable/bg_orange_deep_radius"
         android:text="입장하기"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

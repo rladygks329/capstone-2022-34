@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.dto.SearchChatRoomDTO
@@ -22,6 +24,8 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
     FragmentSearchResultCategoryBinding::inflate) {
 
     private val TAG = "SearchResultCategoryFragment"
+    private val chatInfoFrag = ChatInfoFragment()
+
     val momomeal = MomomealService.momomealAPI
     val chatlist = arrayListOf<Chatroom>()
     var selectedCategory = ""
@@ -55,9 +59,11 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = chatAdapter.getData(position)
-                val intent = Intent(activity, ChatActivity::class.java)
-                intent.putExtra("id", item.idChatroom)
-                startActivity(intent)
+                chatInfoFrag.arguments = bundleOf(
+                    "User" to mainActivity.myInfo!!,
+                    "Chatroom" to item
+                )
+                chatInfoFrag.show(mainActivity.supportFragmentManager, chatInfoFrag.tag)
             }
         })
         //초기 값을 가져온다

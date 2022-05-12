@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.dto.SearchChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentSearchResultBinding
@@ -22,9 +23,13 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
 
     private val TAG = "SearchResultFragment"
     private val momomeal = MomomealService.momomealAPI
+    private val chatInfoFrag = ChatInfoFragment()
     val chatlist = arrayListOf<Chatroom>()
     val chatAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
+    }
+    val mainActivity: MainActivity by lazy {
+        requireActivity() as MainActivity
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +48,11 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = chatAdapter.getData(position)
-                val intent = Intent(activity, ChatActivity::class.java)
-                intent.putExtra("id", item.idChatroom)
-                startActivity(intent)
+                chatInfoFrag.arguments = bundleOf(
+                    "User" to mainActivity.myInfo!!,
+                    "Chatroom" to item
+                )
+                chatInfoFrag.show(mainActivity.supportFragmentManager, chatInfoFrag.tag)
             }
         })
         binding.fragmentSearchResultBack.setOnClickListener{

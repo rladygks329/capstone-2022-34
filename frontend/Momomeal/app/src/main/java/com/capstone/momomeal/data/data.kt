@@ -13,7 +13,11 @@ data class User(
     val profileImgUrl: String = "",
     val totalRate: Int = 50,
     val listReview: List<Int> = listOf()
-) : Parcelable
+) : Parcelable{
+    fun trans_User_light() : User_light{
+        return User_light(name, idUser, email, profileImgUrl)
+    }
+}
 
 @Parcelize
 data class User_light(
@@ -37,6 +41,7 @@ data class Chatroom (
     val category: Category? = Category.Chicken,
     val maxCapacity: Int? = 4,
     val namePickupPlace: String? ="",
+    val nameStore:String? = "",
     val coordPickupPlaceX: Double? = 0.0,
     val coordPickupPlaceY: Double? = 0.0,
     val listUid: List<Int>? = listOf(),
@@ -58,10 +63,18 @@ enum class Rate {
     Good, Bad,
 }
 
-enum class Category {
-    Chicken, Pizza, Korean, Chinese, Japanese,
-    Western, Snackbar, MidnightSnack, BoiledPork, CafeAndDesert,
-    Fastfood,
+enum class Category(val KoreanName: String) {
+    Chicken("치킨"),
+    Pizza("피자"),
+    Korean("한식"),
+    Chinese("중식"),
+    Japanese("일식"),
+    Western("양식"),
+    Snackbar("분식"),
+    MidnightSnack("야식"),
+    BoiledPork("족발/보쌈"),
+    CafeAndDesert("카페/디저트"),
+    Fastfood("패스트푸드")
 }
 
 
@@ -76,9 +89,4 @@ val fakeUsers = listOf(
     User("김미나", 1, "mina123@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3)),
     User("조자현", 2, "ssibo12@gmail.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 40, listOf(1,2,3)),
     User("유비", 3, "poskei@nate.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 60, listOf(1,2,3))
-)
-
-val fakeChatrooms = listOf(
-    Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, 1.1, listOf(7, 49, 89)),
-    Chatroom("밤 12시에 족발 먹을 사람 있니?", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, 1.1, listOf(3, 29, 69))
 )
