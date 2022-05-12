@@ -62,7 +62,6 @@ class ChatActivity : AppCompatActivity() {
         }
 
         // Listeners in drawer
-        binding.nvChatNavigation.
         binding.nvChatNavigation.btnCloseDrawer.setOnClickListener {
             binding.root.closeDrawers()
         }

@@ -4,7 +4,6 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
-import java.io.Serializable
 
 @Parcelize
 data class User(
@@ -65,24 +64,13 @@ enum class Category {
     Fastfood,
 }
 
-data class MyChat(
-    @SerializedName("chatRoomId") val id : Int,
-    @SerializedName("title") val title : String
-){
-    fun toChatroom() : Chatroom {
-        return Chatroom(nameRoom = title, idChatroom = id)
-    }
-}
 
-data class LoginForm(
-    @SerializedName("email") val email: String,
-    @SerializedName("pwd") val password: String
-)
+
 data class LoginResponse(
     @SerializedName("check") val check : Int
 )
 
-val fakeUser = User("김요한", 4, "rladygks329@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3))
+val fakeUser = User("김요한", 9, "rladygks329@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3))
 
 val fakeUsers = listOf(
     User("김미나", 1, "mina123@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3)),

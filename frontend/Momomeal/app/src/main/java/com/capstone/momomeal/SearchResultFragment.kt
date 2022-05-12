@@ -2,24 +2,30 @@ package com.capstone.momomeal
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.dto.SearchChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentSearchResultBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentSearchResultBinding::inflate) {
 
     private val TAG = "SearchResultFragment"
-    val chatlist = arrayListOf<Chatroom>(
-        //test
-        Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, 1.1, listOf(7, 49, 89)),
-        Chatroom("밤 12시에 족발 먹을 사람 있니?", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, 1.1,  listOf(3, 29, 69))
-    )
+    private val momomeal = MomomealService.momomealAPI
+    val chatlist = arrayListOf<Chatroom>()
+    val chatAdapter: ChatroomAdapter by lazy {
+        ChatroomAdapter(requireContext())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +36,10 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
         savedInstanceState: Bundle?
     ): View? {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        binding.fragmentSearchResultBack.setOnClickListener{
-            val activity = requireActivity() as MainActivity
-            activity.comebackHome()
-        }
-        val chatAdapter = ChatroomAdapter(requireContext())
+        var SearchKeyword = arguments?.getString("SearchKeyword")
+        getSearchedChatRoom(SearchKeyword!!)
+
+        binding.fragmentSearchResultRecycle.adapter = chatAdapter
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = chatAdapter.getData(position)
@@ -43,8 +48,42 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
                 startActivity(intent)
             }
         })
-        binding.fragmentSearchResultRecycle.adapter = chatAdapter
-        chatAdapter.replaceData(chatlist)
+        binding.fragmentSearchResultBack.setOnClickListener{
+            (requireActivity() as MainActivity).comebackHome()
+        }
+        binding.fragmentSearchResultSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null){
+                    getSearchedChatRoom(query!!)
+                }
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
         return retView
+    }
+    private fun getSearchedChatRoom(s: String){
+        momomeal.getSearchChatroom(s).enqueue(object: Callback<List<SearchChatRoomDTO>>{
+            override fun onResponse(
+                call: Call<List<SearchChatRoomDTO>>,
+                response: Response<List<SearchChatRoomDTO>>
+            ) {
+                Log.d("retrofit", response?.body().toString())
+                if(response.isSuccessful.not()){
+                    return
+                }
+                response.body()?.let{
+                    chatlist.clear()
+                    it.forEach{ SearchChatRoom-> chatlist.add(SearchChatRoom.toChatroom()) }
+                    chatAdapter.replaceData(chatlist)
+                }
+            }
+
+            override fun onFailure(call: Call<List<SearchChatRoomDTO>>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+        })
     }
 }
