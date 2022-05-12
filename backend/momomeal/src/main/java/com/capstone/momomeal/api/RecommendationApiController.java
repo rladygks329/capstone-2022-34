@@ -45,16 +45,21 @@ public class RecommendationApiController {
 
         if (getMember.isPresent()){
             Members member = getMember.get();
-            RecommendCategory recommendCategory;
+            RecommendCategory recommendCategory = member.getRecommendCategory();
 
-            // 추천 카테고리 객체 생성
-            recommendCategory =
-                    recommendCategoryService.createRecommendCategory(member);
+            if (recommendCategory != null) { // 추천 카테고리 객체가 존재할 때(이전에 설문조사를 한 경우)
+                // 새로 설문조사 한 데이터로 업데이트해야 하기 때문에 모든 카테고리 점수 0으로 리셋함
+                recommendCategory.initScore();
 
+            } else {    // 처음 설문조사를 한 경우
+                // 추천 카테고리 객체 생성
+                recommendCategory =
+                        recommendCategoryService.createRecommendCategory(member);
+            }
 
-            // 설문조사에서 사용자가 선택한 카테고리의 가중치 100더해서 저장
+            // 설문조사에서 사용자가 선택한 카테고리의 가중치 더해서 저장
             for (String category : nullRemovedCategories){
-                recommendCategoryService.addValue(recommendCategory, category, 100);
+                recommendCategoryService.addValue(recommendCategory, category, 10);
             }
 
         }
@@ -69,8 +74,8 @@ public class RecommendationApiController {
     @GetMapping("/recommend-chat-list/{memberId}")
     public ResponseEntity returnRecommendChatRoomList(@PathVariable Long memberId){
         Optional<Members> getMember = memberService.findById(memberId);
-        int threshold = 5;  // 임계값 임의로 5로 설정
-        List<ChatRoom> result = new ArrayList<>();
+        List<ChatRoomListDto> result = new ArrayList<>();
+        List<ChatRoom> chatRooms = new ArrayList<>();
 
         if (getMember.isPresent()){
             Members member = getMember.get();
@@ -81,21 +86,28 @@ public class RecommendationApiController {
             for (JoinedChatRoom joinedChatRoom : joinedChatRooms) {
                 Long participatedChatRoomId = joinedChatRoom.getChatRoom().getId();
                 participatedChatRoomIds.add(participatedChatRoomId);
+                System.out.println("id: " + participatedChatRoomId);
             }   // end
 
             RecommendCategory recommendCategory = member.getRecommendCategory();
 
             if (recommendCategory != null){ // 추천 카테고리 객체가 존재할 때
                 // 추천 카테고리 리스트
-                List<Category> recommendCategoryOverThresholdList =
-                        recommendCategoryService.getRecommendCategoryOverThresholdList(recommendCategory,
-                                threshold);
+                List<Category> top3ScoreCategory = recommendCategory.getTop3ScoreCategory(3);
 
                 // 추천할 카테고리 리스트가 존재할 때
-                if (recommendCategoryOverThresholdList != null){
+                if (top3ScoreCategory != null){
                     // 추천할 카테고리의 채팅방 리스트
-                    result = chatRoomService.
-                            findByCategoryIn(recommendCategoryOverThresholdList, participatedChatRoomIds);
+                    chatRooms = chatRoomService.
+                            findByCategoryIn(top3ScoreCategory, participatedChatRoomIds);
+
+                    double memberX = member.getX_value();
+                    double memberY = member.getY_value();
+
+                    // DTO로 변환함
+                    result = chatRooms.stream()
+                            .map(c -> new ChatRoomListDto(c, memberX, memberY))
+                            .collect(Collectors.toList());
 
                 }
             }
