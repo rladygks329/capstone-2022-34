@@ -89,27 +89,6 @@ public class ProfileFormApiController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "updateUserInfo.do",method = RequestMethod.PUT)
-    public HashMap<String, Object> updateUser(@RequestBody HashMap<String, Object> map){
-        HashMap<String, Object> returnData = new HashMap<>();
-
-        Long userId = (Long)map.get("user_id");
-        String email = (String)map.get("email");
-        String RealName = (String)map.get("name");
-        //String ProfileImg = (String)map.get("profileImgUrl");
-        map.clear();
-
-        Boolean checkUpdate = memberService.updateUser(userId, email, RealName);
-
-        if(checkUpdate == true){
-            returnData.put("check",1);
-        }else{
-            returnData.put("check",0);
-        }
-        return returnData;
-    }
-
-    @ResponseBody
     @RequestMapping(value = "setCoordinate.do",method = RequestMethod.PUT)
     public HashMap<String, Object> getXY(@RequestBody HashMap<String, Object> map){
         HashMap<String, Object> returnData = new HashMap<>();
