@@ -19,7 +19,11 @@ public class HomeFormApiController {
     public HashMap<String, Object> checkLogin() {
         HashMap<String, Object> map = new HashMap();
         boolean check = memoryUserRepository.checkLogin();
-        map.put("check", check);
+        if(check == true){
+            map.put("check",1);
+        }else{
+            map.put("check",0);
+        }
         return map;
     }
 
