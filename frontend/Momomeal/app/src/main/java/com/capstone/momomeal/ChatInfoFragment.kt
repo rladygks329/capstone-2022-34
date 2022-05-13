@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.User
+import com.capstone.momomeal.databinding.ActivityMainBinding
 import com.capstone.momomeal.databinding.FragmentChatInfoBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
@@ -27,9 +28,7 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
     val user: User by lazy{
         arguments?.getParcelable<User>("User")!!
     }
-    val chatroom: Chatroom by lazy{
-        arguments?.getParcelable<Chatroom>("Chatroom")!!
-    }
+    lateinit var chatroom: Chatroom
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +42,6 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
         binding.framgentChatInfoExit.setOnClickListener{
             dismiss()
         }
-        binding.framgentChatInfoTitle.text = chatroom.nameRoom
-        binding.framgentChatInfoCategory.text = chatroom.category?.KoreanName
-        binding.framgentChatInfoMax.text = chatroom.maxCapacity.toString()
-        binding.framgentChatInfoStore.text = chatroom.nameStore
-        binding.framgentChatInfoPickup.text = chatroom.namePickupPlace
         binding.fragmentChatInfoEnter.setOnClickListener{
             enterChat()
         }
@@ -79,4 +73,15 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
             }
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+        chatroom = arguments?.getParcelable<Chatroom>("Chatroom")!!
+        binding.framgentChatInfoTitle.text = chatroom.nameRoom
+        binding.framgentChatInfoCategory.text = chatroom.category?.KoreanName
+        binding.framgentChatInfoMax.text = chatroom.maxCapacity.toString()
+        binding.framgentChatInfoStore.text = chatroom.nameStore
+        binding.framgentChatInfoPickup.text = chatroom.namePickupPlace
+    }
+
 }

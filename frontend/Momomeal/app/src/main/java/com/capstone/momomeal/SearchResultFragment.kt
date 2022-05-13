@@ -1,10 +1,12 @@
 package com.capstone.momomeal
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import com.capstone.momomeal.api.MomomealService
@@ -21,12 +23,23 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
 
     private val TAG = "SearchResultFragment"
     private val momomeal = MomomealService.momomealAPI
+    private val chatInfoFrag = ChatInfoFragment()
 
     val chatAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
     }
     val mainActivity: MainActivity by lazy {
         requireActivity() as MainActivity
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mainActivity.comebackHome()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +58,6 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = chatAdapter.getData(position)
-                val chatInfoFrag = ChatInfoFragment()
                 chatInfoFrag.arguments = bundleOf(
                     "User" to mainActivity.myInfo!!,
                     "Chatroom" to item

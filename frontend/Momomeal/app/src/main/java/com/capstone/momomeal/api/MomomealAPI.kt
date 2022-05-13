@@ -58,6 +58,11 @@ interface MomomealAPI {
        @Path("chatroomId") chatroomId: Long
     ): Call<Chatroom>
 
+    @GET("/recommend-chat-list/{memberId}")
+    fun getRecommendedChatroom(
+        @Path("memberId") memberId: Int
+    ): Call<List<Chatroom>>
+
     @POST("/login.do")
     fun login(
         @Body params: HashMap<String, String>

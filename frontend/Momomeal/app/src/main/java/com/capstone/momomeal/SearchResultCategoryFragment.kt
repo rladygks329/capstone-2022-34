@@ -1,10 +1,12 @@
 package com.capstone.momomeal
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.databinding.FragmentSearchResultCategoryBinding
@@ -19,7 +21,7 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
     FragmentSearchResultCategoryBinding::inflate) {
 
     private val TAG = "SearchResultCategoryFragment"
-
+    val chatInfoFrag = ChatInfoFragment()
     val momomeal = MomomealService.momomealAPI
     var selectedCategory = ""
     val chatAdapter: ChatroomAdapter by lazy {
@@ -27,6 +29,16 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
     }
     val mainActivity: MainActivity by lazy {
        requireActivity() as MainActivity
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mainActivity.comebackHome()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
 
@@ -51,7 +63,6 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
 
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
-                val chatInfoFrag = ChatInfoFragment()
                 val item = chatAdapter.getData(position)
                 chatInfoFrag.arguments = bundleOf(
                     "User" to mainActivity.myInfo!!,

@@ -14,21 +14,26 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
+import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import kotlin.math.log
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate) {
     private val TAG = "HomeFragment"
     private lateinit var mainActivity: MainActivity
+    private val momomeal = MomomealService.momomealAPI
+    private val chatInfoFrag = ChatInfoFragment()
     private val createChatFragment = CreateChatFragment()
     private val scFrag = SearchResultFragment()
     private val scCategoryFrag = SearchResultCategoryFragment()
-    private val chatInfoFrag = ChatInfoFragment()
     private val researchFragment = ResearchFragment()
     private var hasPoint = true
     private val startForResult =
@@ -85,6 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
         initSearch(binding.fragmentHomeSearchbar)
         initTable(binding.fragmentHomeCategoryTable)
+        updateRecommendation()
         return retView
     }
 
@@ -131,13 +137,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         }
     }
 
+    private fun updateRecommendation(){
+        momomeal.getRecommendedChatroom(mainActivity.myInfo.idUser)
+            .enqueue(object: Callback<List<Chatroom>>{
+                override fun onResponse(
+                    call: Call<List<Chatroom>>,
+                    response: Response<List<Chatroom>>
+                ) {
+                    if(response.isSuccessful.not()){
+                        return
+                    }
+                    response.body()?.let{
+                        chatAdapter.replaceData(ArrayList<Chatroom>(it))
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
+                    Log.e("retrofit", t.toString())
+                }
+            })
+    }
+
     //프레그먼트의 hide show가 호출될 때, 불리는 함수
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         if(!hidden){
-            //update data
+            updateRecommendation()
         }
     }
+
 
     fun onclicker(s : String) {
         Log.d(TAG, s)
