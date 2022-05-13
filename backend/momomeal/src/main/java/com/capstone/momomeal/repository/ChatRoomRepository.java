@@ -77,6 +77,15 @@ public class ChatRoomRepository {
 
     }
 
+    public List<ChatRoom> findExceptParticipatedByKeyword(String keyword,
+                                                          List<Long> participatedChatRoomIds){
+        return em.createQuery("select cr from ChatRoom cr " +
+                        "where cr.title like concat('%',:keyword,'%') "
+                        + "and cr.id not in (:ids)", ChatRoom.class)
+                .setParameter("keyword", keyword)
+                .setParameter("ids", participatedChatRoomIds)
+                .getResultList();
+    }
     public List<ChatRoom> findByKeyword(String keyword){
         return em.createQuery("select cr from ChatRoom cr " +
                         "where cr.title like concat('%',:keyword,'%')", ChatRoom.class)

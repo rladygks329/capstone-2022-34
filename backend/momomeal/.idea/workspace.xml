@@ -4,22 +4,61 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="feat: 카테고리 설문조사, 추천 채팅방 리턴 api">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberDTO.java" afterDir="false" />
+    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="feat: 채팅방 목록 리턴 api-거리 순 로직 변경">
+      <change afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/data/dto/LoginForm.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/data/dto/MyChatRoomDTO.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/data/dto/RegisterForm.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/data/dto/SearchChatRoomDTO.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/adapter/ChatMemberAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomListApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomListApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/HomeFormApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/HomeFormApiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/LoginFormApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/LoginFormApiController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ProfileFormApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ProfileFormApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/RecommendationApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/RecommendationApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/SearchApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/SearchApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/ChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/ChatRoom.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/ChatRoomListDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/ChatRoomListDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/ChatRoomRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/ChatRoomRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberForm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberForm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/Members.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/Members.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/ChatRoomRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/ChatRoomRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/MemberRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/MemoryUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/MemoryUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/ChatRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/ChatRoomService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/MemberService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/capstone/momomeal/service/testMemberintegrationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/capstone/momomeal/service/testMemberintegrationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/ChatActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/ChatActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/ChatroomFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/ChatroomFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/HomeFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/HomeFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/LoginFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/LoginFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/MypageFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/MypageFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/SearchResultCategoryFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/SearchResultCategoryFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/SearchResultFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/SearchResultFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/SignupFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/SignupFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/api/DeserializeChatroom.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/api/DeserializeChatroom.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/api/MomomealAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/api/MomomealAPI.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/api/MomomealService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/api/MomomealService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/LoginRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/LoginRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/adapter/ChatAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/adapter/ChatAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/adapter/ChatroomAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/adapter/ChatroomAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/adapter/ReviewAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/adapter/ReviewAdapter.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/feature/data.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/data/data.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/viewmodel/ChatViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/viewmodel/ChatViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/viewmodel/LoginViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/java/com/capstone/momomeal/viewmodel/LoginViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/res/layout/fragment_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/res/layout/fragment_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/res/layout/fragment_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/res/layout/fragment_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/res/layout/fragment_search_result_category.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../frontend/Momomeal/app/src/main/res/layout/fragment_search_result_category.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +96,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -145,6 +187,49 @@
       <option name="presentableId" value="Default" />
       <updated>1650007118979</updated>
     </task>
+    <task id="LOCAL-00001" summary="refactor: chatRoomListDto 외부 클래스로 변경&#10;(카테고리를 채팅방 리턴값에 추가)">
+      <created>1651561075379</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1651561075379</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Merge">
+      <created>1652029996382</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1652029996382</updated>
+    </task>
+    <task id="LOCAL-00003" summary="feat: 채팅방 목록, 채팅방 클릭 api 통일&#10;(리턴 타입: ChatRoomListDto -&gt; ChatRoom)">
+      <created>1652030231322</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1652030231322</updated>
+    </task>
+    <task id="LOCAL-00004" summary="feat: 채팅방 참여 중인 멤버 데이터 추가">
+      <created>1652099238263</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1652099238263</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: 채팅방 검색 api-참여중인 채팅방 제외 기능 추가">
+      <created>1652100924411</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1652100924411</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: 채팅방 목록 리턴 api-거리 순 로직 변경">
+      <created>1652251698854</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1652251698854</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -160,6 +245,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 카테고리 설문조사, 추천 채팅방 리턴 api" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 카테고리 설문조사, 추천 채팅방 리턴 api" />
+    <MESSAGE value="refactor: chatRoomListDto 외부 클래스로 변경&#10;(카테고리를 채팅방 리턴값에 추가)" />
+    <MESSAGE value="Merge" />
+    <MESSAGE value="feat: 채팅방 목록, 채팅방 클릭 api 통일&#10;(리턴 타입: ChatRoomListDto -&gt; ChatRoom)" />
+    <MESSAGE value="feat: 채팅방 참여 중인 멤버 데이터 추가" />
+    <MESSAGE value="feat: 채팅방 검색 api-참여중인 채팅방 제외 기능 추가" />
+    <MESSAGE value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경" />
   </component>
 </project>

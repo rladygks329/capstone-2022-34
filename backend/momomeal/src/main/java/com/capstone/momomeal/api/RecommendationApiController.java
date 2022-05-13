@@ -64,13 +64,13 @@ public class RecommendationApiController {
      * 임계값을 기준으로 사용자에게 추천할 카테고리 뽑아서 해당 카테고리 && 참여하지 않은
      * 채팅방 DTO 목록 반환하는 메서드
      * @param memberId 현재 사용자의 id값
-     * @return 추천 카테고리 채팅방 DTO 목록
+     * @return 추천 카테고리 채팅방 데이터 목록
      */
     @GetMapping("/recommend-chat-list/{memberId}")
     public ResponseEntity returnRecommendChatRoomList(@PathVariable Long memberId){
         Optional<Members> getMember = memberService.findById(memberId);
         int threshold = 5;  // 임계값 임의로 5로 설정
-        List<ChatRoomListDto> result = new ArrayList<>();
+        List<ChatRoom> result = new ArrayList<>();
 
         if (getMember.isPresent()){
             Members member = getMember.get();
@@ -94,13 +94,8 @@ public class RecommendationApiController {
                 // 추천할 카테고리 리스트가 존재할 때
                 if (recommendCategoryOverThresholdList != null){
                     // 추천할 카테고리의 채팅방 리스트
-                    List<ChatRoom> allExceptParticipatedChatRooms = chatRoomService.
+                    result = chatRoomService.
                             findByCategoryIn(recommendCategoryOverThresholdList, participatedChatRoomIds);
-
-                    // 추천 카테고리 채팅방에서 dto만 뽑음
-                    result = allExceptParticipatedChatRooms.stream()
-                            .map(c -> new ChatRoomListDto(c))
-                            .collect(Collectors.toList());
 
                 }
             }
