@@ -48,14 +48,22 @@ public class LoginFormApiController {
         Members member = new Members();
         member.setEmail((String)map.get("email"));
         member.setPwd((String)map.get("pwd"));
+
         Optional<Members> members = memberService.Login(member.getEmail(), member.getPwd());
+
         if(members == null){
             returnMap.put("check",0);
             returnMap.put("member",null);
         }else{
             returnMap.put("check",1);
-            returnMap.put("member",member);
+            returnMap.put("member",members);
         }
         return returnMap;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "logout.do", method = RequestMethod.POST)
+    public void logout(){
+        memoryUserRepository.logOut();
     }
 }

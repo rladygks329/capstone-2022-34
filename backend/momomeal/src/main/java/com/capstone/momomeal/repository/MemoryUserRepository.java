@@ -29,4 +29,13 @@ public class MemoryUserRepository {
     public boolean checkLogin() {
         return memberForm.isLogin();
     }
+
+    public void logOut(){
+        memberForm.setUser_id(null);
+        memberForm.setUserEmail(null);
+        memberForm.setPwd(null);
+        memberForm.setUserName(null);
+        memberForm.setLogin(false);
+    }
+
 }

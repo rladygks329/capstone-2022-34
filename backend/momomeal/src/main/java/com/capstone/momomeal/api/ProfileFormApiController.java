@@ -28,7 +28,7 @@ public class ProfileFormApiController {
     public HashMap<String, Object> getUserInfo(@RequestBody HashMap<String, Object> map){
         HashMap<String, Object> returnData = new HashMap<>();
 
-        Long user_id = (Long)map.get("user_id");
+        Long user_id = Long.valueOf((Integer)map.get("user_id"));
 
         Optional<Members> c_member = memberService.findById(user_id);
         if(c_member.equals(null)){
@@ -46,11 +46,32 @@ public class ProfileFormApiController {
     }
 
     @ResponseBody
+    @RequestMapping(value = "updateUserInfo.do",method = RequestMethod.PUT)
+    public HashMap<String, Object> updateUser(@RequestBody HashMap<String, Object> map){
+        HashMap<String, Object> returnData = new HashMap<>();
+
+        Long userId = (Long)map.get("user_id");
+        String email = (String)map.get("email");
+        String RealName = (String)map.get("name");
+        String ProfileImg = (String)map.get("profileImgUrl");
+        map.clear();
+
+        Boolean checkUpdate = memberService.updateUser(userId, email, RealName,ProfileImg);
+
+        if(checkUpdate == true){
+            returnData.put("check",1);
+        }else{
+            returnData.put("check",0);
+        }
+        return returnData;
+    }
+
+    @ResponseBody
     @RequestMapping(value = "curtUserInfo.do",method = RequestMethod.POST)
     public HashMap<String, Object> curtUserInfo(@RequestBody HashMap<String, Object> map){
         HashMap<String, Object> returnData = new HashMap<>();
 
-        Long user_id = (Long)map.get("user_id");
+        Long user_id = Long.valueOf((Integer)map.get("user_id"));
 
         Optional<Members> c_member = memberService.findById(user_id);
         if(c_member.equals(null)){
