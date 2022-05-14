@@ -1,5 +1,6 @@
 package com.capstone.momomeal.data
 
+import android.graphics.Bitmap
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
@@ -16,24 +17,28 @@ data class User(
     val listReview: List<Int> = listOf()
 ) : Parcelable{
     fun trans_User_light() : User_light{
-        return User_light(name, idUser, email, profileImgUrl)
+        return User_light(name, idUser, profileImgUrl)
     }
 }
 
 @Parcelize
 data class User_light(
-    var name: String = "",
-    var idUser: Int = 0,
-    var email: String ="",
-    var profileImgUrl: String = "",
+    @SerializedName("name") var name: String = "",
+    @SerializedName("userId") var idUser: Int = 0,
+    @SerializedName("img") var profileImgUrl: String = "",
 ) : Parcelable {
     constructor(user: User) : this() {
         this.name = user.name
         this.idUser = user.idUser
-        this.email = user.email
         this.profileImgUrl = user.profileImgUrl
     }
 }
+
+// ChatActivity쪽에서만 사용되는 데이터 클래스. id -> membInfo로 연결되는 HashMap에 사용됨.
+data class membInfo(
+    var name: String = "",
+    var bitmap: Bitmap
+)
 
 @Parcelize
 data class Chatroom (

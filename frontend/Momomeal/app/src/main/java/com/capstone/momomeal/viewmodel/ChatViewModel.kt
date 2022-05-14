@@ -3,6 +3,8 @@ package com.capstone.momomeal.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.capstone.momomeal.data.Chat
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 
@@ -13,8 +15,8 @@ class ChatViewModel(val roomId: Int, val userId: Int) : ViewModel() {
 
     fun initStomp() {
         stompClient.lifecycle()
-//            .subscribeOn(Schedulers.io())
-//            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
             when (it.type) {
                 LifecycleEvent.Type.OPENED -> {

@@ -12,6 +12,7 @@
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_progressbar_manner.xml" value="0.3776041666666667" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_white_radius.xml" value="0.38229166666666664" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/bg_white_radius_half.xml" value="0.38229166666666664" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/border_orange_deep.xml" value="0.3651041666666667" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/greeting_background.xml" value="0.365625" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/home_add_btn_background.xml" value="0.19895833333333332" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/drawable/home_appbar_background.xml" value="0.19895833333333332" />
@@ -82,6 +83,7 @@
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/content_myprofile.xml" value="0.21331521739130435" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/drawer_chat_info.xml" value="0.25" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_chat_drawer.xml" value="0.3645833333333333" />
+        <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_chat_info.xml" value="0.20208333333333334" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_chatroom.xml" value="0.67" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_create_chat.xml" value="0.5598650927487352" />
         <entry key="..\:/Github/capstone-2022-34/frontend/Momomeal/app/src/main/res/layout/fragment_find_chatroom.xml" value="0.3515625" />
