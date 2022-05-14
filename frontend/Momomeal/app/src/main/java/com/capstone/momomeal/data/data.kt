@@ -4,6 +4,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
+import java.util.*
 
 @Parcelize
 data class User(
@@ -13,7 +14,11 @@ data class User(
     val profileImgUrl: String = "",
     val totalRate: Int = 50,
     val listReview: List<Int> = listOf()
-) : Parcelable
+) : Parcelable{
+    fun trans_User_light() : User_light{
+        return User_light(name, idUser, email, profileImgUrl)
+    }
+}
 
 @Parcelize
 data class User_light(
@@ -32,16 +37,30 @@ data class User_light(
 
 @Parcelize
 data class Chatroom (
-    val nameRoom: String? = "",
-    val idChatroom: Int = 0,
-    val category: Category? = Category.Chicken,
+    val idChatroom: Long = 0,
+    val category: Category = Category.Chicken,
+    val nameRoom: String = "",
     val maxCapacity: Int? = 4,
-    val namePickupPlace: String? ="",
+    val nameStore: String = "",
+    val namePickupPlace: String ="",
+    val createdDate: LocalDateTime = LocalDateTime.now(),
     val coordPickupPlaceX: Double? = 0.0,
     val coordPickupPlaceY: Double? = 0.0,
     val listUid: List<Int>? = listOf(),
 ) : Parcelable
-
+/*
+"id": 33,
+"category": "WESTERN",
+"title": "파스타 먹을 사람",
+"hostId": 3,----
+"maxCapacity": 4,
+"storeName": "빠네 파스타 전문점",
+"pickupPlaceName": "스파오티",
+"distance": 400843,
+"createdDate": "2022-05-12T18:43:28.660192"
+}
+]
+* */
 data class Review (
     val idReview: Int = 0,
     val rateSign: Rate,
@@ -58,10 +77,18 @@ enum class Rate {
     Good, Bad,
 }
 
-enum class Category {
-    Chicken, Pizza, Korean, Chinese, Japanese,
-    Western, Snackbar, MidnightSnack, BoiledPork, CafeAndDesert,
-    Fastfood,
+enum class Category(val KoreanName: String) {
+    Chicken("치킨"),
+    Pizza("피자"),
+    Korean("한식"),
+    Chinese("중식"),
+    Japanese("일식"),
+    Western("양식"),
+    Snackbar("분식"),
+    MidnightSnack("야식"),
+    BoiledPork("족발/보쌈"),
+    CafeAndDesert("카페/디저트"),
+    Fastfood("패스트푸드")
 }
 
 
@@ -76,9 +103,4 @@ val fakeUsers = listOf(
     User("김미나", 1, "mina123@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3)),
     User("조자현", 2, "ssibo12@gmail.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 40, listOf(1,2,3)),
     User("유비", 3, "poskei@nate.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 60, listOf(1,2,3))
-)
-
-val fakeChatrooms = listOf(
-    Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, 1.1, listOf(7, 49, 89)),
-    Chatroom("밤 12시에 족발 먹을 사람 있니?", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, 1.1, listOf(3, 29, 69))
 )

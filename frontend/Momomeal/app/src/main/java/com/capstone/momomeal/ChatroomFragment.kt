@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.api.MomomealService
-import com.capstone.momomeal.data.dto.MyChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.User_light
+import com.capstone.momomeal.feature.adapter.ChatRoomViewHolder
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,7 +28,6 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     val chatroomAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
     }
-    val chatroomList = arrayListOf<Chatroom>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,11 +63,12 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                chatroomAdapter.removeData(viewHolder.layoutPosition)
 
                 val mainactivity = requireActivity() as MainActivity
+                Log.d("onswipe",viewHolder.adapterPosition.toString())
+
                 momomeal.deleteChatroom(
-                    mainactivity.myInfo.idUser, chatroomList[viewHolder.layoutPosition-1].idChatroom
+                    mainactivity.myInfo.idUser, chatroomAdapter.getData(viewHolder.layoutPosition).idChatroom
                 ).enqueue( object: Callback<HashMap<String, Int>>{
                     override fun onResponse(
                         call: Call<HashMap<String, Int>>,
@@ -78,6 +78,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                             return
                         }
                         Log.d("retrofit", response?.body().toString())
+                        chatroomAdapter.removeData(viewHolder.layoutPosition)
                     }
 
                     override fun onFailure(call: Call<HashMap<String, Int>>, t: Throwable) {
@@ -144,21 +145,17 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
 
         val mainActivity = requireActivity() as MainActivity
 
-        momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<MyChatRoomDTO>>{
-            override fun onResponse(call: Call<List<MyChatRoomDTO>>, response: Response<List<MyChatRoomDTO>>) {
+        momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<Chatroom>>{
+            override fun onResponse(call: Call<List<Chatroom>>, response: Response<List<Chatroom>>) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
                 }
                 response.body()?.let{
-                    chatroomList.clear()
-                    it.forEach{ mychat->
-                       chatroomList.add(mychat.toChatroom())
-                    }
-                    chatroomAdapter.replaceData(chatroomList)
+                    chatroomAdapter.replaceData(ArrayList<Chatroom>(it))
                 }
             }
-            override fun onFailure(call: Call<List<MyChatRoomDTO>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
                 Log.e("retrofit", t.toString())
             }
         })

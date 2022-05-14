@@ -1,6 +1,8 @@
 package com.capstone.momomeal.feature.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,8 @@ import com.capstone.momomeal.R
 import com.capstone.momomeal.databinding.ViewChatRoomBinding
 import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import kotlin.collections.ArrayList
 
 
@@ -75,8 +79,9 @@ class ChatRoomViewHolder(binding:  ViewChatRoomBinding) : RecyclerView.ViewHolde
     private val category_img: ImageView = binding.viewChatRoomImg
 
     fun bind(item: Chatroom) {
+        val des ="수령지: " +  item.namePickupPlace + " * " + timeForToday(item)
         title.text = item.nameRoom
-        description.text = "수령지: " +  item.namePickupPlace //+ " * " + item.time...(not impl)
+        description.text = des
         when(item.category){
             Category.Chicken -> category_img.setImageResource(R.drawable.ic_category_chicken)
             Category.Pizza -> category_img.setImageResource(R.drawable.ic_category_pizza)
@@ -90,5 +95,32 @@ class ChatRoomViewHolder(binding:  ViewChatRoomBinding) : RecyclerView.ViewHolde
             Category.CafeAndDesert -> category_img.setImageResource(R.drawable.ic_category_cafe_desert)
             Category.Fastfood -> category_img.setImageResource(R.drawable.ic_category_fastfood)
         }
+    }
+    private fun timeForToday(chatroom: Chatroom) : String {
+        val today = LocalDateTime.now()
+
+        val betweenTime = ChronoUnit.SECONDS.between(chatroom.createdDate, today)
+        if (betweenTime < 1) return "방금전"
+        if (betweenTime < 60) {
+            return betweenTime.toString() + "초전"
+        }
+
+        val betweenTimeSecond = betweenTime/60
+        if(betweenTimeSecond < 60){
+            return betweenTimeSecond.toString() + "분전"
+        }
+
+        val betweenTimeHour = betweenTimeSecond/24
+        Log.d("hour", betweenTimeHour.toString())
+        if (betweenTimeHour < 24) {
+            return betweenTimeHour.toString() + "시간전"
+        }
+
+        val betweenTimeDay = betweenTimeHour / 24
+        Log.d("day", betweenTimeDay.toString())
+        if (betweenTimeDay < 365) {
+            return betweenTimeDay.toString() + "일전"
+        }
+        return (betweenTimeDay / 365).toString() + "년전"
     }
 }

@@ -1,14 +1,15 @@
 package com.capstone.momomeal
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import com.capstone.momomeal.api.MomomealService
-import com.capstone.momomeal.data.dto.SearchChatRoomDTO
 import com.capstone.momomeal.databinding.FragmentSearchResultBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Chatroom
@@ -22,9 +23,23 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
 
     private val TAG = "SearchResultFragment"
     private val momomeal = MomomealService.momomealAPI
-    val chatlist = arrayListOf<Chatroom>()
+    private val chatInfoFrag = ChatInfoFragment()
+
     val chatAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
+    }
+    val mainActivity: MainActivity by lazy {
+        requireActivity() as MainActivity
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mainActivity.comebackHome()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +58,11 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = chatAdapter.getData(position)
-                val intent = Intent(activity, ChatActivity::class.java)
-                intent.putExtra("id", item.idChatroom)
-                startActivity(intent)
+                chatInfoFrag.arguments = bundleOf(
+                    "User" to mainActivity.myInfo!!,
+                    "Chatroom" to item
+                )
+                chatInfoFrag.show(mainActivity.supportFragmentManager, chatInfoFrag.tag)
             }
         })
         binding.fragmentSearchResultBack.setOnClickListener{
@@ -65,23 +82,21 @@ class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentS
         return retView
     }
     private fun getSearchedChatRoom(s: String){
-        momomeal.getSearchChatroom(s).enqueue(object: Callback<List<SearchChatRoomDTO>>{
+        momomeal.getSearchChatroom(s, mainActivity.myInfo.idUser).enqueue(object: Callback<List<Chatroom>>{
             override fun onResponse(
-                call: Call<List<SearchChatRoomDTO>>,
-                response: Response<List<SearchChatRoomDTO>>
+                call: Call<List<Chatroom>>,
+                response: Response<List<Chatroom>>
             ) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
                 }
                 response.body()?.let{
-                    chatlist.clear()
-                    it.forEach{ SearchChatRoom-> chatlist.add(SearchChatRoom.toChatroom()) }
-                    chatAdapter.replaceData(chatlist)
+                    chatAdapter.replaceData(ArrayList<Chatroom>(it))
                 }
             }
 
-            override fun onFailure(call: Call<List<SearchChatRoomDTO>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
                 Log.e("retrofit", t.toString())
             }
         })
