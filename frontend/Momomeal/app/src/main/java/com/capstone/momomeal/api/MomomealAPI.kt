@@ -9,8 +9,8 @@ import retrofit2.http.*
 interface MomomealAPI {
     @POST("/chat")
     fun makeChatroom(
-
-    )
+        @Body params: CreateChatForm
+    ): Call<Chatroom>
 
     @GET("/chat-list/{categoryName}/{memberId}/{type}")
     fun getCategoryChatroom(

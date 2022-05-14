@@ -13,15 +13,25 @@ import androidx.appcompat.widget.ListPopupWindow
 import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
+import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.Category
+import com.capstone.momomeal.data.Chatroom
+import com.capstone.momomeal.data.dto.CreateChatForm
 import com.capstone.momomeal.databinding.FragmentCreateChatBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.BaseFragment
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.lang.reflect.Field
+import java.util.*
+import kotlin.collections.HashMap
 
 val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density + 0.5f).toInt()
 
 class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(FragmentCreateChatBinding::inflate) {
     private val TAG = "CreateChatFragment"
+    private val momomeal = MomomealService.momomealAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,15 +65,8 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
 //                TODO("Not yet implemented")
 //            }
 //        }
-        // 뒤로 가는 버튼에 대한 클릭 함수
-        binding.btnBack.setOnClickListener {
-            dismiss()
-        }
-
-        binding.btnChatCraeteConfirm.setOnClickListener {
-            val intent = Intent(activity, ChatActivity::class.java)
-            startActivity(intent)
-        }
+        binding.btnBack.setOnClickListener { dismiss() }
+        binding.btnChatCraeteConfirm.setOnClickListener { submit() }
 
         return retView
     }
@@ -78,5 +81,60 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
         val maxCapacityItem = resources.getStringArray(R.array.spn_max_capacity_array)
         val maxCapacityAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, maxCapacityItem)
         binding.spnChatMaxCapacity.setAdapter(maxCapacityAdapter)
+    }
+    private fun submit(){
+        val user = (activity as MainActivity).myInfo
+        val title = binding.etCreateChatTitle.text.toString()
+        val hostID = user.idUser
+        val maxCapacity = binding.spnChatMaxCapacity.text.toString().toInt()
+        val storeName = binding.etChatDeliverPlace.text.toString()
+        val pickupPlace = binding.etChatLocation.text.toString()
+        var kor_category = binding.spnChatCategory.text.toString()
+        var category = Category.Chicken
+        when(kor_category){
+            Category.Chicken.KoreanName -> category = Category.Chicken
+            Category.Pizza.KoreanName -> category = Category.Pizza
+            Category.Korean.KoreanName -> category = Category.Korean
+            Category.Chinese.KoreanName -> category = Category.Chinese
+            Category.Japanese.KoreanName -> category = Category.Japanese
+            Category.Western.KoreanName -> category = Category.Western
+            Category.Snackbar.KoreanName -> category = Category.Snackbar
+            Category.MidnightSnack.KoreanName -> category = Category.MidnightSnack
+            Category.BoiledPork.KoreanName -> category = Category.BoiledPork
+            Category.CafeAndDesert.KoreanName -> category = Category.CafeAndDesert
+            Category.Fastfood.KoreanName -> category = Category.Fastfood
+        }
+        momomeal.makeChatroom(
+            CreateChatForm(title, hostID, category, storeName, pickupPlace, user.x, user.y)
+        ).enqueue(object : Callback<Chatroom>{
+            override fun onResponse(
+                call: Call<Chatroom>,
+                response: Response<Chatroom>
+            ) {
+                if(response.isSuccessful.not()){
+                    return
+                }
+                response.body()?.let{
+                    val intent = Intent(activity, ChatActivity::class.java)
+                    intent.putExtra("myinfo", user.trans_User_light())
+                    intent.putExtra("chatroominfo", it)
+                    startActivity(intent)
+                    dismiss()
+                }
+            }
+
+            override fun onFailure(call: Call<Chatroom>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.etCreateChatTitle.setText("")
+        binding.spnChatMaxCapacity.setText("")
+        binding.etChatDeliverPlace.setText("")
+        binding.etChatLocation.setText("")
+        binding.spnChatCategory.setText("")
     }
 }
