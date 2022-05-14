@@ -209,6 +209,10 @@ public class Members {
         return this.memberReview;
     }
 
+    public RecommendCategory getRecommendCategory(){
+        return this.recommendCategory;
+    }
+
 
     public String toString() {
         Long var10000 = this.getUser_id();

@@ -52,4 +52,24 @@ public class RecommendCategory {
         this.cntFastfood = 0;
         this.cnEtc = 0;
     }
+
+    @Override
+    public String toString() {
+        return "RecommendCategory{" +
+                "id=" + id +
+                ", members=" + members +
+                ", cntChicken=" + cntChicken +
+                ", cntPizza=" + cntPizza +
+                ", cntKorean=" + cntKorean +
+                ", cntChinese=" + cntChinese +
+                ", cntJapanese=" + cntJapanese +
+                ", cntWestern=" + cntWestern +
+                ", cntSnackbar=" + cntSnackbar +
+                ", cntMidnightSnack=" + cntMidnightSnack +
+                ", cntBoiledPork=" + cntBoiledPork +
+                ", cntCafeAndDesert=" + cntCafeAndDesert +
+                ", cntFastfood=" + cntFastfood +
+                ", cnEtc=" + cnEtc +
+                '}';
+    }
 }

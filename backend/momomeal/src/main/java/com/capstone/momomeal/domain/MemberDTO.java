@@ -17,4 +17,13 @@ public class MemberDTO {
         this.name = name;
         this.img_url = img_url;
     }
+
+    public MemberDTO(){}
+    public void setByMembers(Members members){
+        this.userId = members.getUser_id();
+        this.email = members.getEmail();
+        this.pwd = members.getPwd();
+        this.name = members.getRealName();
+        this.img_url = members.getImg();
+    }
 }
