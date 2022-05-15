@@ -86,7 +86,7 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
         val user = (activity as MainActivity).myInfo
         val title = binding.etCreateChatTitle.text.toString()
         val hostID = user.idUser
-        val maxCapacity = binding.spnChatMaxCapacity.text.toString().toInt()
+        val maxCapacity = binding.spnChatMaxCapacity.text.toString().dropLast(1).toInt()
         val storeName = binding.etChatDeliverPlace.text.toString()
         val pickupPlace = binding.etChatLocation.text.toString()
         var kor_category = binding.spnChatCategory.text.toString()

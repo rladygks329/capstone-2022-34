@@ -43,6 +43,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 hasPoint = true
                 Address.data?.let {
                     binding.fragmentHomeEditAddress.text = it.getStringExtra("data")
+                    mainActivity.myInfo.x = it.getDoubleExtra("x", 0.0)
+                    mainActivity.myInfo.y = it.getDoubleExtra("y", 0.0)
+                    Log.d("주소",mainActivity.myInfo.x.toString() )
+                    Log.d("주소",mainActivity.myInfo.y.toString() )
                 }
             }
         }
@@ -56,6 +60,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("system","home Oncreate is called")
+        mainActivity = (activity as MainActivity)
+        if(mainActivity.myInfo.x == 0.0 || mainActivity.myInfo.y == 0.0){
+            hasPoint = false
+        }
     }
 
     override fun onCreateView(
@@ -64,7 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     ): View? {
         Log.d("system","home OncreateView is called")
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        mainActivity = (activity as MainActivity)
+
 
         binding.fragmentHomeEditAddress.setOnClickListener{
             startForResult.launch(Intent(requireActivity().application, MyAddressActivity::class.java))
