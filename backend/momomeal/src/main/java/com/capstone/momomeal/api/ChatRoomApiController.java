@@ -29,8 +29,8 @@ public class ChatRoomApiController {
      * @return 생성한 채팅방(ChatRoom) id값
      */
     @PostMapping("/chat")
-    public CreateChatRoomResponse saveChatRoom(@RequestBody @Valid ChatRoomRequestDTO requestDTO) {
-        CreateChatRoomResponse result;
+    public ResponseEntity saveChatRoom(@RequestBody @Valid ChatRoomRequestDTO requestDTO) {
+        ChatRoom chatRoom = null;
         // 현재 회원 데이터 가져오기
         Optional<Members> getMember = memberService.findById(requestDTO.getHostId());
 
@@ -38,13 +38,11 @@ public class ChatRoomApiController {
             Members member = getMember.get();
 
             // 채팅방 생성
-            Long createChatRoomId = chatRoomService.createChatRoom(member, requestDTO);
-            result = new CreateChatRoomResponse(createChatRoomId);
-        } else{
-            result = new CreateChatRoomResponse();
+            chatRoom = chatRoomService.createChatRoom(member, requestDTO);
         }
 
-        return result;
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(chatRoom);
     }
 
 

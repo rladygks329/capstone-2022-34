@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="feat: 채팅방 목록 리턴 api-거리 순 로직 변경2">
+    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)">
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/RecommendationApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/RecommendationApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/RecommendCategory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/RecommendCategory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/RecommendCategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/RecommendCategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/ChatRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/ChatRoomService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,7 +161,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652252030190</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)">
+      <created>1652359428357</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1652359428358</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,6 +192,7 @@
     <MESSAGE value="feat: 채팅방 검색 api-참여중인 채팅방 제외 기능 추가" />
     <MESSAGE value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경" />
     <MESSAGE value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경2" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경2" />
+    <MESSAGE value="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)" />
   </component>
 </project>
