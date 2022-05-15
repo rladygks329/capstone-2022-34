@@ -154,21 +154,7 @@
       <option name="project" value="LOCAL" />
       <updated>1652251698854</updated>
     </task>
-    <task id="LOCAL-00007" summary="feat: 채팅방 목록 리턴 api-거리 순 로직 변경2">
-      <created>1652252030190</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1652252030190</updated>
-    </task>
-    <task id="LOCAL-00008" summary="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)">
-      <created>1652359428357</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1652359428358</updated>
-    </task>
-    <option name="localTasksCounter" value="9" />
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,8 +177,6 @@
     <MESSAGE value="feat: 채팅방 참여 중인 멤버 데이터 추가" />
     <MESSAGE value="feat: 채팅방 검색 api-참여중인 채팅방 제외 기능 추가" />
     <MESSAGE value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경" />
-    <MESSAGE value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경2" />
-    <MESSAGE value="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경" />
   </component>
 </project>

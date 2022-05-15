@@ -1,9 +1,8 @@
 package com.capstone.momomeal.api
 
-import com.capstone.momomeal.dto.LoginForm
-import com.capstone.momomeal.dto.LoginResponse
 import com.capstone.momomeal.data.Chatroom
-import com.capstone.momomeal.data.MyChat
+import com.capstone.momomeal.data.LoginResponse
+import com.capstone.momomeal.data.dto.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -33,32 +32,45 @@ interface MomomealAPI {
 
     @GET("/chat/{memberId}/{chatroomId}")
     fun enterChatroom(
-
-    )
+        @Path("memberId") memberId: Int,
+        @Path("chatroomId") chatroomId: Long
+    ): Call<HashMap<String, Int>>
 
     @GET("/entered-chat-list/{memberId}")
     fun getEnteredChatroom(
        @Path("memberId") memberId:Int
-   ): Call<List<MyChat>>
+   ): Call<List<Chatroom>>
 
     @DELETE("/deleted-chat/{memberId}/{chatroomId}")
     fun deleteChatroom(
-       @Path("memberId") memberId:Int,
+       @Path("memberId") memberId: Int,
        @Path("chatroomId") chatroomId: Long
-    )
+    ): Call<HashMap<String, Int>>
 
-    @GET("/searched-chat-list/{keyword}")
+    @GET("/searched-chat-list/{keyword}/{memberId}")
     fun getSearchChatroom(
-       @Path("keyword") keyword:String
+       @Path("keyword") keyword:String,
+       @Path("memberId") memberId: Int
    ): Call<List<Chatroom>>
 
     @GET("/entered-chat-info/{chatroomId}")
     fun getEnteredChatInfo(
        @Path("chatroomId") chatroomId: Long
-    ) : Call<Chatroom>
+    ): Call<Chatroom>
+
+    @GET("/recommend-chat-list/{memberId}")
+    fun getRecommendedChatroom(
+        @Path("memberId") memberId: Int
+    ): Call<List<Chatroom>>
 
     @POST("/login.do")
     fun login(
-        loginForm: LoginForm
-    ) : Call<LoginResponse>
+        @Body params: HashMap<String, String>
+    ): Call<LoginResponse>
+
+    @POST("/createAccount.do")
+    fun register(
+        @Body params: RegisterForm
+    ): Call<LoginResponse>
+
 }

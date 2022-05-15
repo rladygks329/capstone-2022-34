@@ -13,10 +13,9 @@ import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Chatroom
-import com.capstone.momomeal.data.MyChat
 import com.capstone.momomeal.data.User_light
+import com.capstone.momomeal.feature.adapter.ChatRoomViewHolder
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
-import com.capstone.momomeal.data.fakeUser
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,10 +24,10 @@ import retrofit2.Response
 class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomBinding::inflate) {
     private val TAG = "ChatroomFragment"
 
+    val momomeal = MomomealService.momomealAPI
     val chatroomAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
     }
-    val chatroomList = arrayListOf<Chatroom>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,12 +47,9 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 startActivity(intent)
             }
         })
-        with(binding){
-            fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
-            fragmentChatroomRecycle.adapter = chatroomAdapter
-        }
+        binding.fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
+        binding.fragmentChatroomRecycle.adapter = chatroomAdapter
         updateMyChatRoom()
-        chatroomAdapter.replaceData(chatroomList)
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback (
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT
@@ -63,14 +59,33 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                val fromPos: Int = viewHolder.adapterPosition
-                val toPos: Int = target.adapterPosition
-                chatroomAdapter.swapData(fromPos, toPos)
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                chatroomAdapter.removeData(viewHolder.layoutPosition)
+
+                val mainactivity = requireActivity() as MainActivity
+                Log.d("onswipe",viewHolder.adapterPosition.toString())
+
+                momomeal.deleteChatroom(
+                    mainactivity.myInfo.idUser, chatroomAdapter.getData(viewHolder.layoutPosition).idChatroom
+                ).enqueue( object: Callback<HashMap<String, Int>>{
+                    override fun onResponse(
+                        call: Call<HashMap<String, Int>>,
+                        response: Response<HashMap<String, Int>>
+                    ) {
+                        if(response.isSuccessful.not()){
+                            return
+                        }
+                        Log.d("retrofit", response?.body().toString())
+                        chatroomAdapter.removeData(viewHolder.layoutPosition)
+                    }
+
+                    override fun onFailure(call: Call<HashMap<String, Int>>, t: Throwable) {
+                        Log.e("retrofit", t.toString())
+                    }
+                })
+
             }
             override fun onChildDraw(
                 c: Canvas,
@@ -115,6 +130,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
             }
         }
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.fragmentChatroomRecycle)
+
         return retview
     }
 
@@ -126,25 +142,20 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     }
 
     fun updateMyChatRoom(){
-        val momomeal = MomomealService.momomealAPI
+
         val mainActivity = requireActivity() as MainActivity
 
-        momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<MyChat>>{
-            override fun onResponse(call: Call<List<MyChat>>, response: Response<List<MyChat>>) {
+        momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<Chatroom>>{
+            override fun onResponse(call: Call<List<Chatroom>>, response: Response<List<Chatroom>>) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
                 }
                 response.body()?.let{
-                    chatroomList.clear()
-                    //body가 있다면 그안에는 bestSellerDto가 들어있을것
-                    it.forEach{ mychat->
-                       chatroomList.add(mychat.toChatroom())
-                    }
-                    chatroomAdapter.replaceData(chatroomList)
+                    chatroomAdapter.replaceData(ArrayList<Chatroom>(it))
                 }
             }
-            override fun onFailure(call: Call<List<MyChat>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
                 Log.e("retrofit", t.toString())
             }
         })

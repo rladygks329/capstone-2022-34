@@ -31,6 +31,10 @@ class MainActivity : AppCompatActivity() {
     public val myInfo: User by lazy {
         intent.getParcelableExtra<User>("user") as User
     }
+    var searchKeyword: String = ""
+    companion object {
+        private const val KEY_SELECTED_TAB = "selectedTab"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +63,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("main",myInfo.name)
 
     }
-    companion object {
-        private const val KEY_SELECTED_TAB = "selectedTab"
-    }
+
 
 
     fun moveSearch(frag: Fragment){

@@ -26,25 +26,19 @@ public class Members {
 
     private String pwd;
     @NotNull
-    @Column(
-            name = "real_name"
-    )
+    @Column(name = "real_name")
     private String realName;
-    @Column(
-            name = "age"
-    )
+
+    @Column(name = "age")
     private Integer age;
-    @Column(
-            name = "phone_number"
-    )
+
+    @Column(name = "phone_number")
     private String phone_number;
-    @Column(
-            name = "img_dc"
-    )
+
+    @Column(name = "img_dc")
     private String img;
-    @Column(
-            name = "user_rate"
-    )
+
+    @Column(name = "user_rate")
     private Float user_rate;
 
     private double x_value;
@@ -213,6 +207,10 @@ public class Members {
 
     public List<MemberReview> getMemberReview() {
         return this.memberReview;
+    }
+
+    public RecommendCategory getRecommendCategory(){
+        return this.recommendCategory;
     }
 
 

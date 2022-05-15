@@ -1,5 +1,6 @@
 package com.capstone.momomeal.service;
 
+import com.capstone.momomeal.domain.MemberDTO;
 import com.capstone.momomeal.domain.Members;
 import com.capstone.momomeal.repository.MemberRepository;
 import java.util.List;
@@ -33,16 +34,30 @@ public class MemberService {
         }
     }
 
-    @Transactional(
-            readOnly = true
-    )
+    public Boolean updateUser(Long userId, String email, String RealName, String img){
+        try {
+            Optional<Members> member_s = memberRepository.findOne(userId);
+            if(member_s == null){
+                return false;
+            }
+            else {
+                Members member = member_s.get();
+                member.setEmail(email);
+                member.setRealName(RealName);
+                member.setImg(img);
+                return true;
+            }
+        }catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Transactional(readOnly = true)
     public List<Members> findAll() {
         return this.memberRepository.findAll();
     }
 
-    @Transactional(
-            readOnly = true
-    )
+    @Transactional(readOnly = true)
     public Optional<Members> findEmail(String email) {
         Optional<Members> result = this.memberRepository.findEmail(email);
         if (result != null) {
@@ -52,9 +67,7 @@ public class MemberService {
         }
     }
 
-    @Transactional(
-            readOnly = true
-    )
+    @Transactional(readOnly = true)
     public Optional<Members> Login(String email, String pwd) {
         return this.memberRepository.findIdAndPwd(email, pwd);
     }
