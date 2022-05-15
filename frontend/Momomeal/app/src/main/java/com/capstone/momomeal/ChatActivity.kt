@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.capstone.momomeal.data.*
 import com.capstone.momomeal.databinding.LayoutChatHolderBinding
 import com.capstone.momomeal.feature.adapter.ChatAdapter
+import com.capstone.momomeal.feature.adapter.ChatMemberAdapter
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 
@@ -50,6 +51,17 @@ class ChatActivity : AppCompatActivity() {
         binding = LayoutChatHolderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 내 정보는 삭제합니다.
+        for (idx in memberList.indices) {
+            if (memberList[idx].idUser == myInfoLight.idUser) {
+                memberList.removeAt(idx)
+                break
+            }
+        }
+
+        memberList.sortWith(compareBy<User_light> {it.idUser})
+
+        // 비트맵과 이름을 가진 HashMap으로 변환
         var decodeBytes : ByteArray
         var tmpBitmap : Bitmap
         for (item in memberList) {
@@ -71,7 +83,6 @@ class ChatActivity : AppCompatActivity() {
         )
 
         // Listeners in Chat Activity
-
         binding.activityChat.btnChatBack.setOnClickListener {
             onBackPressed()
         }
@@ -85,6 +96,19 @@ class ChatActivity : AppCompatActivity() {
                 sendChat(tmpstr)
             }
         }
+        // Drawer Setiing
+        binding.nvChatNavigation.tvDeliverText.text = chatroomInfo.nameStore
+        binding.nvChatNavigation.tvReceiveText.text = chatroomInfo.namePickupPlace
+        // 이후 지도 세팅으로 넘어감
+
+        // drawer`s Member information RecyclerView Setting
+        binding.nvChatNavigation.rvMemberList.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.nvChatNavigation.rvMemberList.adapter = ChatMemberAdapter(memberMap, memberList)
+        binding.nvChatNavigation.rvMemberList.addItemDecoration(
+            DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        )
+
         // Listeners in drawer
         binding.nvChatNavigation.btnCloseDrawer.setOnClickListener {
             binding.root.closeDrawers()

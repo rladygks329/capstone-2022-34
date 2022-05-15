@@ -20,8 +20,6 @@ class ChatAdapter(
     val chatList: ArrayList<Chat>
 ) : RecyclerView.Adapter<ChatViewHolder>(){
 
-    lateinit var tmpMsg : Chat
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         return when (viewType) {
             OTHER_MSG_FULL -> ChatViewHolder.OtherMsgFullViewHolder(
@@ -61,7 +59,6 @@ class ChatAdapter(
     }
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
-        tmpMsg = chatList[position]
         when (holder) {
             is ChatViewHolder.OtherMsgFullViewHolder
             -> holder.bind(chatList[position], membMap.get(chatList[position].uid))
@@ -85,12 +82,12 @@ sealed class ChatViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bind
         private val binding: ItemOtherMsgFullBinding
     ) : ChatViewHolder(binding) {
         fun bind(item: Chat, info: membInfo?) {
-            if (info == null) {
-                binding.ivOtherProfile.setImageResource(R.drawable.ic_bnv_mypage_selected_24)
-                binding.tvOtherName.text = "Alixe"
-            } else {
+            if (info != null) {
                 binding.ivOtherProfile.setImageBitmap(info.bitmap)
                 binding.tvOtherName.text = info.name
+            } else {
+                binding.ivOtherProfile.setImageResource(R.drawable.ic_basic_prifile)
+                binding.tvOtherName.text = "익명"
             }
             binding.tvOtherMsgFull.text = item.chatContent
 
