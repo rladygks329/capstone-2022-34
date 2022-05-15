@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="feat: 채팅방 추천 api-로직 변경&#10;(임계값 추천 -&gt; 상위 스코어 N개,&#10;다시 설문조사 하는 경우 점수 초기화 하는 방식으로 변경)">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ChatRoomApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/ChatRoomService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/ChatRoomService.java" afterDir="false" />
-    </list>
+    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="Merge" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,9 +40,14 @@
     </option>
   </component>
   <component name="Git.Merge.Settings">
-    <option name="BRANCH" value="main" />
+    <option name="BRANCH" value="kookmin-sw-develop" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="kookmin-sw-develop" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
   <component name="JpbToolWindowState">
@@ -155,7 +153,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652251698854</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Merge">
+      <created>1652605832345</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1652605832345</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -173,11 +178,11 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 카테고리 설문조사, 추천 채팅방 리턴 api" />
     <MESSAGE value="refactor: chatRoomListDto 외부 클래스로 변경&#10;(카테고리를 채팅방 리턴값에 추가)" />
-    <MESSAGE value="Merge" />
     <MESSAGE value="feat: 채팅방 목록, 채팅방 클릭 api 통일&#10;(리턴 타입: ChatRoomListDto -&gt; ChatRoom)" />
     <MESSAGE value="feat: 채팅방 참여 중인 멤버 데이터 추가" />
     <MESSAGE value="feat: 채팅방 검색 api-참여중인 채팅방 제외 기능 추가" />
     <MESSAGE value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 채팅방 목록 리턴 api-거리 순 로직 변경" />
+    <MESSAGE value="Merge" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge" />
   </component>
 </project>
