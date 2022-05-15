@@ -160,12 +160,17 @@
             android:weightSum="1">
             <ToggleButton
                 style="@style/researchTv.odd"
-                android:layout_weight="0.48"
+                android:layout_weight="0.5"
                 android:textOn="야식"
                 android:textOff="야식"
                 app:drawableStartCompat="@drawable/ic_category_midnightsnack"
                 app:drawableTint="@color/orange_deep"
                 android:tag="MidnightSnack"/>
+            <ToggleButton
+                android:enabled="false"
+                android:visibility="invisible"
+                style="@style/researchTv.odd"
+                android:layout_weight="0.5"/>
         </TableRow>
 
     </TableLayout>
