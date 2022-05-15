@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.capstone.momomeal">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,8 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Momomeal"
         android:usesCleartextTraffic="true">
-        <activity android:name="com.capstone.momomeal.MainActivity"/>
-        <activity android:name="com.capstone.momomeal.MyAddressActivity"/>
+        <activity android:name="com.capstone.momomeal.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.capstone.momomeal.MyAddressActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ChatActivity"
             android:exported="false" />

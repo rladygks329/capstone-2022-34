@@ -13,7 +13,9 @@ data class User(
     val email: String ="",
     val profileImgUrl: String = "",
     val totalRate: Int = 50,
-    val listReview: List<Int> = listOf()
+    val listReview: List<Int> = listOf(),
+    var x : Double = 0.0,
+    var y : Double = 0.0
 ) : Parcelable{
     fun trans_User_light() : User_light{
         return User_light(name, idUser, email, profileImgUrl)
