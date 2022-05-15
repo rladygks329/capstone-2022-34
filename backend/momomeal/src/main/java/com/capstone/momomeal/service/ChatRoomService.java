@@ -32,10 +32,10 @@ public class ChatRoomService {
      * 채팅방 생성 메서드
      * @param member    해당 채팅방 생성자
      * @param requestDTO   채팅방의 정보(타이틀, 최대인원수...)
-     * @return 생성한 채팅방(ChatRoom) id값
+     * @return 생성한 채팅방(ChatRoom)
      */
     @Transactional
-    public Long createChatRoom(Members member, ChatRoomRequestDTO requestDTO){
+    public ChatRoom createChatRoom(Members member, ChatRoomRequestDTO requestDTO){
         // string -> Category enum 타입 변환
         TransStringToEnum te = new TransStringToEnum();
         Category category = te.transferStringToEnum(requestDTO.getCategoryName());
@@ -57,7 +57,7 @@ public class ChatRoomService {
         if (recommendCategory != null){
             recommendCategoryService.addValue(recommendCategory, requestDTO.getCategoryName(), 1);
         }
-        return chatRoom.getId();
+        return chatRoom;
 
     }
 
