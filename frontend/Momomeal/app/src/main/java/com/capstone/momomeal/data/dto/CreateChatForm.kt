@@ -8,6 +8,7 @@ data class CreateChatForm(
     @SerializedName("hostId") val hostId: Int,
     @SerializedName("categoryName") val categoryName: Category,
     @SerializedName("storeName") val storeName: String = "",
+    @SerializedName("maxCapacity") val maxCapacity: Int = 2,
     @SerializedName("pickupPlaceName") val pickupPlaceName: String = "",
     @SerializedName("pickupPlaceXCoord") val pickupPlaceXCoord: Double = 1.0,
     @SerializedName("pickupPlaceYCoord") val pickupPlaceYCoord: Double = 1.0

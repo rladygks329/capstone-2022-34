@@ -29,6 +29,7 @@ class DeserializeChatroom : JsonDeserializer<Chatroom> {
         while(pattern.length < dateString){
             pattern += "S"
         }
+
         val createdDate : LocalDateTime = LocalDateTime.parse(
             jsonObject["createdDate"].asString,
             DateTimeFormatter.ofPattern(pattern)

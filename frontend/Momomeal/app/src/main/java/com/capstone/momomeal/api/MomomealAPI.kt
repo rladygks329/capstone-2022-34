@@ -27,11 +27,6 @@ interface MomomealAPI {
        @Path("type") type:String
    ): Call<List<Chatroom>>
 
-    @GET("/clicked-chat/{chatroomId}")
-    fun getChatroomInfo(
-        @Path("chatroomId") chatroomId : Long
-    ): Call<Chatroom>
-
     @GET("/chat/{memberId}/{chatroomId}")
     fun enterChatroom(
         @Path("memberId") memberId: Int,

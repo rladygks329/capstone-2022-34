@@ -34,6 +34,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                         val imageUri : Uri = photoUri!!
                         //imgae decoder.createBitmap.. In api > 30
                         val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(context?.contentResolver, imageUri)
+                        //비트맵을 받아서 크기를 줄이고, 용량을 줄인다.
                         //Bitmap.createScaledBitmap(img, 256, 256, true)
                         //resized.compress(Bitmap.CompressFormat.JPEG, 60, byteArrayOutputStream)
                         chageBitmap(bitmap)
@@ -95,7 +96,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
         return retView
     }
     fun chageBitmap(bitmap: Bitmap){
-        //binding.ivProfile.setImageBitmap(bitmap)
+        binding.ivProfile.setImageBitmap(bitmap)
     }
     fun setName(s : String){
 

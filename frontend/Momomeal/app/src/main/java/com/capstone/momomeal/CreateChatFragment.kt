@@ -105,7 +105,7 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
             Category.Fastfood.KoreanName -> category = Category.Fastfood
         }
         momomeal.makeChatroom(
-            CreateChatForm(title, hostID, category, storeName, pickupPlace, user.x, user.y)
+            CreateChatForm(title, hostID, category, storeName, maxCapacity, pickupPlace, user.x, user.y)
         ).enqueue(object : Callback<Chatroom>{
             override fun onResponse(
                 call: Call<Chatroom>,
