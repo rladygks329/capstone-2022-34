@@ -23,10 +23,16 @@ class DeserializeChatroom : JsonDeserializer<Chatroom> {
         val pickupPlaceName = jsonObject["pickupPlaceName"].asString
         val maxCapacity = jsonObject["maxCapacity"].asInt
         val storeName = jsonObject["storeName"].asString
+
+        var pattern = "yyyy-MM-dd'T'HH:mm:ss."
+        var dateString = jsonObject["createdDate"].asString.length + 2 //'T'
+        while(pattern.length < dateString){
+            pattern += "S"
+        }
         val createdDate : LocalDateTime = LocalDateTime.parse(
             jsonObject["createdDate"].asString,
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-        ) // Change to LocalDateTime(str to ldt)
+            DateTimeFormatter.ofPattern(pattern)
+        ) // Change to LocalDateTime(str to ldt)*/
 
         val chatroomCategory : Category
         val category = jsonObject["category"].asString

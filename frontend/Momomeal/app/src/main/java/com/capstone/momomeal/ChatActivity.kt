@@ -1,5 +1,6 @@
 package com.capstone.momomeal
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
@@ -11,10 +12,14 @@ import android.widget.Toast
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.*
 import com.capstone.momomeal.databinding.LayoutChatHolderBinding
 import com.capstone.momomeal.feature.adapter.ChatAdapter
 import com.capstone.momomeal.feature.adapter.ChatMemberAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.dto.LifecycleEvent
 
@@ -27,8 +32,9 @@ import ua.naiksoftware.stomp.dto.LifecycleEvent
 class ChatActivity : AppCompatActivity() {
     private val TAG = "ChatActivity"
     val url = "http://10.0.2.2:8080/"
-
     val stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url)
+    val momomeal = MomomealService.momomealAPI
+
     // ChatActivity에는 Navigation Drawer가 달려있음.
     // 이거는 반드시 DrawerLayout이 최상위가 되어야 하므로 Activity_chat을 Bind하지 않음.
     private lateinit var binding: LayoutChatHolderBinding // activityChatHolderBinding이 아님
@@ -39,9 +45,7 @@ class ChatActivity : AppCompatActivity() {
     val myInfoLight: User_light by lazy {
         intent.getParcelableExtra<User_light>("myinfo") as User_light
     }
-    val memberList : ArrayList<User_light> by lazy {
-        intent.getParcelableArrayListExtra<User_light>("memblist") as ArrayList<User_light>
-    }
+    private lateinit var memberList: ArrayList<User_light>
     val chatroomInfo: Chatroom by lazy {
         intent.getParcelableExtra<Chatroom>("chatroominfo") as Chatroom
     }
@@ -51,6 +55,28 @@ class ChatActivity : AppCompatActivity() {
         binding = LayoutChatHolderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        momomeal.getEnteredChatInfo(chatroomInfo.idChatroom)
+            .enqueue(object: Callback<ArrayList<User_light>> {
+                override fun onResponse(
+                    call: Call<ArrayList<User_light>>,
+                    response: Response<ArrayList<User_light>>
+                ) {
+                    Log.d("$TAG|get!", response.body().toString())
+                    if(response.isSuccessful.not()){
+                        return
+                    }
+                    response.body()?.let {
+                        memberList = response.body()!!
+                    }
+                }
+
+                override fun onFailure(call: Call<ArrayList<User_light>>, t: Throwable) {
+                    Toast.makeText(
+                        applicationContext, "네트워크 문제로 유저 정보를 가져오지 못했습니다.", Toast.LENGTH_LONG
+                    ).show()
+                }
+            })
+
         // 내 정보는 삭제합니다.
         for (idx in memberList.indices) {
             if (memberList[idx].idUser == myInfoLight.idUser) {
@@ -58,7 +84,7 @@ class ChatActivity : AppCompatActivity() {
                 break
             }
         }
-
+        // ID 순으로 정렬
         memberList.sortWith(compareBy<User_light> {it.idUser})
 
         // 비트맵과 이름을 가진 HashMap으로 변환
