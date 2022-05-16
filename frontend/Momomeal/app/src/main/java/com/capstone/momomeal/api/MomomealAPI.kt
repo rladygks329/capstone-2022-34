@@ -77,5 +77,4 @@ interface MomomealAPI {
         @Path("memberId") memberId: Int,
         @Path("categories") categories: String
     ): Call<ResponseBody>
-
 }

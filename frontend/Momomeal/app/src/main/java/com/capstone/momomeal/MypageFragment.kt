@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.KeyEvent
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +46,21 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         pageInfo = (requireActivity() as MainActivity).myInfo
+
+        Log.d(TAG, "cReate!!")
+
+        val mainactivity = requireActivity() as MainActivity
+
+        // 프로필 이미지 처리. 앵간하면 메인액티비티가 처리해도 될거같음.
+//        val decodeByte = Base64.decode(mainactivity.myInfo.profileImgUrl, Base64.DEFAULT)
+//        val bitmapImg = BitmapFactory.decodeByteArray(decodeByte, 0, decodeByte.size)
+
+//        binding.ivProfile.setImageBitmap(bitmapImg)
+//        binding.etUserName.setText(mainactivity.myInfo.name)
+//        binding.pbManner.progress = mainactivity.myInfo.totalRate
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
