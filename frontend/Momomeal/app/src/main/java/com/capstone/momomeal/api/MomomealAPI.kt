@@ -2,15 +2,17 @@ package com.capstone.momomeal.api
 
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.LoginResponse
+import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.data.dto.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface MomomealAPI {
     @POST("/chat")
     fun makeChatroom(
-
-    )
+        @Body params: CreateChatForm
+    ): Call<Chatroom>
 
     @GET("/chat-list/{categoryName}/{memberId}/{type}")
     fun getCategoryChatroom(
@@ -53,10 +55,12 @@ interface MomomealAPI {
        @Path("memberId") memberId: Int
    ): Call<List<Chatroom>>
 
+    // getParcelable에서는 List를 넘겨줄 수 없어서 ArrayList로 받았음.
+    // 여기만 ArrayList를 사용함. 주의!
     @GET("/entered-chat-info/{chatroomId}")
     fun getEnteredChatInfo(
        @Path("chatroomId") chatroomId: Long
-    ): Call<Chatroom>
+    ): Call<ArrayList<User_light>>
 
     @GET("/recommend-chat-list/{memberId}")
     fun getRecommendedChatroom(
@@ -72,5 +76,11 @@ interface MomomealAPI {
     fun register(
         @Body params: RegisterForm
     ): Call<LoginResponse>
+
+    @GET("/preferred-category/{memberId}/{categories}")
+    fun sendResearch(
+        @Path("memberId") memberId: Int,
+        @Path("categories") categories: String
+    ): Call<ResponseBody>
 
 }

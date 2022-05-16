@@ -6,14 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.User
-import com.capstone.momomeal.databinding.ActivityMainBinding
 import com.capstone.momomeal.databinding.FragmentChatInfoBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
-import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,9 +19,7 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
 
     private val TAG = "ChatInfoFragment"
     val momomeal = MomomealService.momomealAPI
-    val chatAdapter: ChatroomAdapter by lazy {
-        ChatroomAdapter(requireContext())
-    }
+
     val user: User by lazy{
         arguments?.getParcelable<User>("User")!!
     }
@@ -32,7 +27,6 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -82,6 +76,11 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
         binding.framgentChatInfoMax.text = chatroom.maxCapacity.toString()
         binding.framgentChatInfoStore.text = chatroom.nameStore
         binding.framgentChatInfoPickup.text = chatroom.namePickupPlace
+
+        //풀스크린보다 작게 크기를 설정한다.
+        val dialogWidth = getResources().displayMetrics.widthPixels * 0.9
+        val dialogHeight = getResources().displayMetrics.heightPixels * 0.9
+        dialog?.window?.setLayout(dialogWidth.toInt(), dialogHeight.toInt())
     }
 
 }

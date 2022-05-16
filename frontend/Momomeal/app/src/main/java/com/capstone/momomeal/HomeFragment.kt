@@ -36,12 +36,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val scCategoryFrag = SearchResultCategoryFragment()
     private val researchFragment = ResearchFragment()
     private var hasPoint = true
+    private var hasRearch = false
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
             if (Address.resultCode == Activity.RESULT_OK) {
                 hasPoint = true
                 Address.data?.let {
                     binding.fragmentHomeEditAddress.text = it.getStringExtra("data")
+                    mainActivity.myInfo.x = it.getDoubleExtra("x", 0.0)
+                    mainActivity.myInfo.y = it.getDoubleExtra("y", 0.0)
+                    Log.d("주소",mainActivity.myInfo.x.toString() )
+                    Log.d("주소",mainActivity.myInfo.y.toString() )
                 }
             }
         }
@@ -55,6 +60,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("system","home Oncreate is called")
+        mainActivity = (activity as MainActivity)
+        if(mainActivity.myInfo.x == 0.0 || mainActivity.myInfo.y == 0.0){
+            hasPoint = false
+        }
     }
 
     override fun onCreateView(
@@ -63,7 +72,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     ): View? {
         Log.d("system","home OncreateView is called")
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        mainActivity = (activity as MainActivity)
+
 
         binding.fragmentHomeEditAddress.setOnClickListener{
             startForResult.launch(Intent(requireActivity().application, MyAddressActivity::class.java))
@@ -77,7 +86,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 if(hasPoint){
                     val item = chatAdapter.getData(position)
                     chatInfoFrag.arguments = bundleOf(
-                        "User" to mainActivity.myInfo!!,
+                        "User" to mainActivity.myInfo,
                         "Chatroom" to item
                     )
                     chatInfoFrag.show(mainActivity.supportFragmentManager, chatInfoFrag.tag)
@@ -91,6 +100,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         initSearch(binding.fragmentHomeSearchbar)
         initTable(binding.fragmentHomeCategoryTable)
         updateRecommendation()
+        if(!hasRearch){
+            researchFragment.show(mainActivity.supportFragmentManager, researchFragment.tag)
+        }
         return retView
     }
 
@@ -103,7 +115,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(hasPoint && query != null){
-                    val bundle = bundleOf("SearchKeyword" to query!!)
+                    val bundle = bundleOf("SearchKeyword" to query)
                     scFrag.arguments = bundle
                     mainActivity.moveSearch(scFrag)
                 }else{

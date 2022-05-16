@@ -4,16 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.capstone.momomeal.R
 import com.capstone.momomeal.databinding.ItemMyMsgBinding
 import com.capstone.momomeal.databinding.ItemOtherMsgBinding
 import com.capstone.momomeal.databinding.ItemOtherMsgFullBinding
 import com.capstone.momomeal.data.Chat
 import com.capstone.momomeal.data.User_light
+import com.capstone.momomeal.data.membInfo
 import java.lang.IllegalArgumentException
 
 class ChatAdapter(
 //    val context: Context,
     val myInfo: User_light,
+    val membMap: HashMap<Int, membInfo>,
     val chatList: ArrayList<Chat>
 ) : RecyclerView.Adapter<ChatViewHolder>(){
 
@@ -46,6 +49,8 @@ class ChatAdapter(
     override fun getItemViewType(position: Int): Int {
         if (chatList[position].uid == myInfo.idUser) {
             return MY_MSG
+//        } else if (position == 0) {
+//            return OTHER_MSG_FULL
         } else if (position >= 0 && chatList[position - 1].uid != myInfo.idUser){
             return OTHER_MSG_FULL
         } else {
@@ -55,12 +60,16 @@ class ChatAdapter(
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         when (holder) {
-            is ChatViewHolder.OtherMsgFullViewHolder -> holder.bind(chatList[position])
+            is ChatViewHolder.OtherMsgFullViewHolder
+            -> holder.bind(chatList[position], membMap.get(chatList[position].uid))
             is ChatViewHolder.OtherMsgViewHolder -> holder.bind(chatList[position])
             is ChatViewHolder.MyMsgViewHolder -> holder.bind(chatList[position])
         }
     }
+    // 여기서부터는 전용 함수들
+//    fun updateMembers()
 
+    //  메시지 타입 구별용 객체
     companion object {
         private const val OTHER_MSG_FULL = 0
         private const val OTHER_MSG = 1
@@ -72,10 +81,16 @@ sealed class ChatViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bind
     class OtherMsgFullViewHolder(
         private val binding: ItemOtherMsgFullBinding
     ) : ChatViewHolder(binding) {
-        fun bind(item: Chat) {
-//            binding.tvOtherMsgFull.text = item.chatContent
-//            binding.tvOtherName.text
-//            binding.ivOtherProfile.set
+        fun bind(item: Chat, info: membInfo?) {
+            if (info != null) {
+                binding.ivOtherProfile.setImageBitmap(info.bitmap)
+                binding.tvOtherName.text = info.name
+            } else {
+                binding.ivOtherProfile.setImageResource(R.drawable.ic_basic_prifile)
+                binding.tvOtherName.text = "익명"
+            }
+            binding.tvOtherMsgFull.text = item.chatContent
+
         }
     }
 

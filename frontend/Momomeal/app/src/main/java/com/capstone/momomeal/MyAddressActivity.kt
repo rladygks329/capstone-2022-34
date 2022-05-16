@@ -30,14 +30,16 @@ class MyAddressActivity : AppCompatActivity()  {
             }
         })
         //최초 웹뷰 로드
-        webView.loadUrl("https://momomeal-15dcf.web.app")
+        webView.loadUrl("http://momomeal-15dcf.web.app")
     }
     private inner class BridgeInterface {
         //sample2_execDaumPostcode에서 사용할 함수를 지정
         @JavascriptInterface
-        fun processDATA(data: String) {
+        fun processDATA(data: String, x:String, y:String) {
             //다음 주소 검색(api) 결과값이 브릿지 통로를 통해 전달받는다 (from javascript)
             val result = Intent()
+            result.putExtra("x", x.toDouble())
+            result.putExtra("y", y.toDouble())
             result.putExtra("data", data)
             setResult(RESULT_OK, result)
             finish()

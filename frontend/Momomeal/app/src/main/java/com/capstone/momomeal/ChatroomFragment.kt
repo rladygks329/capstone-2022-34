@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.api.MomomealService
@@ -33,18 +34,41 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
 
         chatroomAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val chatroomInfo = chatroomAdapter.getData(position)
-                val myInfoLight = User_light((activity as MainActivity).myInfo)
-                val intent = Intent(activity, ChatActivity::class.java)
-                intent.putExtra("chatroominfo", chatroomInfo) // Chatroom information
-                intent.putExtra("myinfo", myInfoLight)
-                startActivity(intent)
+                momomeal.getEnteredChatInfo(chatroomInfo.idChatroom)
+                    .enqueue(object: Callback<ArrayList<User_light>> {
+                        override fun onResponse(
+                            call: Call<ArrayList<User_light>>,
+                            response: Response<ArrayList<User_light>>
+                        ) {
+                            Log.d("$TAG|click!", response.body().toString())
+                            if(response.isSuccessful.not()){
+                                return
+                            }
+                            response.body()?.let {
+                                val intent = Intent(activity, ChatActivity::class.java)
+                                val myInfoLight = User_light((activity as MainActivity).myInfo)
+                                val memberList = response.body()
+                                intent.putExtra("chatroominfo", chatroomInfo) // Chatroom information
+                                intent.putExtra("myinfo", myInfoLight)
+                                intent.putParcelableArrayListExtra("memblist", memberList)
+                                startActivity(intent)
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ArrayList<User_light>>, t: Throwable) {
+                            Toast.makeText(
+                                context, "네트워크 지연 문제. 잠시 후에 다시 시도해주세요.", Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    })
+
+
             }
         })
         binding.fragmentChatroomToolbar.inflateMenu(R.menu.menu_chat_room)
