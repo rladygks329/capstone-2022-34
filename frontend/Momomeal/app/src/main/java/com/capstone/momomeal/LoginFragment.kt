@@ -39,9 +39,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         //init
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.viewModel = loginViewModel
-        loginViewModel.email = auto.getString("email", "")!!
-        loginViewModel.password = auto.getString("password", "")!!
-        loginViewModel.auto = auto.getBoolean("active", false)
+        if(auto.getBoolean("active", false)){
+            loginViewModel.email = auto.getString("email", "")!!
+            loginViewModel.password = auto.getString("password", "")!!
+            loginViewModel.auto = auto.getBoolean("active", false)
+        }
         paintGradient(binding.fragmentLoginAppname)
         return retView
     }
@@ -51,18 +53,22 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         //viewlifecycleOwner가 oncreate에서 만들어지므로 onViewCreated에서 observer를 달아준다.
         loginViewModel.loginEvent.observe(viewLifecycleOwner, EventObserver<String>{
             when(it){
-                "Fail" -> Toast.makeText(requireActivity().applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+                "Fail" ->showMSG("로그인 실패")
                 "moveGreeting" -> moveGreeting()
             }
         })
         loginViewModel.user.observe(viewLifecycleOwner, Observer {
-            startMain(it)
+            if(it.member != null){
+                startMain(it.member.toUser(), it.recommend)
+            }else{
+                showMSG("이메일이나 비밀번호를 확인해주세요")
+            }
         })
         if(auto.getBoolean("active", false)){
             loginViewModel.login()
         }
     }
-    private fun startMain(user: User){
+    private fun startMain(user: User, recommend: String){
         val autoLoginEdit = auto.edit()
         autoLoginEdit.putString("email", loginViewModel.email)
         autoLoginEdit.putString("password", loginViewModel.password)
@@ -70,6 +76,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         autoLoginEdit.commit()
         val intent = Intent(activity, MainActivity::class.java)
         intent.putExtra("user", user)
+        intent.putExtra("recommend", recommend == "yes")
         startActivity(intent)
         requireActivity().finish()
     }
@@ -94,5 +101,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         view.text = spannable
+    }
+    fun showMSG(s: String){
+        Toast.makeText(requireActivity().applicationContext, s, Toast.LENGTH_SHORT).show()
     }
 }

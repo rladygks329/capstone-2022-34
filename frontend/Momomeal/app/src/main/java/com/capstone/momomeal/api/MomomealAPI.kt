@@ -1,7 +1,7 @@
 package com.capstone.momomeal.api
 
 import com.capstone.momomeal.data.Chatroom
-import com.capstone.momomeal.data.LoginResponse
+import com.capstone.momomeal.data.checkResponse
 import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.data.dto.*
 import okhttp3.ResponseBody
@@ -64,17 +64,22 @@ interface MomomealAPI {
 
     @POST("/login.do")
     fun login(
-        @Body params: HashMap<String, String>
+        @Body params: LoginForm
     ): Call<LoginResponse>
 
     @POST("/createAccount.do")
     fun register(
         @Body params: RegisterForm
-    ): Call<LoginResponse>
+    ): Call<checkResponse>
 
     @GET("/preferred-category/{memberId}/{categories}")
     fun sendResearch(
         @Path("memberId") memberId: Int,
         @Path("categories") categories: String
     ): Call<ResponseBody>
+
+    @PUT("/setCoordinate.do")
+    fun updateCoordinate(
+        @Body params: UpdateCoordinateForm
+    ) : Call<checkResponse>
 }
