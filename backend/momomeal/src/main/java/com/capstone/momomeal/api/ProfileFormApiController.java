@@ -42,7 +42,8 @@ public class ProfileFormApiController {
         returnData.put("name",member.getRealName());
         returnData.put("email",member.getEmail());
         returnData.put("img_url",member.getImg());
-        //returnData.put("int",member.TotalRate());
+        returnData.put("int",member.TotalRate());
+        returnData.put("reviewList",member.getMemberReview());
 
         return returnData;
     }
@@ -52,7 +53,7 @@ public class ProfileFormApiController {
     public HashMap<String, Object> updateUser(@RequestBody HashMap<String, Object> map){
         HashMap<String, Object> returnData = new HashMap<>();
 
-        Long userId = (Long)map.get("user_id");
+        Long userId = Long.valueOf((Integer)map.get("user_id"));
         String email = (String)map.get("email");
         String RealName = (String)map.get("name");
         String ProfileImg = (String)map.get("profileImgUrl");
@@ -90,10 +91,10 @@ public class ProfileFormApiController {
 
     @ResponseBody
     @RequestMapping(value = "setCoordinate.do",method = RequestMethod.PUT)
-    public HashMap<String, Object> getXY(@RequestBody HashMap<String, Object> map){
+    public HashMap<String, Object> putXY(@RequestBody HashMap<String, Object> map){
         HashMap<String, Object> returnData = new HashMap<>();
 
-        Long userId = (Long)map.get("user_id");
+        Long userId = Long.valueOf((Integer)map.get("user_id"));
         Double x_value = (Double)map.get("x");
         Double y_value = (Double)map.get("y");
 
@@ -110,13 +111,14 @@ public class ProfileFormApiController {
     @RequestMapping(value = "getUserReviewList.do",method = RequestMethod.POST)
     public HashMap<String, Object> getReview(@RequestBody HashMap<String, Object> map){
         HashMap<String, Object> returnData = new HashMap<>();
-        Long userId = (Long)map.get("userId");
+        Long userId = Long.valueOf((Integer)map.get("user_id"));
 
         List<MemberReview> memberReviews = memberReviewService.getReviewList(userId);
         if(memberReviews.isEmpty()){
             returnData.put("check",0);
             return returnData;
         }
+        returnData.put("check",1);
         returnData.put("Reviews",memberReviews);
         return returnData;
     }
