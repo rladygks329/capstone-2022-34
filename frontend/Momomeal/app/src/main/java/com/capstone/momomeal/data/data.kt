@@ -11,11 +11,11 @@ import java.util.*
 
 @Parcelize
 data class User(
-    val name: String = "",
+    var name: String = "",
     val idUser: Int = 0,
     val email: String ="",
-    val profileImgUrl: String = "",
-    val totalRate: Int = 50,
+    var profileImgUrl: String = "",
+    var totalRate: Int = 50,
     val listReview: List<Int> = listOf(),
     var x : Double = 0.0,
     var y : Double = 0.0,
@@ -72,10 +72,10 @@ data class Chatroom (
 ]
 * */
 data class Review (
-    val idReview: Int = 0,
+    @SerializedName("RateStatus")
     val rateSign: Rate,
+    @SerializedName("review_text")
     val conReview: String = "",
-    val dateReview: LocalDateTime,
 )
 
 data class Chat (
@@ -84,7 +84,7 @@ data class Chat (
 )
 
 enum class Rate {
-    Good, Bad,
+    LIKE, BAD,
 }
 
 enum class Category(val KoreanName: String) {

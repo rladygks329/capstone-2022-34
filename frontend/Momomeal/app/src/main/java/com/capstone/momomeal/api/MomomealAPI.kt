@@ -82,4 +82,14 @@ interface MomomealAPI {
     fun updateCoordinate(
         @Body params: UpdateCoordinateForm
     ) : Call<checkResponse>
+
+    @PUT("/updateUserInfo.do")
+    fun updateUserInfo(
+        @Body params: UpdateUserInfoForm
+    ) : Call<checkResponse>
+
+    @POST("getUserInfo.do")
+    fun getUserInfo(
+        @Body params: getUserInfoForm
+    ) : Call<getUserResponse>
 }

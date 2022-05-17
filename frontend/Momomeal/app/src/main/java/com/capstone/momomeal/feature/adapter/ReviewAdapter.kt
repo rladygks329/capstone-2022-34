@@ -9,8 +9,12 @@ import com.capstone.momomeal.data.Rate
 import com.capstone.momomeal.data.Review
 
 class ReviewAdapter(
-    val reviewList: ArrayList<Review>
+    var reviewList: ArrayList<Review>
 ) : RecyclerView.Adapter<ViewHolder>() {
+    fun replaceData(reviews: List<Review>){
+        reviewList = ArrayList<Review>(reviews)
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemReviewContentBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
@@ -28,8 +32,8 @@ class ViewHolder(val binding: ItemReviewContentBinding) : RecyclerView.ViewHolde
     fun bind(item: Review) {
         binding.tvReviewContent.text = item.conReview
         when (item.rateSign) {
-            Rate.Good -> binding.ivReviewContent.setImageResource(R.drawable.ic_good_sign)
-            Rate.Bad -> binding.ivReviewContent.setImageResource(R.drawable.ic_bad_sign)
+            Rate.LIKE -> binding.ivReviewContent.setImageResource(R.drawable.ic_good_sign)
+            Rate.BAD -> binding.ivReviewContent.setImageResource(R.drawable.ic_bad_sign)
         }
     }
 }
