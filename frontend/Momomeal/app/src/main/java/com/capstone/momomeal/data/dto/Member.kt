@@ -14,7 +14,7 @@ data class Member(
     val name: String = "",
 
     //@SerializedName("img_url")
-    val img_url1: String = "",
+    val img_url: String = "",
 
     //@SerializedName("x")
     val x: Double =  1.0,
@@ -26,10 +26,10 @@ data class Member(
     val address: String = "",
 
     //@SerializedName("user_rate")
-    val user_late: Int = 50
+    val user_rate: Int = 50
 ){
     fun toUser(): User {
-        return User(name, userId, email, img_url1, user_late, listOf(), x, y, address)
+        return User(name, userId, email, img_url, user_rate, listOf(), x, y, address)
     }
 }
 /*

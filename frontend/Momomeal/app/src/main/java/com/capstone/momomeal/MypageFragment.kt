@@ -168,7 +168,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                 Log.d("retrofit", response?.body().toString())
                 response.body()?.let{
                     binding.etUserName.setText(it.name)
-                    if(it.img_url != ""){
+                    if(it.img != ""){
                         binding.ivProfile.setImageBitmap(decodeImage(pageInfo.profileImgUrl))
                     }
                     binding.pbManner.progress = it.rate

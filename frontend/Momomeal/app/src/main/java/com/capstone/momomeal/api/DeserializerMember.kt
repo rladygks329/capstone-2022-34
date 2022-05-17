@@ -17,9 +17,9 @@ class DeserializerMember: JsonDeserializer<Member> {
         val email = jsonObject["email"].asString
         val name = jsonObject["name"].asString
         var img = ""
-        val img_url = jsonObject["img_url"]
-        if(img_url != null){
-            img = img_url.asString
+
+        if(!jsonObject.get("img_url").isJsonNull) {
+            img = jsonObject["img_url"].asString
         }
 
         /*
@@ -27,8 +27,8 @@ class DeserializerMember: JsonDeserializer<Member> {
         val x = jsonObject["x"].asDouble
         val y = jsonObject["y"].asDouble
         val address = jsonObject["address"].asString
-        val user_late = jsonObject["user_late"].asString
-        return Member(userId, email, name, img, x, y, address, user_late)
+        val user_rate = jsonObject["user_rate"].asInt
+        return Member(userId, email, name, img, x, y, address, user_rate)
         */
         return Member(userId, email, name, img)
     }

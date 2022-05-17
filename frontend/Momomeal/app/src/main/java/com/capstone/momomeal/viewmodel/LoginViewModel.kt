@@ -58,6 +58,7 @@ class LoginViewModel : ViewModel() {
                     }
                 }
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Log.e("retrofit", t.toString())
                     _loginEvent.postValue(Event("Fail"))
                 }
             })

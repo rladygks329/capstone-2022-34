@@ -7,7 +7,7 @@ data class getUserResponse(
     @SerializedName("reviewList")
     val reviewList: List<Review> = listOf(),
     @SerializedName("img_url")
-    val img_url:String,
+    val img_url: String?,
     @SerializedName("name")
     val name: String,
     @SerializedName("email")
@@ -16,7 +16,8 @@ data class getUserResponse(
     val rate: Int
 )
 {
-
+    val img
+        get() = img_url ?: ""
 }
 /*
 * "reviewList":[],
