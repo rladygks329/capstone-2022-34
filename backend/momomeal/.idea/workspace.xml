@@ -4,7 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="Merge" />
+    <list default="true" id="b46009b3-a198-4818-89f9-21969eecf516" name="Changes" comment="feat: 카테고리 설문조사, 추천 채팅방 리턴 api">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ReviewFormApiController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/ReviewDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/LoginFormApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/LoginFormApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ProfileFormApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/api/ProfileFormApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberReview.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/MemberReview.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/Members.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/domain/Members.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/MemoryUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/repository/MemoryUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/MemberReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/MemberReviewService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/capstone/momomeal/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/capstone/momomeal/service/testMemberReviewIntegrationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/capstone/momomeal/service/testMemberReviewIntegrationRepository.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +33,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -50,6 +68,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="JpbToolWindowState">
     <option name="myId2FirstActivated">
       <map>
@@ -62,7 +88,7 @@
       <map>
         <entry key="com.haulmont.jpb.jpaInspector" value="true" />
         <entry key="com.haulmont.jpb.jpaPalette" value="true" />
-        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
       </map>
     </option>
   </component>
@@ -78,10 +104,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../main/capstone-2022-34/backend/momomeal" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Gradle.testMemberReviewIntegrationRepository.addReview">
     <configuration name="MomomealApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.capstone.momomeal.MomomealApplication" />
       <module name="momomeal.main" />
@@ -95,9 +121,104 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="PutMemberData.PutData" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.capstone.momomeal.service.PutMemberData.PutData&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="testMemberReviewIntegrationRepository.addReview" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.capstone.momomeal.service.testMemberReviewIntegrationRepository.addReview&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="testMemberReviewIntegrationRepository.getReviewList" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.capstone.momomeal.service.testMemberReviewIntegrationRepository.getReviewList&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="testMemberReviewIntegrationRepository.getSimpleQueryReviewList" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.capstone.momomeal.service.testMemberReviewIntegrationRepository.getSimpleQueryReviewList&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MomomealApplication" />
+        <item itemvalue="Gradle.testMemberReviewIntegrationRepository.addReview" />
+        <item itemvalue="Gradle.PutMemberData.PutData" />
+        <item itemvalue="Gradle.testMemberReviewIntegrationRepository.getReviewList" />
+        <item itemvalue="Gradle.testMemberReviewIntegrationRepository.getSimpleQueryReviewList" />
         <item itemvalue="Application.MomomealApplication" />
       </list>
     </recent_temporary>
@@ -173,7 +294,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 카테고리 설문조사, 추천 채팅방 리턴 api" />
