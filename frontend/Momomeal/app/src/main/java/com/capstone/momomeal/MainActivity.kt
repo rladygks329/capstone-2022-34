@@ -31,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     public val myInfo: User by lazy {
         intent.getParcelableExtra<User>("user") as User
     }
+    public val recommend: Boolean by lazy {
+        intent.getBooleanExtra("recommend", false)
+    }
     var searchKeyword: String = ""
     companion object {
         private const val KEY_SELECTED_TAB = "selectedTab"

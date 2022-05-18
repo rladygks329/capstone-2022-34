@@ -2,14 +2,13 @@ package com.capstone.momomeal
 
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
-import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.databinding.FragmentResearchBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
 import okhttp3.ResponseBody
@@ -26,6 +25,17 @@ class ResearchFragment : BaseDialogFragment<FragmentResearchBinding>(FragmentRes
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialog)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.setOnKeyListener { dialog, keyCode, event ->
+            if(keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+                return@setOnKeyListener true
+            }
+            return@setOnKeyListener false
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

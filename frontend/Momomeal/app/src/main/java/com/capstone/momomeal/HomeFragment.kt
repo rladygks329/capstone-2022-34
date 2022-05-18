@@ -19,6 +19,8 @@ import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
+import com.capstone.momomeal.data.checkResponse
+import com.capstone.momomeal.data.dto.UpdateCoordinateForm
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,13 +42,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
             if (Address.resultCode == Activity.RESULT_OK) {
-                hasPoint = true
                 Address.data?.let {
-                    binding.fragmentHomeEditAddress.text = it.getStringExtra("data")
-                    mainActivity.myInfo.x = it.getDoubleExtra("x", 0.0)
-                    mainActivity.myInfo.y = it.getDoubleExtra("y", 0.0)
-                    Log.d("주소",mainActivity.myInfo.x.toString() )
-                    Log.d("주소",mainActivity.myInfo.y.toString() )
+                    val address = it.getStringExtra("data")
+                    val x = it.getDoubleExtra("x", 0.0)
+                    val y = it.getDoubleExtra("y", 0.0)
+                    momomeal.updateCoordinate(UpdateCoordinateForm(mainActivity.myInfo.idUser, x, y, address!!)).enqueue(object: Callback<checkResponse>{
+                        override fun onResponse(
+                            call: Call<checkResponse>,
+                            response: Response<checkResponse>
+                        ) {
+                            if(response.isSuccessful.not()){
+                                return
+                            }
+                            response.body()?.let{
+                                if(it.check == 1){
+                                    hasPoint = true
+                                    binding.fragmentHomeEditAddress.text = address
+                                    mainActivity.myInfo.x = x
+                                    mainActivity.myInfo.y = y
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<checkResponse>, t: Throwable) {
+                            Toast.makeText(requireContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
             }
         }
@@ -61,9 +82,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         super.onCreate(savedInstanceState)
         Log.d("system","home Oncreate is called")
         mainActivity = (activity as MainActivity)
-        if(mainActivity.myInfo.x == 0.0 || mainActivity.myInfo.y == 0.0){
+        if(mainActivity.myInfo.x == 0.0 && mainActivity.myInfo.y == 0.0){
             hasPoint = false
         }
+        hasRearch = mainActivity.recommend
     }
 
     override fun onCreateView(
@@ -78,7 +100,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
             startForResult.launch(Intent(requireActivity().application, MyAddressActivity::class.java))
         }
         binding.fabHome.setOnClickListener {
-            createChatFragment.show(mainActivity.supportFragmentManager, createChatFragment.tag)
+            if(hasPoint){
+                createChatFragment.show(mainActivity.supportFragmentManager, createChatFragment.tag)
+            }else{
+                Toast.makeText(requireContext(), "주소를 설정해주세요", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.fragmentHomeRecycler.adapter = chatAdapter
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{

@@ -1,59 +1,91 @@
 package com.capstone.momomeal
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.Rate
+import com.capstone.momomeal.data.Review
+import com.capstone.momomeal.data.dto.getUserInfoForm
+import com.capstone.momomeal.data.dto.getUserResponse
+import com.capstone.momomeal.databinding.FragmentProfileBinding
+import com.capstone.momomeal.feature.BaseFragment
+import com.capstone.momomeal.feature.adapter.ReviewAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.ByteArrayInputStream
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private val reviewDialogFragment = CreateReviewFragment()
+    private var user_id: Int = -1
+    val momomeal = MomomealService.momomealAPI
+    val reviewAdapter: ReviewAdapter by lazy {
+        ReviewAdapter(ArrayList<Review>())
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        val retview = super.onCreateView(inflater, container, savedInstanceState)
+        user_id = requireArguments().getInt("user_id")
+        binding.fragmentProfileReviewRecycler.adapter = reviewAdapter
+        binding.btnProfileBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
+        binding.btnOtherReview.setOnClickListener{
+            reviewDialogFragment.arguments = bundleOf(
+                "user_id" to user_id,
+                "name" to binding.tvProfileUsername.text.toString()
+            )
+            reviewDialogFragment.show(requireActivity().supportFragmentManager, reviewDialogFragment.tag)
+        }
+        updatePage(user_id)
+        return retview
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onResume() {
+        super.onResume()
+        updatePage(user_id)
+    }
+
+    fun updatePage(id: Int){
+        momomeal.getUserInfo(getUserInfoForm(id)).enqueue(object: Callback<getUserResponse> {
+            override fun onResponse(
+                call: Call<getUserResponse>,
+                response: Response<getUserResponse>
+            ) {
+                if(response.isSuccessful.not()){
+                    return
+                }
+                Log.d("retrofit", response.body().toString())
+                response.body()?.let{
+                    binding.tvProfileUsername.text = it.name
+                    if(it.img != ""){
+                        binding.ivProfile.setImageBitmap(decodeImage(it.img))
+                    }
+                    binding.pbOtherManner.progress = it.rate
+                    binding.tvMannerPoint.text = it.rate.toString() + "점"
+                    Log.d("retrofit", it.reviewList.toString())
+                    reviewAdapter.replaceData(it.reviewList)
                 }
             }
+            override fun onFailure(call: Call<getUserResponse>, t: Throwable) {
+                Log.e("retrofit", t.toString())
+            }
+        })
+    }
+    private fun decodeImage(Base64_string: String): Bitmap {
+        val bytePlainOrg = Base64.decode(Base64_string, 0)
+        val inStream = ByteArrayInputStream(bytePlainOrg)
+        return BitmapFactory.decodeStream(inStream)
     }
 }

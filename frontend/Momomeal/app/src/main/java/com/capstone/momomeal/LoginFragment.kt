@@ -1,17 +1,21 @@
 package com.capstone.momomeal
 
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Spannable
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.text.set
 import androidx.core.text.toSpannable
 import androidx.lifecycle.Observer
@@ -39,9 +43,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         //init
         loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         binding.viewModel = loginViewModel
-        loginViewModel.email = auto.getString("email", "")!!
-        loginViewModel.password = auto.getString("password", "")!!
-        loginViewModel.auto = auto.getBoolean("active", false)
+        if(auto.getBoolean("active", false)){
+            loginViewModel.email = auto.getString("email", "")!!
+            loginViewModel.password = auto.getString("password", "")!!
+            loginViewModel.auto = auto.getBoolean("active", false)
+        }
+        binding.fragmentLoginKakao.setOnClickListener{
+            val profileFrag = ProfileFragment()
+            profileFrag.arguments = bundleOf("user_id" to 3)
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.activity_login_fragment_container, profileFrag)
+                .addToBackStack(TAG)
+                .commit()
+        }
         paintGradient(binding.fragmentLoginAppname)
         return retView
     }
@@ -50,19 +65,25 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         super.onViewCreated(view, savedInstanceState)
         //viewlifecycleOwner가 oncreate에서 만들어지므로 onViewCreated에서 observer를 달아준다.
         loginViewModel.loginEvent.observe(viewLifecycleOwner, EventObserver<String>{
+            view?.hideKeyboard()
             when(it){
-                "Fail" -> Toast.makeText(requireActivity().applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+                "Fail" ->showMSG("로그인 실패")
                 "moveGreeting" -> moveGreeting()
             }
         })
         loginViewModel.user.observe(viewLifecycleOwner, Observer {
-            startMain(it)
+            view?.hideKeyboard()
+            if(it.member != null){
+                startMain(it.member.toUser(), it.recommend)
+            }else{
+                showMSG("이메일이나 비밀번호를 확인해주세요")
+            }
         })
         if(auto.getBoolean("active", false)){
             loginViewModel.login()
         }
     }
-    private fun startMain(user: User){
+    private fun startMain(user: User, recommend: String){
         val autoLoginEdit = auto.edit()
         autoLoginEdit.putString("email", loginViewModel.email)
         autoLoginEdit.putString("password", loginViewModel.password)
@@ -70,6 +91,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         autoLoginEdit.commit()
         val intent = Intent(activity, MainActivity::class.java)
         intent.putExtra("user", user)
+        intent.putExtra("recommend", recommend == "yes")
         startActivity(intent)
         requireActivity().finish()
     }
@@ -94,5 +116,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         view.text = spannable
+    }
+    fun showMSG(s: String){
+        Toast.makeText(requireActivity().applicationContext, s, Toast.LENGTH_SHORT).show()
+    }
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }
