@@ -11,14 +11,32 @@ import com.capstone.momomeal.databinding.ItemOtherMsgFullBinding
 import com.capstone.momomeal.data.Chat
 import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.data.membInfo
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import java.lang.IllegalArgumentException
 
 class ChatAdapter(
 //    val context: Context,
     val myInfo: User_light,
     var membMap: HashMap<Int, membInfo>,
-    var chatList: ArrayList<Chat>
+    val chatroomId: Long
 ) : RecyclerView.Adapter<ChatViewHolder>(){
+    private val msgList = ArrayList<Chat>()
+    private val fireDB = FirebaseDatabase.getInstance().reference
+        .child("chatroom").child(chatroomId.toString())
+    private lateinit var recyView: RecyclerView
+    init {
+
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        super.onAttachedToRecyclerView(recyclerView)
+        recyView = recyclerView
+        getMsgList()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         return when (viewType) {
@@ -41,16 +59,16 @@ class ChatAdapter(
         }
     }
 
-    override fun getItemCount(): Int = chatList.size
+    override fun getItemCount(): Int = msgList.size
 
     // 채팅의 경우 RecyclerView에 들어가는 item의 타입이 3개이므로, 타입의 구별이 필요합니다.
     // 그 구별을 위한 함수입니다.
     override fun getItemViewType(position: Int): Int {
-        if (chatList[position].uid == myInfo.idUser) {
+        if (msgList[position].uid == myInfo.idUser) {
             return MY_MSG
 //        } else if (position == 0) {
 //            return OTHER_MSG_FULL
-        } else if (position >= 0 && chatList[position - 1].uid != myInfo.idUser){
+        } else if (position == 0 || msgList[position - 1].uid != myInfo.idUser){
             return OTHER_MSG_FULL
         } else {
             return OTHER_MSG
@@ -60,9 +78,9 @@ class ChatAdapter(
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         when (holder) {
             is ChatViewHolder.OtherMsgFullViewHolder
-            -> holder.bind(chatList[position], membMap.get(chatList[position].uid))
-            is ChatViewHolder.OtherMsgViewHolder -> holder.bind(chatList[position])
-            is ChatViewHolder.MyMsgViewHolder -> holder.bind(chatList[position])
+            -> holder.bind(msgList[position], membMap.get(msgList[position].uid))
+            is ChatViewHolder.OtherMsgViewHolder -> holder.bind(msgList[position])
+            is ChatViewHolder.MyMsgViewHolder -> holder.bind(msgList[position])
         }
     }
     // 여기서부터는 전용 함수들
@@ -77,10 +95,25 @@ class ChatAdapter(
     }
     fun removeMembers(id: Int) = membMap.remove(id)
 
-    // chatList 갱신용 함수
+    // msgList 갱신용 함수
     fun addChat(chat: Chat) {
-        chatList.add(chat)
-        notifyItemInserted(chatList.size - 1)
+        msgList.add(chat)
+        notifyItemInserted(msgList.size - 1)
+    }
+
+    fun getMsgList() {
+        fireDB.child("chats").addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(snapshot: DataSnapshot) {
+                msgList.clear()
+                for (msg in snapshot.children) {
+                    val tmp = msg.getValue<Chat>()
+                    msgList.add(tmp!!)
+                }
+            }
+        })
+        notifyDataSetChanged()
+        recyView.scrollToPosition(msgList.size - 1)
     }
 
     //  메시지 타입 구별용 객체

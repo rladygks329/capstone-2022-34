@@ -75,7 +75,10 @@ data class Review (
     val conReview: String = "",
     val dateReview: LocalDateTime,
 )
-
+class ChatModel (
+    val users: HashMap<String, Boolean> = HashMap(),
+    val chats: HashMap<String, Chat> = HashMap()) {
+}
 data class Chat (
     val uid: Int = 0,
     val chatContent: String = "",
@@ -103,9 +106,7 @@ data class LoginResponse(
     @SerializedName("check") val check : Int
 )
 
-class ChatModel (
-    val userMap: HashMap<Int, Boolean> = HashMap(),
-    val )
+
 
 
 val fakeUser = User("김요한", 9, "rladygks329@naver.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 50, listOf(1,2,3))
