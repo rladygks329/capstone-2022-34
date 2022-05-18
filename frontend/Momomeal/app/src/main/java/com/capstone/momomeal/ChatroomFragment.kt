@@ -142,7 +142,6 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     }
 
     fun updateMyChatRoom(){
-
         val mainActivity = requireActivity() as MainActivity
 
         momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<Chatroom>>{
