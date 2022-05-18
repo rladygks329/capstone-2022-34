@@ -27,7 +27,7 @@ public class ReviewFormApiController {
 
         Long user_id = Long.valueOf((Integer)map.get("user_id"));
         String review = (String)map.get("review");
-        RateStatus rateStatus = ((String)map.get("rate") == "LIKE") ? RateStatus.LIKE : RateStatus.BAD;
+        RateStatus rateStatus = ((String)map.get("rate")).equals("LIKE") ? RateStatus.LIKE : RateStatus.BAD;
 
         MemberReview memberReview = new MemberReview();
         memberReview.setReview_text(review);

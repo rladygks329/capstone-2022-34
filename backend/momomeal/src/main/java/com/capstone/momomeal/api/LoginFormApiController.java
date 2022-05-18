@@ -61,13 +61,13 @@ public class LoginFormApiController {
         }else{
             Members member_s = members.get();
             Smember.setByMembers(member_s);
-            returnMap.put("check",1);  
+            returnMap.put("check",1);
             returnMap.put("member",Smember);
             try{
                 RecommendCategory rc = member_s.getRecommendCategory();
-                returnMap.put("recommend",rc);
+                returnMap.put("recommend", "yes");
             }catch(NullPointerException e){
-                returnMap.put("recommend",null);
+                returnMap.put("recommend", "no");
                 return returnMap;
             }
         }
@@ -80,5 +80,3 @@ public class LoginFormApiController {
         memoryUserRepository.logOut();
     }
 }
-
-
