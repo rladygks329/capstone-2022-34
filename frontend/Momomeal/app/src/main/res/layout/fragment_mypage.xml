@@ -72,7 +72,7 @@
 
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/profile_img_circle"
-                app:srcCompat="@drawable/ic_basic_prifile"
+                app:srcCompat="@drawable/ic_basic_profile"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="0dp" />
 

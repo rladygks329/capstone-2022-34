@@ -12,7 +12,7 @@ class LoginRepository(
     suspend fun login(email: String, password: String): User? {
         return if(email == "user1234" && password == "1234") fakeUser
         else if (email == "ses@naver.com" && password == "qwerty") fakeUsers[0]
-        else if (email == "alal" && password == "12321") fakeUsers[1]
+        else if (email == "asdd" && password == "qwer123") fakeUsers[1]
         else null
     }
 }

@@ -16,8 +16,8 @@ import java.lang.IllegalArgumentException
 class ChatAdapter(
 //    val context: Context,
     val myInfo: User_light,
-    val membMap: HashMap<Int, membInfo>,
-    val chatList: ArrayList<Chat>
+    var membMap: HashMap<Int, membInfo>,
+    var chatList: ArrayList<Chat>
 ) : RecyclerView.Adapter<ChatViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -39,7 +39,6 @@ class ChatAdapter(
             )
             else -> throw IllegalArgumentException("Invalid ViewType Provided")
         }
-
     }
 
     override fun getItemCount(): Int = chatList.size
@@ -67,7 +66,22 @@ class ChatAdapter(
         }
     }
     // 여기서부터는 전용 함수들
-//    fun updateMembers()
+    // membMap 갱신용 함수
+    fun updateMembers(map: HashMap<Int, membInfo>) {
+        membMap = map
+        notifyDataSetChanged()
+    }
+    fun addMember(id: Int, info: membInfo) {
+        membMap.set(id, info)
+        notifyDataSetChanged()
+    }
+    fun removeMembers(id: Int) = membMap.remove(id)
+
+    // chatList 갱신용 함수
+    fun addChat(chat: Chat) {
+        chatList.add(chat)
+        notifyItemInserted(chatList.size - 1)
+    }
 
     //  메시지 타입 구별용 객체
     companion object {
@@ -86,7 +100,7 @@ sealed class ChatViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bind
                 binding.ivOtherProfile.setImageBitmap(info.bitmap)
                 binding.tvOtherName.text = info.name
             } else {
-                binding.ivOtherProfile.setImageResource(R.drawable.ic_basic_prifile)
+                binding.ivOtherProfile.setImageResource(R.drawable.ic_basic_profile)
                 binding.tvOtherName.text = "익명"
             }
             binding.tvOtherMsgFull.text = item.chatContent
