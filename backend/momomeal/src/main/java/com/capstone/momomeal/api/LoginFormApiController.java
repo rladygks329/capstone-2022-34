@@ -32,6 +32,7 @@ public class LoginFormApiController {
         member.setEmail((String)map.get("email"));
         member.setPwd((String)map.get("pwd"));
         member.setRealName((String)map.get("Rname"));
+        member.setUser_rate(50F);
 
         try {
             memberService.join(member);
@@ -64,9 +65,9 @@ public class LoginFormApiController {
             returnMap.put("member",Smember);
             try{
                 RecommendCategory rc = member_s.getRecommendCategory();
-                returnMap.put("recommend",rc);
+                returnMap.put("recommend", "yes");
             }catch(NullPointerException e){
-                returnMap.put("recommend",null);
+                returnMap.put("recommend", "no");
                 return returnMap;
             }
         }
@@ -79,5 +80,3 @@ public class LoginFormApiController {
         memoryUserRepository.logOut();
     }
 }
-
-

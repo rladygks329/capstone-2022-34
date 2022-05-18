@@ -2,6 +2,8 @@ package com.capstone.momomeal.data
 
 import android.graphics.Bitmap
 import android.os.Parcelable
+import com.capstone.momomeal.data.dto.LoginResponse
+import com.capstone.momomeal.data.dto.Member
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
@@ -10,14 +12,15 @@ import kotlin.collections.HashMap
 
 @Parcelize
 data class User(
-    val name: String = "",
+    var name: String = "",
     val idUser: Int = 0,
     val email: String ="",
-    val profileImgUrl: String = "",
-    val totalRate: Int = 50,
+    var profileImgUrl: String = "",
+    var totalRate: Int = 50,
     val listReview: List<Int> = listOf(),
     var x : Double = 0.0,
-    var y : Double = 0.0
+    var y : Double = 0.0,
+    var address: String = ""
 ) : Parcelable{
     fun trans_User_light() : User_light{
         return User_light(name, idUser, profileImgUrl)
@@ -70,10 +73,10 @@ data class Chatroom (
 ]
 * */
 data class Review (
-    val idReview: Int = 0,
+    @SerializedName("RateStatus")
     val rateSign: Rate,
+    @SerializedName("review_text")
     val conReview: String = "",
-    val dateReview: LocalDateTime,
 )
 class ChatModel (
     val users: HashMap<String, Boolean> = HashMap(),
@@ -85,7 +88,7 @@ data class Chat (
 )
 
 enum class Rate {
-    Good, Bad,
+    LIKE, BAD,
 }
 
 enum class Category(val KoreanName: String) {
@@ -102,7 +105,7 @@ enum class Category(val KoreanName: String) {
     Fastfood("패스트푸드")
 }
 
-data class LoginResponse(
+data class checkResponse(
     @SerializedName("check") val check : Int
 )
 
@@ -221,4 +224,11 @@ val fakeUsers = listOf(
     User("김미나", 1, "mina123@naver.com", choco1, 50, listOf(1,2,3)),
     User("조자현", 21, "ssibo12@gmail.com", choco2, 40, listOf(1,2,3)),
     User("유비", 3, "poskei@nate.com", "https://miro.medium.com/max/1400/0*EhfyHg8fBGUEyAE-.png", 60, listOf(1,2,3))
+)
+
+val fakeLoginResponse = listOf(
+    LoginResponse( Member(1, "mina123@naver.com","김미나","img_xxx",) , "yes"),
+    LoginResponse( Member(3, "ssibo12@naver.com","조자현","img_xxx",) , "no"),
+    LoginResponse( Member(9, "poskei@naver.com","유비","img_xxx",) , "yes"),
+    LoginResponse(null, "no")
 )

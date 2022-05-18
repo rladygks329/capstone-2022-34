@@ -71,8 +71,13 @@ public class MemberReview {
         this.member = member;
     }
 
+    @Override
     public String toString() {
-        Long var10000 = this.getReview_id();
-        return "MemberReview(review_id=" + var10000 + ", review_text=" + this.getReview_text() + ", rate=" + this.getRate() + ", member=" + this.getMember() + ")";
+        return "MemberReview{" +
+                "review_id=" + review_id +
+                ", review_text='" + review_text + '\'' +
+                ", rate=" + rate +
+                ", member=" + member +
+                '}';
     }
 }

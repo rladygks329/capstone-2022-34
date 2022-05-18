@@ -25,9 +25,6 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
     }
     lateinit var chatroom: Chatroom
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,14 +70,14 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
         super.onResume()
         chatroom = arguments?.getParcelable<Chatroom>("Chatroom")!!
         binding.framgentChatInfoTitle.text = chatroom.nameRoom
-        binding.framgentChatInfoCategory.text = chatroom.category?.KoreanName
+        binding.framgentChatInfoCategory.text = chatroom.category.KoreanName
         binding.framgentChatInfoMax.text = chatroom.maxCapacity.toString()
         binding.framgentChatInfoStore.text = chatroom.nameStore
         binding.framgentChatInfoPickup.text = chatroom.namePickupPlace
 
         //풀스크린보다 작게 크기를 설정한다.
-        val dialogWidth = getResources().displayMetrics.widthPixels * 0.9
-        val dialogHeight = getResources().displayMetrics.heightPixels * 0.9
+        val dialogWidth = resources.displayMetrics.widthPixels * 0.9
+        val dialogHeight = resources.displayMetrics.heightPixels * 0.9
         dialog?.window?.setLayout(dialogWidth.toInt(), dialogHeight.toInt())
     }
 
