@@ -7,16 +7,14 @@ package com.capstone.momomeal.api;
 
 import com.capstone.momomeal.domain.MemberReview;
 import com.capstone.momomeal.domain.Members;
+import com.capstone.momomeal.domain.ReviewDto;
 import com.capstone.momomeal.service.MemberReviewService;
 import com.capstone.momomeal.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.spel.ast.OpAnd;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,11 +37,18 @@ public class ProfileFormApiController {
         }
         Members member = c_member.get();
 
+        List<ReviewDto> reviewList = new ArrayList<>();
+
+        for(MemberReview reviews : member.getMemberReview()){
+            ReviewDto review = new ReviewDto(reviews);
+            reviewList.add(review);
+        }
+
         returnData.put("name",member.getRealName());
         returnData.put("email",member.getEmail());
         returnData.put("img_url",member.getImg());
-        returnData.put("int",member.TotalRate());
-        returnData.put("reviewList",member.getMemberReview());
+        returnData.put("TotalRate",memberService.getUserTotalRate(member.getUser_id()));
+        returnData.put("reviewList",reviewList);
 
         return returnData;
     }
@@ -107,19 +112,4 @@ public class ProfileFormApiController {
         return returnData;
     }
 
-    @ResponseBody
-    @RequestMapping(value = "getUserReviewList.do",method = RequestMethod.POST)
-    public HashMap<String, Object> getReview(@RequestBody HashMap<String, Object> map){
-        HashMap<String, Object> returnData = new HashMap<>();
-        Long userId = Long.valueOf((Integer)map.get("user_id"));
-
-        List<MemberReview> memberReviews = memberReviewService.getReviewList(userId);
-        if(memberReviews.isEmpty()){
-            returnData.put("check",0);
-            return returnData;
-        }
-        returnData.put("check",1);
-        returnData.put("Reviews",memberReviews);
-        return returnData;
-    }
 }

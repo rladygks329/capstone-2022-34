@@ -97,4 +97,25 @@ public class MemberService {
             return false;
         }
     }
+
+    public Integer getMember_rate(Long user_id){
+        Optional<Members> members = memberRepository.findOne(user_id);
+        if(members.equals(null)){
+            return null;
+        }
+        Members member = members.get();
+        Integer returnRate = Integer.valueOf(member.TotalRate());
+
+        return returnRate;
+    }
+
+    public Integer getUserTotalRate(Long user_id){
+        Optional<Members> one = memberRepository.findOne(user_id);
+
+        if(one.equals(null)){
+            return null;
+        }
+        Members member = one.get();
+        return member.TotalRate();
+    }
 }

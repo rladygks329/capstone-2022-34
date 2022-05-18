@@ -32,6 +32,7 @@ public class LoginFormApiController {
         member.setEmail((String)map.get("email"));
         member.setPwd((String)map.get("pwd"));
         member.setRealName((String)map.get("Rname"));
+        member.setUser_rate(50F);
 
         try {
             memberService.join(member);
@@ -60,7 +61,7 @@ public class LoginFormApiController {
         }else{
             Members member_s = members.get();
             Smember.setByMembers(member_s);
-            returnMap.put("check",1);
+            returnMap.put("check",1);  
             returnMap.put("member",Smember);
             try{
                 RecommendCategory rc = member_s.getRecommendCategory();
