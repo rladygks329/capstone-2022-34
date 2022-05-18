@@ -51,6 +51,7 @@ class LoginViewModel : ViewModel() {
                 ) {
                     Log.d("retrofit",response.body().toString())
                     if(response.isSuccessful.not()){
+                        _loginEvent.postValue(Event("Fail"))
                         return
                     }
                     response.body()?.let{

@@ -14,9 +14,9 @@ class DeserializerReview: JsonDeserializer<Review> {
         context: JsonDeserializationContext?
     ): Review {
         val jsonObject = json?.asJsonObject ?: throw NullPointerException("Response Json String is null")
-        val RateStatus = jsonObject["RateStatus"].asString
+        val RateStatue = jsonObject["rate"].asString
         val review_text = jsonObject["review_text"].asString
-        val rate = Rate.valueOf(RateStatus)
+        val rate = Rate.valueOf(RateStatue)
 
         return Review(rate, review_text)
     }

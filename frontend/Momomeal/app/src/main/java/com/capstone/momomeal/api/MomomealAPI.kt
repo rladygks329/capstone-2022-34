@@ -88,8 +88,14 @@ interface MomomealAPI {
         @Body params: UpdateUserInfoForm
     ) : Call<checkResponse>
 
-    @POST("getUserInfo.do")
+    @POST("/getUserInfo.do")
     fun getUserInfo(
         @Body params: getUserInfoForm
     ) : Call<getUserResponse>
+
+    //stub
+    @PUT("/addReview.do")
+    fun addReview(
+        @Body params: CreateReviewForm
+    ) : Call<checkResponse>
 }

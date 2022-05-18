@@ -7,12 +7,12 @@ data class getUserResponse(
     @SerializedName("reviewList")
     val reviewList: List<Review> = listOf(),
     @SerializedName("img_url")
-    val img_url: String?,
+    private val img_url: String?,
     @SerializedName("name")
     val name: String,
     @SerializedName("email")
     val email: String,
-    @SerializedName("int")
+    @SerializedName("TotalRate")
     val rate: Int
 )
 {

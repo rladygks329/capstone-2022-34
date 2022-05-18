@@ -42,9 +42,6 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             ArrayList<Review>()
         )
     }
-    val testReviewList = listOf<Review>(
-        Review(Rate.LIKE, "좋아요")
-    )
     lateinit var pageInfo : User
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -173,8 +170,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                     }
                     binding.pbManner.progress = it.rate
                     binding.tvMannerPoint.text = it.rate.toString() + "점"
-                    reviewAdapter.replaceData(testReviewList)
-                    //reviewAdapter.replaceData(it.reviewList)
+                    reviewAdapter.replaceData(it.reviewList)
                 }
             }
 
