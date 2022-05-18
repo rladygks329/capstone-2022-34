@@ -27,14 +27,7 @@ class ChatAdapter(
     private val msgList = ArrayList<Chat>()
     private val fireDB = FirebaseDatabase.getInstance().reference
         .child("chatroom").child(chatroomId.toString())
-    private lateinit var recyView: RecyclerView
     init {
-
-    }
-
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        recyView = recyclerView
         getMsgList()
     }
 
@@ -68,7 +61,7 @@ class ChatAdapter(
             return MY_MSG
 //        } else if (position == 0) {
 //            return OTHER_MSG_FULL
-        } else if (position == 0 || msgList[position - 1].uid != myInfo.idUser){
+        } else if (position == 0 || msgList[position - 1].uid != msgList[position].uid){
             return OTHER_MSG_FULL
         } else {
             return OTHER_MSG
@@ -101,6 +94,7 @@ class ChatAdapter(
         notifyItemInserted(msgList.size - 1)
     }
 
+    // 이전까지의 채팅 기록을 뒤져서 가져오는
     fun getMsgList() {
         fireDB.child("chats").addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
@@ -113,7 +107,6 @@ class ChatAdapter(
             }
         })
         notifyDataSetChanged()
-        recyView.scrollToPosition(msgList.size - 1)
     }
 
     //  메시지 타입 구별용 객체

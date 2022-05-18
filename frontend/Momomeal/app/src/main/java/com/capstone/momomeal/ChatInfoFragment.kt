@@ -57,6 +57,7 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
                     val intent = Intent(activity, ChatActivity::class.java)
                     intent.putExtra("myinfo", user.trans_User_light())
                     intent.putExtra("chatroominfo", chatroom)
+                    intent.putExtra("isNewChat", false)
                     startActivity(intent)
                     dismiss()
                 }

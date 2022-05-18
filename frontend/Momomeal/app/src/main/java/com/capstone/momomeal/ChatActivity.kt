@@ -2,12 +2,14 @@ package com.capstone.momomeal
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Rect
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
@@ -15,6 +17,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.*
 import com.capstone.momomeal.databinding.LayoutChatHolderBinding
@@ -35,6 +38,7 @@ import retrofit2.Response
 
 class ChatActivity : AppCompatActivity() {
     private val TAG = "ChatActivity"
+    private var isKeyboardOpen = false
 
     // For API
     val momomeal = MomomealService.momomealAPI
@@ -78,11 +82,25 @@ class ChatActivity : AppCompatActivity() {
         memberList = arrayListOf<User_light>()
         memberMap = hashMapOf<Int, membInfo>()
 
+        // 키보드 설정을 위한 뷰 설정정
+       setupView()
+
         // Chatting RecyclerView Setting
 //        val chatAdapter = ChatAdapter(myInfoLight, chatList)
         binding.activityChat.rvChatArea.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.activityChat.rvChatArea.adapter = chatAdapter
+        binding.activityChat.rvChatArea.apply {
+            adapter = chatAdapter
+            addOnLayoutChangeListener(onLayoutChangeListener)
+            viewTreeObserver.addOnScrollChangedListener {
+                if (isScrollable() && !isKeyboardOpen) {
+                    setStackFromEnd()
+                    removeOnLayoutChangeListener(onLayoutChangeListener)
+                }
+            }
+        }
+        binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
+
 
         // drawer`s Member information RecyclerView Setting
         binding.nvChatNavigation.rvMemberList.layoutManager =
@@ -235,5 +253,32 @@ class ChatActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
+
+    // RecyclerView의 키보드를 적당하게 위로 올리는 데 필요한 함수들입니다.
+    private fun setupView() { // 키보드 Open/Close 체크
+        binding.activityChat.clChatContainer.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = Rect()
+            binding.activityChat.clChatContainer.getWindowVisibleDisplayFrame(rect)
+            val rootViewHeight = binding.activityChat.clChatContainer.rootView.height
+            val heightDiff = rootViewHeight - rect.height()
+            isKeyboardOpen = heightDiff > rootViewHeight * 0.25 // true == 키보드 올라감
+        }
+    }
+
+    fun RecyclerView.isScrollable(): Boolean {
+        return canScrollVertically(1) || canScrollVertically(-1)
+    }
+
+    fun RecyclerView.setStackFromEnd() {
+        (layoutManager as? LinearLayoutManager)?.stackFromEnd = true
+    }
+
+    private val onLayoutChangeListener = View.OnLayoutChangeListener {
+            _, _, _, _, bottom, _, _, _, oldBottom ->
+        if (bottom < oldBottom) {
+            binding.activityChat.rvChatArea.scrollBy(0, oldBottom - bottom)
+        } // 스크롤 유지를 위해 추가
+    }
+
 
 }
