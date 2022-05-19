@@ -85,7 +85,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         if(mainActivity.myInfo.x == 0.0 && mainActivity.myInfo.y == 0.0){
             hasPoint = false
         }
-        hasRearch = mainActivity.recommend
     }
 
     override fun onCreateView(
@@ -126,8 +125,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         initSearch(binding.fragmentHomeSearchbar)
         initTable(binding.fragmentHomeCategoryTable)
         updateRecommendation()
+        hasRearch = mainActivity.recommend
         if(!hasRearch){
             researchFragment.show(mainActivity.supportFragmentManager, researchFragment.tag)
+        }
+        if(mainActivity.myInfo.address != ""){
+            binding.fragmentHomeEditAddress.text = mainActivity.myInfo.address
         }
         return retView
     }
