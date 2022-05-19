@@ -20,6 +20,7 @@ import com.capstone.momomeal.data.dto.CreateChatForm
 import com.capstone.momomeal.databinding.FragmentCreateChatBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
 import com.capstone.momomeal.feature.BaseFragment
+import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +33,7 @@ val Int.dp: Int get() = (this * Resources.getSystem().displayMetrics.density + 0
 class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(FragmentCreateChatBinding::inflate) {
     private val TAG = "CreateChatFragment"
     private val momomeal = MomomealService.momomealAPI
+    private val fireDatabase = FirebaseDatabase.getInstance().reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +107,7 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
             Category.Fastfood.KoreanName -> category = Category.Fastfood
         }
         momomeal.makeChatroom(
-            CreateChatForm(title, hostID, category, storeName, pickupPlace, user.x, user.y)
+            CreateChatForm(title, hostID, category, storeName, maxCapacity, pickupPlace, user.x, user.y)
         ).enqueue(object : Callback<Chatroom>{
             override fun onResponse(
                 call: Call<Chatroom>,
@@ -116,8 +118,10 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
                 }
                 response.body()?.let{
                     val intent = Intent(activity, ChatActivity::class.java)
+                    val isNewChat = true
                     intent.putExtra("myinfo", user.trans_User_light())
                     intent.putExtra("chatroominfo", it)
+                    intent.putExtra("isNewChat", isNewChat)
                     startActivity(intent)
                     dismiss()
                 }

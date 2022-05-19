@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/cl_chat_container"
     tools:context=".ChatActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -102,10 +103,12 @@
             android:layout_marginEnd="4dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_send_24"
+            android:clickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/gray4" />
+            app:tint="@color/gray4"
+            android:focusable="true" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

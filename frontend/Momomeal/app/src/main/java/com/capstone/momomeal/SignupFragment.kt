@@ -9,7 +9,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import com.capstone.momomeal.api.MomomealService
-import com.capstone.momomeal.data.LoginResponse
+import com.capstone.momomeal.data.checkResponse
 import com.capstone.momomeal.data.dto.RegisterForm
 import com.capstone.momomeal.databinding.FragmentSignupBinding
 import com.capstone.momomeal.feature.BaseFragment
@@ -73,8 +73,8 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
         val name = binding.fragmentSignupName.getEditText()?.getText().toString()
 
         momomeal.register(RegisterForm(email, pwd, name))
-            .enqueue(object : Callback<LoginResponse>{
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+            .enqueue(object : Callback<checkResponse>{
+            override fun onResponse(call: Call<checkResponse>, response: Response<checkResponse>) {
                 Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
@@ -89,7 +89,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
                 }
             }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+            override fun onFailure(call: Call<checkResponse>, t: Throwable) {
                 Log.e("retrofit", t.toString())
             }
         })

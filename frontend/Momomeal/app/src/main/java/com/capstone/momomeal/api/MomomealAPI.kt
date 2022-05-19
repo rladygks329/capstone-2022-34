@@ -1,7 +1,7 @@
 package com.capstone.momomeal.api
 
 import com.capstone.momomeal.data.Chatroom
-import com.capstone.momomeal.data.LoginResponse
+import com.capstone.momomeal.data.checkResponse
 import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.data.dto.*
 import okhttp3.ResponseBody
@@ -26,11 +26,6 @@ interface MomomealAPI {
        @Path("memberId") memberId:Int,
        @Path("type") type:String
    ): Call<List<Chatroom>>
-
-    @GET("/clicked-chat/{chatroomId}")
-    fun getChatroomInfo(
-        @Path("chatroomId") chatroomId : Long
-    ): Call<Chatroom>
 
     @GET("/chat/{memberId}/{chatroomId}")
     fun enterChatroom(
@@ -69,13 +64,13 @@ interface MomomealAPI {
 
     @POST("/login.do")
     fun login(
-        @Body params: HashMap<String, String>
+        @Body params: LoginForm
     ): Call<LoginResponse>
 
     @POST("/createAccount.do")
     fun register(
         @Body params: RegisterForm
-    ): Call<LoginResponse>
+    ): Call<checkResponse>
 
     @GET("/preferred-category/{memberId}/{categories}")
     fun sendResearch(
@@ -83,4 +78,28 @@ interface MomomealAPI {
         @Path("categories") categories: String
     ): Call<ResponseBody>
 
+    @PUT("/setCoordinate.do")
+    fun updateCoordinate(
+        @Body params: UpdateCoordinateForm
+    ) : Call<checkResponse>
+
+    @PUT("/updateUserInfo.do")
+    fun updateUserInfo(
+        @Body params: UpdateUserInfoForm
+    ) : Call<checkResponse>
+
+    @POST("/getUserInfo.do")
+    fun getUserInfo(
+        @Body params: getUserInfoForm
+    ) : Call<getUserResponse>
+
+    //stub
+    @PUT("/addReview.do")
+    fun addReview(
+        @Body params: CreateReviewForm
+    ) : Call<checkResponse>
 }
+
+
+
+

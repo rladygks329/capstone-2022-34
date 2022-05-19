@@ -1,6 +1,8 @@
 package com.capstone.momomeal.api
 
 import com.capstone.momomeal.data.Chatroom
+import com.capstone.momomeal.data.Review
+import com.capstone.momomeal.data.dto.Member
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
@@ -13,6 +15,8 @@ object MomomealService {
     private val customgson : Gson by lazy {
         GsonBuilder()
             .registerTypeAdapter(Chatroom::class.java, DeserializeChatroom())
+            .registerTypeAdapter(Member::class.java, DeserializerMember())
+            .registerTypeAdapter(Review::class.java, DeserializerReview())
             .create()
     }
     private val retrofit : Retrofit by lazy {

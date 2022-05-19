@@ -34,7 +34,7 @@ class ChatMemberViewHolder(
             binding.ivMemberProfile1.setImageBitmap(info.bitmap)
             binding.tvMemberName1.text = info.name
         } else {
-            binding.ivMemberProfile1.setImageResource(R.drawable.ic_basic_prifile)
+            binding.ivMemberProfile1.setImageResource(R.drawable.ic_basic_profile)
             binding.tvMemberName1.text = "익명"
         }
     }
