@@ -54,8 +54,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_korean"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_korean"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -68,8 +67,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_chinese"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_chinese"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -82,8 +80,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_japanese"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_japanese"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -96,8 +93,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_western"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_western"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -110,8 +106,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_fastfood"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_fastfood"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -127,8 +122,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_chicken"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_chicken"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -141,8 +135,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_pizza"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_pizza"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -155,8 +148,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_snackbar"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_snackbar"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -169,8 +161,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_boiledpork"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_boiledfork"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -183,8 +174,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_cafe_desert"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_cafe_desert"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -200,7 +190,6 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                app:drawableTint="@color/orange_deep"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -208,7 +197,7 @@
                 android:textSize="11sp"
                 android:text="야식"
                 android:layout_weight="0.2"
-                app:drawableTopCompat="@drawable/ic_category_midnightsnack"
+                app:drawableTopCompat="@drawable/ic_colorful_category_midnight_snack"
                 android:tag="MidnightSnack"/>
         </TableRow>
     </TableLayout>

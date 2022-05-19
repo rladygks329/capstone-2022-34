@@ -67,7 +67,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         loginViewModel.loginEvent.observe(viewLifecycleOwner, EventObserver<String>{
             view?.hideKeyboard()
             when(it){
-                "Fail" ->showMSG("로그인 실패")
+                "Fail" ->showMSG("이메일이나 비밀번호를 확인해주세요")
                 "moveGreeting" -> moveGreeting()
             }
         })
