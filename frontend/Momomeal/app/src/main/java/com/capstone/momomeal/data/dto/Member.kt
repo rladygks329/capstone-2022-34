@@ -13,19 +13,17 @@ data class Member(
     @SerializedName("name")
     val name: String = "",
 
-    //@SerializedName("img_url")
     val img_url: String = "",
 
-    //@SerializedName("x")
-    val x: Double =  1.0,
+    @SerializedName("x")
+    val x: Double =  0.0,
 
-    //@SerializedName("y")
+    @SerializedName("y")
     val y: Double =  0.0,
 
-    //@SerializedName("address")
+    @SerializedName("address")
     val address: String = "",
 
-    //@SerializedName("user_rate")
     val user_rate: Int = 50
 ){
     fun toUser(): User {
