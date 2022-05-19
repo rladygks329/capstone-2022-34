@@ -104,8 +104,9 @@ public class ProfileFormApiController {
         Long userId = Long.valueOf((Integer)map.get("user_id"));
         Double x_value = (Double)map.get("x");
         Double y_value = (Double)map.get("y");
+        String address = (String)map.get("address");
 
-        Boolean check = memberService.setCoordinate(userId, x_value, y_value);
+        Boolean check = memberService.setCoordinate(userId, x_value, y_value, address);
         if(check == true){
             returnData.put("check",1);
         }else{
