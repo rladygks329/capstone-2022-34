@@ -48,6 +48,8 @@ public class ProfileFormApiController {
         returnData.put("email",member.getEmail());
         returnData.put("img_url",member.getImg());
         returnData.put("TotalRate",memberService.getUserTotalRate(member.getUser_id()));
+        returnData.put("X_value",member.getX_value());
+        returnData.put("Y_value",member.getY_value());
         returnData.put("reviewList",reviewList);
 
         return returnData;
