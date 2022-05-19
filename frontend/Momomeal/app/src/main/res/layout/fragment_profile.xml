@@ -63,7 +63,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/profile_img_circle"
-            app:srcCompat="@drawable/ic_basic_prifile" />
+            app:srcCompat="@drawable/ic_basic_profile" />
 
         <TextView
             android:id="@+id/tv_profile_username"

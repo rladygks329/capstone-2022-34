@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/fragment_home_appBar"
         android:layout_width="match_parent"
-        android:layout_height="152dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/home_appbar_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,13 +19,15 @@
         <TextView
             android:id="@+id/fragment_home_edit_address"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
             android:layout_marginHorizontal="16dp"
             android:textColor="@color/white"
             android:text="현재 위치를 입력해주세요"
             android:gravity="center_vertical"
             android:textSize="14sp"
             android:fontFamily="@font/lotte_mart_dream_bold"
+            android:drawableTint="@color/white"
             android:drawableEnd="@drawable/ic_down_mark_24"/>
         <androidx.appcompat.widget.SearchView
             android:id="@+id/fragment_home_searchbar"
@@ -33,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/home_searchview_background"
             app:queryHint="검색어를 입력하십시오"
             />
