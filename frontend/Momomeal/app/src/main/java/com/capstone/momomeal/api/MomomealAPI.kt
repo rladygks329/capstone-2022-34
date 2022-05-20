@@ -1,16 +1,18 @@
 package com.capstone.momomeal.api
 
 import com.capstone.momomeal.data.Chatroom
-import com.capstone.momomeal.data.LoginResponse
+import com.capstone.momomeal.data.checkResponse
+import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.data.dto.*
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface MomomealAPI {
     @POST("/chat")
     fun makeChatroom(
-
-    )
+        @Body params: CreateChatForm
+    ): Call<Chatroom>
 
     @GET("/chat-list/{categoryName}/{memberId}/{type}")
     fun getCategoryChatroom(
@@ -24,11 +26,6 @@ interface MomomealAPI {
        @Path("memberId") memberId:Int,
        @Path("type") type:String
    ): Call<List<Chatroom>>
-
-    @GET("/clicked-chat/{chatroomId}")
-    fun getChatroomInfo(
-        @Path("chatroomId") chatroomId : Long
-    ): Call<Chatroom>
 
     @GET("/chat/{memberId}/{chatroomId}")
     fun enterChatroom(
@@ -53,10 +50,12 @@ interface MomomealAPI {
        @Path("memberId") memberId: Int
    ): Call<List<Chatroom>>
 
+    // getParcelable에서는 List를 넘겨줄 수 없어서 ArrayList로 받았음.
+    // 여기만 ArrayList를 사용함. 주의!
     @GET("/entered-chat-info/{chatroomId}")
     fun getEnteredChatInfo(
        @Path("chatroomId") chatroomId: Long
-    ): Call<Chatroom>
+    ): Call<ArrayList<User_light>>
 
     @GET("/recommend-chat-list/{memberId}")
     fun getRecommendedChatroom(
@@ -65,12 +64,42 @@ interface MomomealAPI {
 
     @POST("/login.do")
     fun login(
-        @Body params: HashMap<String, String>
+        @Body params: LoginForm
     ): Call<LoginResponse>
 
     @POST("/createAccount.do")
     fun register(
         @Body params: RegisterForm
-    ): Call<LoginResponse>
+    ): Call<checkResponse>
 
+    @GET("/preferred-category/{memberId}/{categories}")
+    fun sendResearch(
+        @Path("memberId") memberId: Int,
+        @Path("categories") categories: String
+    ): Call<ResponseBody>
+
+    @PUT("/setCoordinate.do")
+    fun updateCoordinate(
+        @Body params: UpdateCoordinateForm
+    ) : Call<checkResponse>
+
+    @PUT("/updateUserInfo.do")
+    fun updateUserInfo(
+        @Body params: UpdateUserInfoForm
+    ) : Call<checkResponse>
+
+    @POST("/getUserInfo.do")
+    fun getUserInfo(
+        @Body params: getUserInfoForm
+    ) : Call<getUserResponse>
+
+    //stub
+    @PUT("/addReview.do")
+    fun addReview(
+        @Body params: CreateReviewForm
+    ) : Call<checkResponse>
 }
+
+
+
+

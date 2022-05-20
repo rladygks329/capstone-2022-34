@@ -85,16 +85,38 @@ public class MemberService {
         }
     }
 
-    public Boolean setCoordinate(Long userId, Double x, Double y){
+    public Boolean setCoordinate(Long userId, Double x, Double y, String address){
         try {
             Members member = memberRepository.findById(userId);
 
             member.setX_value(x);
             member.setY_value(y);
+            member.setAddress(address);
 
             return true;
         }catch (Exception e){
             return false;
         }
+    }
+
+    public Integer getMember_rate(Long user_id){
+        Optional<Members> members = memberRepository.findOne(user_id);
+        if(members.equals(null)){
+            return null;
+        }
+        Members member = members.get();
+        Integer returnRate = Integer.valueOf(member.TotalRate());
+
+        return returnRate;
+    }
+
+    public Integer getUserTotalRate(Long user_id){
+        Optional<Members> one = memberRepository.findOne(user_id);
+
+        if(one.equals(null)){
+            return null;
+        }
+        Members member = one.get();
+        return member.TotalRate();
     }
 }

@@ -74,7 +74,9 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/textfield_create_chat_normal"
             android:ems="20"
+            android:padding="8dp"
             android:inputType="text"
+            android:textCursorDrawable="@drawable/cursor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_create_chat_title" />
@@ -115,6 +117,7 @@
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_chat_category">
+
                 <AutoCompleteTextView
                     android:id="@+id/spn_chat_category"
                     android:layout_width="match_parent"
@@ -184,6 +187,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="2dp"
+            android:padding="8dp"
+            android:textCursorDrawable="@drawable/cursor"
             android:background="@drawable/textfield_create_chat_normal"
             android:ems="20"
             android:inputType="text"
@@ -209,6 +214,8 @@
             android:layout_marginTop="2dp"
             android:background="@drawable/textfield_create_chat_normal"
             android:ems="20"
+            android:padding="8dp"
+            android:textCursorDrawable="@drawable/cursor"
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -223,6 +230,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="56dp"
         android:text="@string/btn_create_confirm_txt"
+        android:textColor="@color/white"
         android:background="@drawable/bg_orange_deep_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

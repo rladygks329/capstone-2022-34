@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingEnd="15dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_other_profile"
@@ -34,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/bg_chat_gray"
         android:fontFamily="@font/roboto"
         android:paddingHorizontal="10dp"
@@ -41,6 +43,7 @@
         android:text="@string/short_fill_text"
         android:textColor="@color/black"
         android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_other_profile"
         app:layout_constraintTop_toBottomOf="@+id/tv_other_name" />
 

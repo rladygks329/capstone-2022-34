@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.api.MomomealService
@@ -33,15 +34,14 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
 
         chatroomAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
+                val intent = Intent(activity, ChatActivity::class.java)
                 val chatroomInfo = chatroomAdapter.getData(position)
                 val myInfoLight = User_light((activity as MainActivity).myInfo)
-                val intent = Intent(activity, ChatActivity::class.java)
                 intent.putExtra("chatroominfo", chatroomInfo) // Chatroom information
                 intent.putExtra("myinfo", myInfoLight)
                 startActivity(intent)
@@ -142,7 +142,6 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     }
 
     fun updateMyChatRoom(){
-
         val mainActivity = requireActivity() as MainActivity
 
         momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<Chatroom>>{

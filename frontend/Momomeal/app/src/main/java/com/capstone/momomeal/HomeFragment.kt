@@ -19,6 +19,8 @@ import com.capstone.momomeal.databinding.FragmentHomeBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Category
 import com.capstone.momomeal.data.Chatroom
+import com.capstone.momomeal.data.checkResponse
+import com.capstone.momomeal.data.dto.UpdateCoordinateForm
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,12 +38,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     private val scCategoryFrag = SearchResultCategoryFragment()
     private val researchFragment = ResearchFragment()
     private var hasPoint = true
+    private var hasRearch = false
     private val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { Address ->
             if (Address.resultCode == Activity.RESULT_OK) {
-                hasPoint = true
                 Address.data?.let {
-                    binding.fragmentHomeEditAddress.text = it.getStringExtra("data")
+                    val address = it.getStringExtra("data")
+                    val x = it.getDoubleExtra("x", 0.0)
+                    val y = it.getDoubleExtra("y", 0.0)
+                    momomeal.updateCoordinate(UpdateCoordinateForm(mainActivity.myInfo.idUser, x, y, address!!)).enqueue(object: Callback<checkResponse>{
+                        override fun onResponse(
+                            call: Call<checkResponse>,
+                            response: Response<checkResponse>
+                        ) {
+                            if(response.isSuccessful.not()){
+                                return
+                            }
+                            response.body()?.let{
+                                if(it.check == 1){
+                                    hasPoint = true
+                                    binding.fragmentHomeEditAddress.text = address
+                                    mainActivity.myInfo.x = x
+                                    mainActivity.myInfo.y = y
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<checkResponse>, t: Throwable) {
+                            Toast.makeText(requireContext(), "인터넷연결을 확인해주세요", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
             }
         }
@@ -55,6 +81,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("system","home Oncreate is called")
+        mainActivity = (activity as MainActivity)
+        if(mainActivity.myInfo.x == 0.0 && mainActivity.myInfo.y == 0.0){
+            hasPoint = false
+        }
     }
 
     override fun onCreateView(
@@ -63,13 +93,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     ): View? {
         Log.d("system","home OncreateView is called")
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        mainActivity = (activity as MainActivity)
+
 
         binding.fragmentHomeEditAddress.setOnClickListener{
             startForResult.launch(Intent(requireActivity().application, MyAddressActivity::class.java))
         }
         binding.fabHome.setOnClickListener {
-            createChatFragment.show(mainActivity.supportFragmentManager, createChatFragment.tag)
+            if(hasPoint){
+                createChatFragment.show(mainActivity.supportFragmentManager, createChatFragment.tag)
+            }else{
+                Toast.makeText(requireContext(), "주소를 설정해주세요", Toast.LENGTH_SHORT).show()
+            }
         }
         binding.fragmentHomeRecycler.adapter = chatAdapter
         chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
@@ -77,7 +111,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 if(hasPoint){
                     val item = chatAdapter.getData(position)
                     chatInfoFrag.arguments = bundleOf(
-                        "User" to mainActivity.myInfo!!,
+                        "User" to mainActivity.myInfo,
                         "Chatroom" to item
                     )
                     chatInfoFrag.show(mainActivity.supportFragmentManager, chatInfoFrag.tag)
@@ -91,6 +125,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         initSearch(binding.fragmentHomeSearchbar)
         initTable(binding.fragmentHomeCategoryTable)
         updateRecommendation()
+        hasRearch = mainActivity.recommend
+        if(!hasRearch){
+            researchFragment.show(mainActivity.supportFragmentManager, researchFragment.tag)
+        }
+        if(mainActivity.myInfo.address != ""){
+            binding.fragmentHomeEditAddress.text = mainActivity.myInfo.address
+        }
         return retView
     }
 
@@ -103,7 +144,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         search.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if(hasPoint && query != null){
-                    val bundle = bundleOf("SearchKeyword" to query!!)
+                    val bundle = bundleOf("SearchKeyword" to query)
                     scFrag.arguments = bundle
                     mainActivity.moveSearch(scFrag)
                 }else{

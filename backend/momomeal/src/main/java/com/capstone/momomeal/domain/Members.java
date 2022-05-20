@@ -35,7 +35,7 @@ public class Members {
     @Column(name = "phone_number")
     private String phone_number;
 
-    @Column(name = "img_dc")
+    @Column(columnDefinition = "LONGTEXT", name = "img_dc")
     private String img;
 
     @Column(name = "user_rate")
@@ -43,6 +43,8 @@ public class Members {
 
     private double x_value;
     private double y_value;
+
+    private String address;
     @OneToMany(
             mappedBy = "member"
     )
@@ -201,6 +203,10 @@ public class Members {
 
     public double getY_value() {return y_value; }
 
+    public String getAddress() {return address; }
+
+    public void setAddress(String address) {this.address = address; }
+
     public List<JoinedChatRoom> getJoinedChatRooms() {
         return this.joinedChatRooms;
     }
@@ -214,9 +220,4 @@ public class Members {
     }
 
 
-    public String toString() {
-        Long var10000 = this.getUser_id();
-        return "Members(user_id=" + var10000 + ", email=" + this.getEmail() + ", pwd=" + this.getPwd() + ", realName=" + this.getRealName() + ", age=" + this.getAge() + ", phone_number=" + this.getPhone_number() + ", img=" + this.getImg() + ", user_rate=" + this.getUser_rate() + ", joinedChatRooms=" + this.getJoinedChatRooms() + ", memberReview=" + this.getMemberReview() + ")";
-
-    }
 }
