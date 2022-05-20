@@ -95,13 +95,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </LinearLayout>
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_login_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/bg_orange_deep_radius"
+        android:paddingVertical="12dp"
+        app:cornerRadius="12dp"
         android:fontFamily="@font/roboto_black"
         android:onClick="@{()->viewModel.login()}"
         android:text="@string/btn_login_text"
@@ -110,13 +111,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/framgent_login_linear1" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_login_kakao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/bg_orange_deep_radius"
+        app:cornerRadius="12dp"
+        android:paddingVertical="12dp"
         android:fontFamily="@font/roboto_black"
         android:text="@string/btn_login_kakao"
         android:textColor="@color/white"

@@ -175,11 +175,12 @@
 
     </TableLayout>
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/fragment_research_submit"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/bg_orange_deep_radius"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp"
+        app:cornerRadius="12dp"
         android:text="제출하기"
         android:textSize="14sp"
         android:textColor="@color/white"
