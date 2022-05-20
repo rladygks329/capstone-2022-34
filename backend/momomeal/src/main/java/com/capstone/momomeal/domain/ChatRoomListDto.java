@@ -19,6 +19,8 @@ public class ChatRoomListDto {
     private String pickupPlaceName;
     private int distance;
     private LocalDateTime createdDate;
+    private Double pickupPlaceXCoord;
+    private Double pickupPlaceYCoord;
 
 
     public ChatRoomListDto(ChatRoom chatRoom, double x, double y) {
@@ -33,6 +35,9 @@ public class ChatRoomListDto {
         // 사용자의 현재 위치와 수령 장소까지의 거리 계산
         this.distance = calculateDistance(x, y,
                 chatRoom.getPickupPlaceXCoord(), chatRoom.getPickupPlaceYCoord());
+
+        this.pickupPlaceXCoord = chatRoom.getPickupPlaceXCoord();
+        this.pickupPlaceYCoord = chatRoom.getPickupPlaceYCoord();
     }
 
     // 사용자의 현재 위치와 수령 장소까지의 거리 계산 메서드
