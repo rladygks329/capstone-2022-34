@@ -100,6 +100,19 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
             textInputEditText.setSelection(textInputEditText.length())
             textInputEditText.showSoftKeyboard()
         }
+        binding.btnLogout.setOnClickListener{
+            val saved_login_info =requireActivity().getSharedPreferences("autoLogin",
+                Context.MODE_PRIVATE
+            )
+            val autoLoginEdit = saved_login_info.edit()
+            autoLoginEdit.putString("email", "")
+            autoLoginEdit.putString("password", "")
+            autoLoginEdit.putBoolean("active", false)
+            autoLoginEdit.commit()
+            val intent = Intent(activity, LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
         updatePage(pageInfo.idUser)
         return retView
     }
