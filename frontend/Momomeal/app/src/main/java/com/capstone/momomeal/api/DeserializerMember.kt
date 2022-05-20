@@ -16,21 +16,18 @@ class DeserializerMember: JsonDeserializer<Member> {
         val userId = jsonObject["userId"].asInt
         val email = jsonObject["email"].asString
         val name = jsonObject["name"].asString
+        val x = jsonObject["x"].asDouble
+        val y = jsonObject["y"].asDouble
         var img = ""
+        var address = ""
 
         if(!jsonObject.get("img_url").isJsonNull) {
             img = jsonObject["img_url"].asString
         }
-
-        /*
-        백엔드 바뀌면 바꿀 코드
-        val x = jsonObject["x"].asDouble
-        val y = jsonObject["y"].asDouble
-        val address = jsonObject["address"].asString
-        val user_rate = jsonObject["user_rate"].asInt
-        return Member(userId, email, name, img, x, y, address, user_rate)
-        */
-        return Member(userId, email, name, img)
+        if(!jsonObject.get("address").isJsonNull) {
+            address = jsonObject["address"].asString
+        }
+        return Member(userId, email, name, img, x, y, address)
     }
 }
 
