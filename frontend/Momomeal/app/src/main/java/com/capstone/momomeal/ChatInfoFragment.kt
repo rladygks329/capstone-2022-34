@@ -1,6 +1,5 @@
 package com.capstone.momomeal
 
-import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +11,8 @@ import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.User
 import com.capstone.momomeal.databinding.FragmentChatInfoBinding
 import com.capstone.momomeal.feature.BaseDialogFragment
+import net.daum.mf.map.api.MapPOIItem
+import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,7 +40,6 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
         binding.fragmentChatInfoEnter.setOnClickListener{
             enterChat()
         }
-        initView()
         return retView
     }
     private fun enterChat(){
@@ -82,10 +82,25 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
         val dialogWidth = resources.displayMetrics.widthPixels * 0.9
         val dialogHeight = resources.displayMetrics.heightPixels * 0.9
         dialog?.window?.setLayout(dialogWidth.toInt(), dialogHeight.toInt())
+        initView()
     }
     private fun initView() {
         val mapView = MapView(requireActivity())
         val mapViewContainer = binding.fragmentChatInfoMapContainer as ViewGroup
+        Log.d("x", chatroom.coordPickupPlaceX!!.toString())
+        Log.d("y", chatroom.coordPickupPlaceY!!.toString())
+        val mapPoint = MapPoint.mapPointWithGeoCoord(chatroom.coordPickupPlaceX!!, chatroom.coordPickupPlaceY!!)
+
+        mapView.setMapCenterPoint(mapPoint, true);
+        mapView.setZoomLevel(1, true)
+
+        val marker = MapPOIItem()
+        marker.itemName = "near this"
+        marker.mapPoint = mapPoint
+        marker.markerType = MapPOIItem.MarkerType.BluePin
+        marker.selectedMarkerType = MapPOIItem.MarkerType.RedPin // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+        mapView.addPOIItem(marker)
         mapViewContainer.addView(mapView)
     }
 
