@@ -48,6 +48,8 @@ public class ProfileFormApiController {
         returnData.put("email",member.getEmail());
         returnData.put("img_url",member.getImg());
         returnData.put("TotalRate",memberService.getUserTotalRate(member.getUser_id()));
+        returnData.put("X_value",member.getX_value());
+        returnData.put("Y_value",member.getY_value());
         returnData.put("reviewList",reviewList);
 
         return returnData;
@@ -102,8 +104,9 @@ public class ProfileFormApiController {
         Long userId = Long.valueOf((Integer)map.get("user_id"));
         Double x_value = (Double)map.get("x");
         Double y_value = (Double)map.get("y");
+        String address = (String)map.get("address");
 
-        Boolean check = memberService.setCoordinate(userId, x_value, y_value);
+        Boolean check = memberService.setCoordinate(userId, x_value, y_value, address);
         if(check == true){
             returnData.put("check",1);
         }else{
