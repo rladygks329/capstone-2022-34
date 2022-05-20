@@ -230,6 +230,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/orange_deep"
         android:text="@string/btn_create_confirm_txt"
         android:textColor="@color/white"
         app:cornerRadius="12dp"
