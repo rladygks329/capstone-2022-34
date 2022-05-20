@@ -9,6 +9,7 @@
         android:id="@+id/tv_my_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="280dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/bg_chat_orange"
