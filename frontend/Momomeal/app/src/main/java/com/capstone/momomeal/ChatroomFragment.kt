@@ -67,8 +67,11 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 val mainactivity = requireActivity() as MainActivity
                 Log.d("onswipe",viewHolder.adapterPosition.toString())
 
+                val deleted_chat_room = chatroomAdapter.getData(viewHolder.layoutPosition)
+                chatroomAdapter.removeData(viewHolder.layoutPosition)
+
                 momomeal.deleteChatroom(
-                    mainactivity.myInfo.idUser, chatroomAdapter.getData(viewHolder.layoutPosition).idChatroom
+                    mainactivity.myInfo.idUser, deleted_chat_room.idChatroom
                 ).enqueue( object: Callback<HashMap<String, Int>>{
                     override fun onResponse(
                         call: Call<HashMap<String, Int>>,
@@ -78,11 +81,11 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                             return
                         }
                         Log.d("retrofit", response?.body().toString())
-                        chatroomAdapter.removeData(viewHolder.layoutPosition)
                     }
 
                     override fun onFailure(call: Call<HashMap<String, Int>>, t: Throwable) {
                         Log.e("retrofit", t.toString())
+                        Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
                     }
                 })
 

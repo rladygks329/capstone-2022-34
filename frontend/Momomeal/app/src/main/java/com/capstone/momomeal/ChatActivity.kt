@@ -89,6 +89,7 @@ class ChatActivity : AppCompatActivity() {
 //        val chatAdapter = ChatAdapter(myInfoLight, chatList)
 //        binding.activityChat.rvChatArea.layoutManager =
 //            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
         binding.activityChat.rvChatArea.apply {
             adapter = chatAdapter
             addOnLayoutChangeListener(onLayoutChangeListener)
