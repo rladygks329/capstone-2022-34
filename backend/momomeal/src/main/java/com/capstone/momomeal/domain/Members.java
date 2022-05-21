@@ -43,6 +43,8 @@ public class Members {
 
     private double x_value;
     private double y_value;
+
+    private String address;
     @OneToMany(
             mappedBy = "member"
     )
@@ -200,6 +202,10 @@ public class Members {
     public double getX_value() {return x_value; }
 
     public double getY_value() {return y_value; }
+
+    public String getAddress() {return address; }
+
+    public void setAddress(String address) {this.address = address; }
 
     public List<JoinedChatRoom> getJoinedChatRooms() {
         return this.joinedChatRooms;

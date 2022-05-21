@@ -30,4 +30,3 @@ object MomomealService {
         retrofit.create(MomomealAPI::class.java)
     }
 }
-

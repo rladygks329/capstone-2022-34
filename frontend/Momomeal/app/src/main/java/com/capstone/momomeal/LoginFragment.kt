@@ -48,15 +48,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             loginViewModel.password = auto.getString("password", "")!!
             loginViewModel.auto = auto.getBoolean("active", false)
         }
-        binding.fragmentLoginKakao.setOnClickListener{
-            val profileFrag = ProfileFragment()
-            profileFrag.arguments = bundleOf("user_id" to 3)
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.activity_login_fragment_container, profileFrag)
-                .addToBackStack(TAG)
-                .commit()
-        }
+//        binding.fragmentLoginKakao.setOnClickListener{
+//            val profileFrag = ProfileFragment()
+//            profileFrag.arguments = bundleOf("user_id" to activity.)
+//            requireActivity().supportFragmentManager
+//                .beginTransaction()
+//                .replace(R.id.activity_login_fragment_container, profileFrag)
+//                .addToBackStack(TAG)
+//                .commit()
+//        }
         paintGradient(binding.fragmentLoginAppname)
         return retView
     }

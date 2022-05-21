@@ -85,12 +85,13 @@ public class MemberService {
         }
     }
 
-    public Boolean setCoordinate(Long userId, Double x, Double y){
+    public Boolean setCoordinate(Long userId, Double x, Double y, String address){
         try {
             Members member = memberRepository.findById(userId);
 
             member.setX_value(x);
             member.setY_value(y);
+            member.setAddress(address);
 
             return true;
         }catch (Exception e){

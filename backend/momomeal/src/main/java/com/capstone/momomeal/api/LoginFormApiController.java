@@ -1,9 +1,6 @@
 package com.capstone.momomeal.api;
 
-import com.capstone.momomeal.domain.MemberDTO;
-import com.capstone.momomeal.domain.MemberForm;
-import com.capstone.momomeal.domain.Members;
-import com.capstone.momomeal.domain.RecommendCategory;
+import com.capstone.momomeal.domain.*;
 import com.capstone.momomeal.repository.MemoryUserRepository;
 import com.capstone.momomeal.service.MemberService;
 
@@ -53,7 +50,7 @@ public class LoginFormApiController {
         member.setPwd((String)map.get("pwd"));
 
         Optional<Members> members = memberService.Login(member.getEmail(), member.getPwd());
-        MemberDTO Smember = new MemberDTO();
+        LargerMemberDTO Smember = new LargerMemberDTO();
 
         if(members == null){
             returnMap.put("check",0);
@@ -63,12 +60,12 @@ public class LoginFormApiController {
             Smember.setByMembers(member_s);
             returnMap.put("check",1);
             returnMap.put("member",Smember);
-            try{
-                RecommendCategory rc = member_s.getRecommendCategory();
-                returnMap.put("recommend", "yes");
-            }catch(NullPointerException e){
+
+            RecommendCategory rc = member_s.getRecommendCategory();
+            if(rc == null){
                 returnMap.put("recommend", "no");
-                return returnMap;
+            }else{
+                returnMap.put("recommend", "yes");
             }
         }
         return returnMap;
