@@ -51,9 +51,11 @@ class DeserializeChatroom : JsonDeserializer<Chatroom> {
             "FASTFOOD"-> chatroomCategory = Category.Fastfood
             else -> chatroomCategory = Category.Chicken
         }
+
+        val x = jsonObject["pickupPlaceXCoord"].asDouble
+        val y = jsonObject["pickupPlaceYCoord"].asDouble
         return Chatroom(
-            id, chatroomCategory, title, maxCapacity, storeName, pickupPlaceName, createdDate
-        )
+            id, chatroomCategory, title, maxCapacity, storeName, pickupPlaceName, createdDate, x, y)
     }
 }
 /*

@@ -89,7 +89,7 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
         val mapViewContainer = binding.fragmentChatInfoMapContainer as ViewGroup
         Log.d("x", chatroom.coordPickupPlaceX!!.toString())
         Log.d("y", chatroom.coordPickupPlaceY!!.toString())
-        val mapPoint = MapPoint.mapPointWithGeoCoord(chatroom.coordPickupPlaceX!!, chatroom.coordPickupPlaceY!!)
+        val mapPoint = MapPoint.mapPointWithGeoCoord(chatroom.coordPickupPlaceY!!, chatroom.coordPickupPlaceX!!)
 
         mapView.setMapCenterPoint(mapPoint, true);
         mapView.setZoomLevel(1, true)
