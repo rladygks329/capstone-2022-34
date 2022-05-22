@@ -2,6 +2,7 @@ package com.capstone.momomeal.feature
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.firebase.messaging.ktx.remoteMessage
 
 class ChatMessagingService : FirebaseMessagingService() {
     private val TAG = "ChatMessagingService"
@@ -15,12 +16,12 @@ class ChatMessagingService : FirebaseMessagingService() {
         // FCM이 수신될때마다 실행되는 부분
         super.onMessageReceived(message)
 
-//        if ()
+        if (message.data.isNotEmpty()) {
+            sendNotification(message)
+        }
     }
 
-    fun sendNotification (
-        message: RemoteMessage
-    ) {
+    fun sendNotification (message: RemoteMessage) {
 
     }
 }

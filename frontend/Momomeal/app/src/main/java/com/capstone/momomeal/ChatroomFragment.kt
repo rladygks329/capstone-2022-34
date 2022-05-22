@@ -18,6 +18,7 @@ import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.feature.adapter.ChatRoomViewHolder
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,11 +41,24 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     ): View? {
         Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
-
+        val mainactivity = requireActivity() as MainActivity
         chatroomAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val intent = Intent(activity, ChatActivity::class.java)
                 val chatroomInfo = chatroomAdapter.getData(position)
+
+                val userArea = fireDatabase.child("chatroom")
+                    .child(chatroomInfo.idChatroom.toString())
+                    .child("users")
+                userArea.get().addOnSuccessListener {
+                    Log.d(TAG, it.children.toString())
+                    val a = it
+                    if (it.hasChildren()) {
+                        Log.d(TAG, "AAA")
+                    }
+                }
+
+
                 val myInfoLight = User_light((activity as MainActivity).myInfo)
                 intent.putExtra("chatroominfo", chatroomInfo) // Chatroom information
                 intent.putExtra("myinfo", myInfoLight)
@@ -68,13 +82,13 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
                 val mainactivity = requireActivity() as MainActivity
                 Log.d("onswipe",viewHolder.adapterPosition.toString())
 
                 val deleted_chat_room = chatroomAdapter.getData(viewHolder.layoutPosition)
                 chatroomAdapter.removeData(viewHolder.layoutPosition)
 
+                // 서버에서 내 정보를 삭제합니다.
                 momomeal.deleteChatroom(
                     mainactivity.myInfo.idUser, deleted_chat_room.idChatroom
                 ).enqueue( object: Callback<HashMap<String, Int>>{
@@ -85,18 +99,27 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                         if(response.isSuccessful.not()){
                             return
                         }
-                        Log.d("retrofit", response?.body().toString())
                     }
-
                     override fun onFailure(call: Call<HashMap<String, Int>>, t: Throwable) {
-                        Log.e("retrofit", t.toString())
                         Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
                     }
                 })
 
-                fireDatabase.child("chatroom")
-                    .child(deleted_chat_room.idChatroom.toString()).removeValue()
+                // Firebase 내의 채팅방에서 내 정보를 지웁니다.
 
+                val userArea = fireDatabase.child("chatroom")
+                    .child(deleted_chat_room.idChatroom.toString())
+                    .child("users")
+                userArea.child(mainactivity.myInfo.idUser.toString())
+                    .removeValue().addOnSuccessListener {
+                        userArea.get().addOnSuccessListener {
+                            if (!it.hasChildren()) {
+                                // 만약 혼자 남은 방에서 나가는 거라면, Firebase 내부에서 채팅방을 완전히 삭제합니다.
+                                fireDatabase.child("chatroom")
+                                    .child(deleted_chat_room.idChatroom.toString()).removeValue()
+                            }
+                        }
+                }
             }
             override fun onChildDraw(
                 c: Canvas,
