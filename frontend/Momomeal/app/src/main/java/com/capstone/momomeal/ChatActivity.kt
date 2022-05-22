@@ -146,7 +146,7 @@ class ChatActivity : AppCompatActivity() {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         Log.d(TAG, "fireDatabase onDataChange 불렀어요?")
                         chatAdapter.notifyDataSetChanged()
-                        binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
+                        binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount + 1)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -200,7 +200,7 @@ class ChatActivity : AppCompatActivity() {
             binding.activityChat.etChatContent.text.clear()
             if (tmpstr != "") {
                 val msg = Chat(myInfoLight.idUser, tmpstr)
-                //chatAdapter.addChat(msg)
+                chatAdapter.addChat(msg)
                 fireDatabase.child("chatroom")
                     .child(chatroomInfo.idChatroom.toString()).child("chats").push().setValue(msg)
                 binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
