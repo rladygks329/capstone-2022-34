@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             mainBnv.setupWithNavController(this)
         }
 
+
         savedInstanceState?.getInt(KEY_SELECTED_TAB)
             ?.let {
                 MainTab.from(it)
