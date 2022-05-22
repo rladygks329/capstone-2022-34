@@ -1,5 +1,8 @@
 package com.capstone.momomeal
 
+import android.app.Activity
+import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -9,8 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResultListener
 import com.capstone.momomeal.api.MomomealService
-import com.capstone.momomeal.data.Rate
 import com.capstone.momomeal.data.Review
 import com.capstone.momomeal.data.dto.getUserInfoForm
 import com.capstone.momomeal.data.dto.getUserResponse
@@ -24,8 +27,9 @@ import java.io.ByteArrayInputStream
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
 
-    private val reviewDialogFragment = CreateReviewFragment()
+
     private var user_id: Int = -1
+    val reviewDialogFragment = CreateReviewFragment()
     val momomeal = MomomealService.momomealAPI
     val reviewAdapter: ReviewAdapter by lazy {
         ReviewAdapter(ArrayList<Review>())
@@ -41,20 +45,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         binding.btnProfileBack.setOnClickListener{
             requireActivity().onBackPressed()
         }
-        binding.btnOtherReview.setOnClickListener{
+        binding.btnOtherReview.setOnClickListener {
             reviewDialogFragment.arguments = bundleOf(
                 "user_id" to user_id,
                 "name" to binding.tvProfileUsername.text.toString()
             )
-            reviewDialogFragment.show(requireActivity().supportFragmentManager, reviewDialogFragment.tag)
+            reviewDialogFragment.show(
+                requireActivity().supportFragmentManager,
+                reviewDialogFragment.tag
+            )
+            Log.d("profile",(reviewDialogFragment.dialog == null).toString())
         }
         updatePage(user_id)
         return retview
-    }
-
-    override fun onResume() {
-        super.onResume()
-        updatePage(user_id)
     }
 
     fun updatePage(id: Int){
