@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -48,7 +47,7 @@ class ChatActivity : AppCompatActivity() {
     private val fireDatabase = FirebaseDatabase.getInstance().reference
 
     // ChatActivity에는 Navigation Drawer가 달려있음.
-    // 이거는 반드시 DrawerLayout이 최상위가 되어야 하므로 Activity_chat을 Bind하지 않음.
+    // 반드시 DrawerLayout이 최상위가 되어야 하므로 Activity_chat을 Bind하지 않음.
     private lateinit var binding: LayoutChatHolderBinding // activityChatHolderBinding이 아님
     private lateinit var memberList: ArrayList<User_light>
     private lateinit var memberMap: HashMap<Int, membInfo> // 멤버의 id로 나머지 정보를 찾는 HashMap
@@ -102,11 +101,6 @@ class ChatActivity : AppCompatActivity() {
         // 키보드 설정을 위한 뷰 설정정
        setupView()
 
-        // Chatting RecyclerView Setting
-//        val chatAdapter = ChatAdapter(myInfoLight, memberMap, chatroomInfo.idChatroom)
-//        binding.activityChat.rvChatArea.layoutManager =
-//            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
         // 채팅할 때 키보드 밀려올라가는거 세팅
         binding.activityChat.rvChatArea.apply {
             this.adapter = chatAdapter
@@ -136,17 +130,17 @@ class ChatActivity : AppCompatActivity() {
             val child : Map<String, ChatModel> = mapOf(chatroomInfo.idChatroom.toString() to chatmodel)
             fireDatabase.child("chatroom").updateChildren(child)
         } else if (chatStatus == ChatStatus.FIRST_ENTER) {
+            // 해당 유저를 추가합니다.
+            val user : Map<String, Boolean> = mapOf(myInfoLight.idUser.toString() to true)
             fireDatabase.child("chatroom")
                 .child(chatroomInfo.idChatroom.toString())
-                .child("users")
+                .child("users").updateChildren(user)
         } else {
             fireDatabase.child("chatroom")
                 .child(chatroomInfo.idChatroom.toString())
                 .child("chats").addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        Log.d(TAG, "fireDatabase onDataChange 불렀어요?")
-                        chatAdapter.notifyDataSetChanged()
-                        binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount + 1)
+                        binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -179,6 +173,19 @@ class ChatActivity : AppCompatActivity() {
 //                        TODO("Not yet implemented")
                 }
             })
+        // 채팅 입력을 갱신합니다.
+        fireDatabase.child("chatroom")
+            .child(chatroomInfo.idChatroom.toString())
+            .child("chats").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    chatAdapter.notifyItemChanged(chatAdapter.itemCount - 1)
+                    binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("채팅 기록 가져오기 실패")
+                }
+            })
         setContentView(binding.root)
         // 멤버들의 정보를 받아옵니다.
 
@@ -192,10 +199,8 @@ class ChatActivity : AppCompatActivity() {
         binding.activityChat.btnMore.setOnClickListener {
             binding.root.openDrawer(GravityCompat.END)
             imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-            Toast.makeText(this,"More CLicked",Toast.LENGTH_SHORT).show()
         }
         binding.activityChat.btnChatSend.setOnClickListener {
-            Log.d(TAG, "Send Clickevent")
             val tmpstr = binding.activityChat.etChatContent.text.toString()
             binding.activityChat.etChatContent.text.clear()
             if (tmpstr != "") {
@@ -270,7 +275,6 @@ class ChatActivity : AppCompatActivity() {
                     call: Call<ArrayList<User_light>>,
                     response: Response<ArrayList<User_light>>
                 ) {
-                    Log.d("$TAG|get!", response.body().toString())
                     if(response.isSuccessful.not()){
                         return
                     }
