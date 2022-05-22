@@ -13,7 +13,6 @@
         android:maxWidth="280dp"
         android:backgroundTint="@color/orange_deep"
         android:scaleType="centerCrop"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/profile_img_circle"

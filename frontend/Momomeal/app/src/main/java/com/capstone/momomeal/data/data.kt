@@ -100,8 +100,8 @@ enum class Category(val KoreanName: String) {
     Western("양식"),
     Snackbar("분식"),
     MidnightSnack("야식"),
-    BoiledPork("족발/보쌈"),
-    CafeAndDesert("카페/디저트"),
+    BoiledPork("족발&보쌈"),
+    CafeAndDesert("카페&디저트"),
     Fastfood("패스트푸드")
 }
 

@@ -1,6 +1,7 @@
 package com.capstone.momomeal
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -89,6 +90,13 @@ class CreateReviewFragment : BaseDialogFragment<FragmentReviewBinding>(FragmentR
             dismiss()
         }
         return retView
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        val profile = requireActivity().supportFragmentManager
+            .findFragmentById(R.id.activity_chat) as ProfileFragment
+        profile.updatePage(user_id)
     }
 
     override fun onResume() {

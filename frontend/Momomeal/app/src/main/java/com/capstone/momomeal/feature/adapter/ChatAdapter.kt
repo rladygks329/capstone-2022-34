@@ -21,10 +21,15 @@ import java.lang.IllegalArgumentException
 class ChatAdapter(
 //    val context: Context,
     val myInfo: User_light,
-    var membMap: HashMap<Int, membInfo>,
     val chatroomId: Long
 ) : RecyclerView.Adapter<ChatViewHolder>(){
     private val msgList = ArrayList<Chat>()
+    private var membMap =  HashMap<Int, membInfo>()
+
+    fun setMemMap(newMemMap: HashMap<Int, membInfo>){
+        membMap = newMemMap
+        notifyDataSetChanged()
+    }
     private val fireDB = FirebaseDatabase.getInstance().reference
         .child("chatroom").child(chatroomId.toString())
     init {
