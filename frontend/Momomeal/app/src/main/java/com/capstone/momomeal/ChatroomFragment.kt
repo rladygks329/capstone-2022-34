@@ -11,12 +11,14 @@ import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.ChatStatus
 import com.capstone.momomeal.databinding.FragmentChatroomBinding
 import com.capstone.momomeal.feature.BaseFragment
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.User_light
 import com.capstone.momomeal.feature.adapter.ChatRoomViewHolder
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +31,8 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
     val chatroomAdapter: ChatroomAdapter by lazy {
         ChatroomAdapter(requireContext())
     }
+
+    private val fireDatabase = FirebaseDatabase.getInstance().reference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +48,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 val myInfoLight = User_light((activity as MainActivity).myInfo)
                 intent.putExtra("chatroominfo", chatroomInfo) // Chatroom information
                 intent.putExtra("myinfo", myInfoLight)
+                intent.putExtra("chatstatus", ChatStatus.ENTER)
                 startActivity(intent)
             }
         })
@@ -88,6 +93,9 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                         Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
                     }
                 })
+
+                fireDatabase.child("chatroom")
+                    .child(deleted_chat_room.idChatroom.toString()).removeValue()
 
             }
             override fun onChildDraw(

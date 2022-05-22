@@ -89,8 +89,9 @@ class ChatActivity : AppCompatActivity() {
 //        binding.activityChat.rvChatArea.layoutManager =
 //            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        binding.activityChat.rvChatArea.adapter = chatAdapter
+        // 채팅할 때 키보드 밀려올라가는거 세팅
         binding.activityChat.rvChatArea.apply {
+            this.adapter = chatAdapter
             addOnLayoutChangeListener(onLayoutChangeListener)
             viewTreeObserver.addOnScrollChangedListener {
                 if (isScrollable() && !isKeyboardOpen) {
@@ -116,12 +117,11 @@ class ChatActivity : AppCompatActivity() {
 //            chatmodel.chats.put(myInfoLight.idUser.toString(), Chat(myInfoLight.idUser, "AAA"))
             val child : Map<String, ChatModel> = mapOf(chatroomInfo.idChatroom.toString() to chatmodel)
             fireDatabase.child("chatroom").updateChildren(child)
+        } else if (chatStatus == ChatStatus.FIRST_ENTER) {
+            fireDatabase.child("chatroom")
+                .child(chatroomInfo.idChatroom.toString())
+                .child("users")
         } else {
-            if (chatStatus == ChatStatus.FIRST_ENTER) {
-                fireDatabase.child("chatroom")
-                    .child(chatroomInfo.idChatroom.toString())
-                    .child("users")
-            }
             fireDatabase.child("chatroom")
                 .child(chatroomInfo.idChatroom.toString())
                 .child("chats").addListenerForSingleValueEvent(object : ValueEventListener {
@@ -135,8 +135,8 @@ class ChatActivity : AppCompatActivity() {
                         TODO("채팅 기록 가져오기 실패")
                     }
                 })
-
         }
+
         // 채팅방에 누군가 들어왔습니다.
         fireDatabase.child("chatroom")
             .child(chatroomInfo.idChatroom.toString())

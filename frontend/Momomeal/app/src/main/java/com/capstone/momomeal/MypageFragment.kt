@@ -125,7 +125,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                     call: Call<checkResponse>,
                     response: Response<checkResponse>
                 ) {
-                    Log.d("retrofit",response.body().toString())
+//                    Log.d("retrofit",response.body().toString())
                     if(response.isSuccessful.not()){
                         return
                     }
@@ -148,7 +148,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                     call: Call<checkResponse>,
                     response: Response<checkResponse>
                 ) {
-                    Log.d("retrofit",response.body().toString())
+//                    Log.d("retrofit",response.body().toString())
                     if(response.isSuccessful.not()){
                         return
                     }
@@ -175,7 +175,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
                 if(response.isSuccessful.not()){
                     return
                 }
-                Log.d("retrofit", response?.body().toString())
+//                Log.d("retrofit", response?.body().toString())
                 response.body()?.let{
                     binding.etUserName.setText(it.name)
                     if(it.img != ""){
