@@ -50,8 +50,13 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 val userArea = fireDatabase.child("chatroom")
                     .child(chatroomInfo.idChatroom.toString())
                     .child("users")
-                Log.d(TAG, userArea.get().getResult().toString())
-                userArea.get()
+                userArea.get().addOnSuccessListener {
+                    Log.d(TAG, it.children.toString())
+                    val a = it
+                    if (it.hasChildren()) {
+                        Log.d(TAG, "AAA")
+                    }
+                }
 
 
                 val myInfoLight = User_light((activity as MainActivity).myInfo)
@@ -101,17 +106,19 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                 })
 
                 // Firebase 내의 채팅방에서 내 정보를 지웁니다.
+
                 val userArea = fireDatabase.child("chatroom")
                     .child(deleted_chat_room.idChatroom.toString())
                     .child("users")
-                userArea.child(mainactivity.myInfo.idUser.toString()).removeValue()
-                Log.d(TAG, userArea.get().toString())
-                Log.d(TAG, userArea.get().getResult().toString())
-                Log.d(TAG, userArea.get().result.toString())
-                if (userArea.get().getResult().hasChildren()) {
-                    // 만약 혼자 남은 방에서 나가는 거라면, Firebase 내부에서 채팅방을 완전히 삭제합니다.
-                    fireDatabase.child("chatroom")
-                        .child(deleted_chat_room.idChatroom.toString()).removeValue()
+                userArea.child(mainactivity.myInfo.idUser.toString())
+                    .removeValue().addOnSuccessListener {
+                        userArea.get().addOnSuccessListener {
+                            if (!it.hasChildren()) {
+                                // 만약 혼자 남은 방에서 나가는 거라면, Firebase 내부에서 채팅방을 완전히 삭제합니다.
+                                fireDatabase.child("chatroom")
+                                    .child(deleted_chat_room.idChatroom.toString()).removeValue()
+                            }
+                        }
                 }
             }
             override fun onChildDraw(
