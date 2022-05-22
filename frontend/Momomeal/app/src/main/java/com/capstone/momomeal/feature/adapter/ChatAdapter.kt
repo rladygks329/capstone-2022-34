@@ -97,7 +97,7 @@ class ChatAdapter(
     // msgList 갱신용 함수
     fun addChat(chat: Chat) {
         msgList.add(chat)
-        notifyItemInserted(msgList.size)
+//        notifyItemInserted(msgList.size)
     }
 
     // 이전까지의 채팅 기록을 뒤져서 가져오는
