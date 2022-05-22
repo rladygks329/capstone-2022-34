@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
@@ -200,10 +199,8 @@ class ChatActivity : AppCompatActivity() {
         binding.activityChat.btnMore.setOnClickListener {
             binding.root.openDrawer(GravityCompat.END)
             imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-            Toast.makeText(this,"More CLicked",Toast.LENGTH_SHORT).show()
         }
         binding.activityChat.btnChatSend.setOnClickListener {
-            Log.d(TAG, "Send Clickevent")
             val tmpstr = binding.activityChat.etChatContent.text.toString()
             binding.activityChat.etChatContent.text.clear()
             if (tmpstr != "") {
