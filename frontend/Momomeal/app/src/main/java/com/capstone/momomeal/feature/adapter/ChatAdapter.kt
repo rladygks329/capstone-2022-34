@@ -1,5 +1,6 @@
 package com.capstone.momomeal.feature.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -91,7 +92,7 @@ class ChatAdapter(
     // msgList 갱신용 함수
     fun addChat(chat: Chat) {
         msgList.add(chat)
-        notifyItemInserted(msgList.size - 1)
+        notifyItemInserted(msgList.size)
     }
 
     // 이전까지의 채팅 기록을 뒤져서 가져오는
@@ -122,6 +123,7 @@ sealed class ChatViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bind
         private val binding: ItemOtherMsgFullBinding
     ) : ChatViewHolder(binding) {
         fun bind(item: Chat, info: membInfo?) {
+            Log.d("OMF : ", info.toString())
             if (info != null) {
                 binding.ivOtherProfile.setImageBitmap(info.bitmap)
                 binding.tvOtherName.text = info.name

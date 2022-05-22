@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.DialogFragment
 import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.data.Category
+import com.capstone.momomeal.data.ChatStatus
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.dto.CreateChatForm
 import com.capstone.momomeal.databinding.FragmentCreateChatBinding
@@ -118,10 +119,9 @@ class CreateChatFragment : BaseDialogFragment<FragmentCreateChatBinding>(Fragmen
                 }
                 response.body()?.let{
                     val intent = Intent(activity, ChatActivity::class.java)
-                    val isNewChat = true
                     intent.putExtra("myinfo", user.trans_User_light())
                     intent.putExtra("chatroominfo", it)
-                    intent.putExtra("isNewChat", isNewChat)
+                    intent.putExtra("chatstatus", ChatStatus.CREATE_CHAT)
                     startActivity(intent)
                     dismiss()
                 }
