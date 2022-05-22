@@ -57,8 +57,8 @@ class ChatActivity : AppCompatActivity() {
 
     // intent로 받는 데이터들
 //    private val chatList: ArrayList<Chat> = arrayListOf()
-    private val isNewChat: Boolean by lazy {
-        intent.getBooleanExtra("isNewChat", false)
+    private val chatStatus: ChatStatus by lazy {
+        intent.getSerializableExtra("chatstatus") as ChatStatus
     }
     private val myInfoLight: User_light by lazy {
         intent.getParcelableExtra<User_light>("myinfo") as User_light
@@ -74,7 +74,6 @@ class ChatActivity : AppCompatActivity() {
     private val chatMemberAdapter : ChatMemberAdapter by lazy {
         ChatMemberAdapter()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,12 +103,13 @@ class ChatActivity : AppCompatActivity() {
        setupView()
 
         // Chatting RecyclerView Setting
-//        val chatAdapter = ChatAdapter(myInfoLight, chatList)
+//        val chatAdapter = ChatAdapter(myInfoLight, memberMap, chatroomInfo.idChatroom)
 //        binding.activityChat.rvChatArea.layoutManager =
 //            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+        // 채팅할 때 키보드 밀려올라가는거 세팅
         binding.activityChat.rvChatArea.apply {
-            adapter = chatAdapter
+            this.adapter = chatAdapter
             addOnLayoutChangeListener(onLayoutChangeListener)
             viewTreeObserver.addOnScrollChangedListener {
                 if (isScrollable() && !isKeyboardOpen) {
@@ -120,8 +120,8 @@ class ChatActivity : AppCompatActivity() {
         }
         binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
 
-
         // drawer`s Member information RecyclerView Setting
+//        val chatMemberAdapter = ChatMemberAdapter(memberMap, memberList)
         binding.nvChatNavigation.rvMemberList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.nvChatNavigation.rvMemberList.adapter = chatMemberAdapter
@@ -129,18 +129,23 @@ class ChatActivity : AppCompatActivity() {
         // 채팅방의 정보를 체크합니다.
         val chatmodel = ChatModel()
 
-        if (isNewChat) {
+        if (chatStatus == ChatStatus.CREATE_CHAT) {
             // 새로운 채팅방을 만듭니다.
             chatmodel.users.put(myInfoLight.idUser.toString(), true)
 //            chatmodel.chats.put(myInfoLight.idUser.toString(), Chat(myInfoLight.idUser, "AAA"))
             val child : Map<String, ChatModel> = mapOf(chatroomInfo.idChatroom.toString() to chatmodel)
             fireDatabase.child("chatroom").updateChildren(child)
+        } else if (chatStatus == ChatStatus.FIRST_ENTER) {
+            fireDatabase.child("chatroom")
+                .child(chatroomInfo.idChatroom.toString())
+                .child("users")
         } else {
             fireDatabase.child("chatroom")
                 .child(chatroomInfo.idChatroom.toString())
-                .child("chats").addValueEventListener(object : ValueEventListener {
+                .child("chats").addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        chatAdapter.notifyItemInserted(chatAdapter.itemCount - 1)
+                        Log.d(TAG, "fireDatabase onDataChange 불렀어요?")
+                        chatAdapter.notifyDataSetChanged()
                         binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
                     }
 
@@ -148,33 +153,34 @@ class ChatActivity : AppCompatActivity() {
                         TODO("채팅 기록 가져오기 실패")
                     }
                 })
-            fireDatabase.child("chatroom")
-                .child(chatroomInfo.idChatroom.toString())
-                .child("users").addChildEventListener(object : ChildEventListener {
-                    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                        updateUserInfo()
-                    }
-
-                    override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-//                        TODO("Not yet implemented")
-                    }
-
-                    override fun onChildRemoved(snapshot: DataSnapshot) {
-//                        TODO("채팅방에 누군가 나감")
-                    }
-
-                    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-//                        TODO("Not yet implemented")
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-//                        TODO("Not yet implemented")
-                    }
-                })
         }
+
+        // 채팅방에 누군가 들어왔습니다.
+        fireDatabase.child("chatroom")
+            .child(chatroomInfo.idChatroom.toString())
+            .child("users").addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                      updateUserInfo()
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                        TODO("Not yet implemented")
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+//                        TODO("채팅방에 누군가 나감")
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                        TODO("Not yet implemented")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+//                        TODO("Not yet implemented")
+                }
+            })
         setContentView(binding.root)
         // 멤버들의 정보를 받아옵니다.
-
 
         // ChatActivity Setting
         binding.activityChat.tvChatTitle.text = chatroomInfo.nameRoom
@@ -197,6 +203,7 @@ class ChatActivity : AppCompatActivity() {
                 //chatAdapter.addChat(msg)
                 fireDatabase.child("chatroom")
                     .child(chatroomInfo.idChatroom.toString()).child("chats").push().setValue(msg)
+                binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
             }
         }
 

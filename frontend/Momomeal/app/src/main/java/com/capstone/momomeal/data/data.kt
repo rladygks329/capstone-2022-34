@@ -79,7 +79,7 @@ data class Review (
     val conReview: String = "",
 )
 class ChatModel (
-    val users: HashMap<String, Boolean> = HashMap(),
+    val users: HashMap<String, Boolean> = HashMap(), // STring으로 바꿔서 토큰화시키는게 좋을듯
     val chats: HashMap<String, Chat> = HashMap()) {
 }
 data class Chat (
@@ -103,6 +103,11 @@ enum class Category(val KoreanName: String) {
     BoiledPork("족발&보쌈"),
     CafeAndDesert("카페&디저트"),
     Fastfood("패스트푸드")
+}
+
+
+enum class ChatStatus {
+    CREATE_CHAT, FIRST_ENTER, ENTER
 }
 
 data class checkResponse(
