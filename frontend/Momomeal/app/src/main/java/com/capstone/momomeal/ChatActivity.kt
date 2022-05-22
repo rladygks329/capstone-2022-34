@@ -1,5 +1,6 @@
 package com.capstone.momomeal
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Rect
@@ -14,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.os.bundleOf
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +25,7 @@ import com.capstone.momomeal.data.*
 import com.capstone.momomeal.databinding.LayoutChatHolderBinding
 import com.capstone.momomeal.feature.adapter.ChatAdapter
 import com.capstone.momomeal.feature.adapter.ChatMemberAdapter
+import com.capstone.momomeal.feature.adapter.ChatroomAdapter
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import retrofit2.Call
@@ -50,11 +53,12 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var memberList: ArrayList<User_light>
     private lateinit var memberMap: HashMap<Int, membInfo> // 멤버의 id로 나머지 정보를 찾는 HashMap
     private lateinit var imm : InputMethodManager
+    val profileFragment = ProfileFragment()
 
     // intent로 받는 데이터들
 //    private val chatList: ArrayList<Chat> = arrayListOf()
-    private val isNewChat: Boolean by lazy {
-        intent.getBooleanExtra("isNewChat", false)
+    private val chatStatus: ChatStatus by lazy {
+        intent.getSerializableExtra("chatstatus") as ChatStatus
     }
     private val myInfoLight: User_light by lazy {
         intent.getParcelableExtra<User_light>("myinfo") as User_light
@@ -65,12 +69,11 @@ class ChatActivity : AppCompatActivity() {
 
     // Adapters
     private val chatAdapter : ChatAdapter by lazy {
-        ChatAdapter(myInfoLight, memberMap, chatroomInfo.idChatroom)
+        ChatAdapter(myInfoLight, chatroomInfo.idChatroom)
     }
     private val chatMemberAdapter : ChatMemberAdapter by lazy {
-        ChatMemberAdapter(memberMap, memberList)
+        ChatMemberAdapter()
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,17 +84,32 @@ class ChatActivity : AppCompatActivity() {
         // 빈 리스트를 미리 할당
         memberList = arrayListOf<User_light>()
         memberMap = hashMapOf<Int, membInfo>()
+        updateUserInfo()
+
+        chatMemberAdapter.setItemClickListener(object : ChatMemberAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                binding.root.closeDrawers()
+                profileFragment.arguments = bundleOf(
+                    "user_id" to chatMemberAdapter.getUserID(position)
+                )
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.activity_chat, profileFragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        })
 
         // 키보드 설정을 위한 뷰 설정정
        setupView()
 
         // Chatting RecyclerView Setting
-//        val chatAdapter = ChatAdapter(myInfoLight, chatList)
+//        val chatAdapter = ChatAdapter(myInfoLight, memberMap, chatroomInfo.idChatroom)
 //        binding.activityChat.rvChatArea.layoutManager =
 //            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+        // 채팅할 때 키보드 밀려올라가는거 세팅
         binding.activityChat.rvChatArea.apply {
-            adapter = chatAdapter
+            this.adapter = chatAdapter
             addOnLayoutChangeListener(onLayoutChangeListener)
             viewTreeObserver.addOnScrollChangedListener {
                 if (isScrollable() && !isKeyboardOpen) {
@@ -102,8 +120,8 @@ class ChatActivity : AppCompatActivity() {
         }
         binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
 
-
         // drawer`s Member information RecyclerView Setting
+//        val chatMemberAdapter = ChatMemberAdapter(memberMap, memberList)
         binding.nvChatNavigation.rvMemberList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.nvChatNavigation.rvMemberList.adapter = chatMemberAdapter
@@ -111,51 +129,141 @@ class ChatActivity : AppCompatActivity() {
         // 채팅방의 정보를 체크합니다.
         val chatmodel = ChatModel()
 
-        if (isNewChat) {
+        if (chatStatus == ChatStatus.CREATE_CHAT) {
             // 새로운 채팅방을 만듭니다.
             chatmodel.users.put(myInfoLight.idUser.toString(), true)
 //            chatmodel.chats.put(myInfoLight.idUser.toString(), Chat(myInfoLight.idUser, "AAA"))
             val child : Map<String, ChatModel> = mapOf(chatroomInfo.idChatroom.toString() to chatmodel)
             fireDatabase.child("chatroom").updateChildren(child)
+        } else if (chatStatus == ChatStatus.FIRST_ENTER) {
+            fireDatabase.child("chatroom")
+                .child(chatroomInfo.idChatroom.toString())
+                .child("users")
         } else {
             fireDatabase.child("chatroom")
                 .child(chatroomInfo.idChatroom.toString())
-                .child("chats").addValueEventListener(object : ValueEventListener {
+                .child("chats").addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        chatAdapter.notifyItemInserted(chatAdapter.itemCount - 1)
-                        binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
+                        Log.d(TAG, "fireDatabase onDataChange 불렀어요?")
+                        chatAdapter.notifyDataSetChanged()
+                        binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount + 1)
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         TODO("채팅 기록 가져오기 실패")
                     }
                 })
-            fireDatabase.child("chatroom")
-                .child(chatroomInfo.idChatroom.toString())
-                .child("users").addChildEventListener(object : ChildEventListener {
-                    override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-//                        TODO("채팅방에 누군가 입장함. ")
-                    }
-
-                    override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-//                        TODO("Not yet implemented")
-                    }
-
-                    override fun onChildRemoved(snapshot: DataSnapshot) {
-//                        TODO("채팅방에 누군가 나감")
-                    }
-
-                    override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-//                        TODO("Not yet implemented")
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-//                        TODO("Not yet implemented")
-                    }
-                })
         }
+
+        // 채팅방에 누군가 들어왔습니다.
+        fireDatabase.child("chatroom")
+            .child(chatroomInfo.idChatroom.toString())
+            .child("users").addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                      updateUserInfo()
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+//                        TODO("Not yet implemented")
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+//                        TODO("채팅방에 누군가 나감")
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+//                        TODO("Not yet implemented")
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+//                        TODO("Not yet implemented")
+                }
+            })
         setContentView(binding.root)
         // 멤버들의 정보를 받아옵니다.
+
+        // ChatActivity Setting
+        binding.activityChat.tvChatTitle.text = chatroomInfo.nameRoom
+
+        // Listeners in Chat Activity
+        binding.activityChat.btnChatBack.setOnClickListener {
+            onBackPressed()
+        }
+        binding.activityChat.btnMore.setOnClickListener {
+            binding.root.openDrawer(GravityCompat.END)
+            imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+            Toast.makeText(this,"More CLicked",Toast.LENGTH_SHORT).show()
+        }
+        binding.activityChat.btnChatSend.setOnClickListener {
+            Log.d(TAG, "Send Clickevent")
+            val tmpstr = binding.activityChat.etChatContent.text.toString()
+            binding.activityChat.etChatContent.text.clear()
+            if (tmpstr != "") {
+                val msg = Chat(myInfoLight.idUser, tmpstr)
+                chatAdapter.addChat(msg)
+                fireDatabase.child("chatroom")
+                    .child(chatroomInfo.idChatroom.toString()).child("chats").push().setValue(msg)
+                binding.activityChat.rvChatArea.scrollToPosition(chatAdapter.itemCount - 1)
+            }
+        }
+
+        // Drawer Setiing
+        binding.nvChatNavigation.tvDeliverText.text = chatroomInfo.nameStore
+        binding.nvChatNavigation.tvReceiveText.text = chatroomInfo.namePickupPlace
+        // 이후 지도 세팅으로 넘어감
+
+        // Listeners in drawer
+        binding.nvChatNavigation.btnCloseDrawer.setOnClickListener {
+            binding.root.closeDrawers()
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        if (binding.root.isDrawerOpen(GravityCompat.END)) {
+            binding.root.closeDrawers()
+        }
+        else {
+            val count = supportFragmentManager.backStackEntryCount
+            if (count == 0) {
+                super.onBackPressed()
+            } else {
+                supportFragmentManager.popBackStack()
+            }
+        }
+    }
+
+    // RecyclerView의 키보드를 적당하게 위로 올리는 데 필요한 함수들입니다.
+    private fun setupView() { // 키보드 Open/Close 체크
+        binding.activityChat.clChatContainer.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = Rect()
+            binding.activityChat.clChatContainer.getWindowVisibleDisplayFrame(rect)
+            val rootViewHeight = binding.activityChat.clChatContainer.rootView.height
+            val heightDiff = rootViewHeight - rect.height()
+            isKeyboardOpen = heightDiff > rootViewHeight * 0.25 // true == 키보드 올라감
+        }
+    }
+
+    fun RecyclerView.isScrollable(): Boolean {
+        return canScrollVertically(1) || canScrollVertically(-1)
+    }
+
+    fun RecyclerView.setStackFromEnd() {
+        (layoutManager as? LinearLayoutManager)?.stackFromEnd = true
+    }
+
+    private val onLayoutChangeListener = View.OnLayoutChangeListener {
+            _, _, _, _, bottom, _, _, _, oldBottom ->
+        if (bottom < oldBottom) {
+            binding.activityChat.rvChatArea.scrollBy(0, oldBottom - bottom)
+        } // 스크롤 유지를 위해 추가
+    }
+
+    private fun updateUserInfo(){
         momomeal.getEnteredChatInfo(chatroomInfo.idChatroom)
             .enqueue(object: Callback<ArrayList<User_light>> {
                 override fun onResponse(
@@ -198,6 +306,8 @@ class ChatActivity : AppCompatActivity() {
                             memberMap.put(item.idUser, membInfo(item.name, tmpBitmap))
                         }
                     }
+                    chatAdapter.setMemMap(memberMap)
+                    chatMemberAdapter.setData(memberMap, memberList)
                 }
                 override fun onFailure(call: Call<ArrayList<User_light>>, t: Throwable) {
                     Toast.makeText(
@@ -205,80 +315,6 @@ class ChatActivity : AppCompatActivity() {
                     ).show()
                 }
             })
-
-        // ChatActivity Setting
-        binding.activityChat.tvChatTitle.text = chatroomInfo.nameRoom
-
-        // Listeners in Chat Activity
-        binding.activityChat.btnChatBack.setOnClickListener {
-            onBackPressed()
-        }
-        binding.activityChat.btnMore.setOnClickListener {
-            binding.root.openDrawer(GravityCompat.END)
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
-            Toast.makeText(this,"More CLicked",Toast.LENGTH_SHORT).show()
-        }
-        binding.activityChat.btnChatSend.setOnClickListener {
-            Log.d(TAG, "Send Clickevent")
-            val tmpstr = binding.activityChat.etChatContent.text.toString()
-            binding.activityChat.etChatContent.text.clear()
-            if (tmpstr != "") {
-                val msg = Chat(myInfoLight.idUser, tmpstr)
-                chatAdapter.addChat(msg)
-                fireDatabase.child("chatroom")
-                    .child(chatroomInfo.idChatroom.toString()).child("chats").push().setValue(msg)
-            }
-        }
-
-        // Drawer Setiing
-        binding.nvChatNavigation.tvDeliverText.text = chatroomInfo.nameStore
-        binding.nvChatNavigation.tvReceiveText.text = chatroomInfo.namePickupPlace
-        // 이후 지도 세팅으로 넘어감
-
-        // Listeners in drawer
-        binding.nvChatNavigation.btnCloseDrawer.setOnClickListener {
-            binding.root.closeDrawers()
-        }
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        if (binding.root.isDrawerOpen(GravityCompat.END)) {
-            binding.root.closeDrawers()
-        }
-        else {
-            super.onBackPressed()
-        }
-    }
-
-    // RecyclerView의 키보드를 적당하게 위로 올리는 데 필요한 함수들입니다.
-    private fun setupView() { // 키보드 Open/Close 체크
-        binding.activityChat.clChatContainer.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = Rect()
-            binding.activityChat.clChatContainer.getWindowVisibleDisplayFrame(rect)
-            val rootViewHeight = binding.activityChat.clChatContainer.rootView.height
-            val heightDiff = rootViewHeight - rect.height()
-            isKeyboardOpen = heightDiff > rootViewHeight * 0.25 // true == 키보드 올라감
-        }
-    }
-
-    fun RecyclerView.isScrollable(): Boolean {
-        return canScrollVertically(1) || canScrollVertically(-1)
-    }
-
-    fun RecyclerView.setStackFromEnd() {
-        (layoutManager as? LinearLayoutManager)?.stackFromEnd = true
-    }
-
-    private val onLayoutChangeListener = View.OnLayoutChangeListener {
-            _, _, _, _, bottom, _, _, _, oldBottom ->
-        if (bottom < oldBottom) {
-            binding.activityChat.rvChatArea.scrollBy(0, oldBottom - bottom)
-        } // 스크롤 유지를 위해 추가
     }
 
 

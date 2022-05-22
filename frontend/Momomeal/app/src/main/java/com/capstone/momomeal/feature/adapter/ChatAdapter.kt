@@ -1,5 +1,6 @@
 package com.capstone.momomeal.feature.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,10 +22,15 @@ import java.lang.IllegalArgumentException
 class ChatAdapter(
 //    val context: Context,
     val myInfo: User_light,
-    var membMap: HashMap<Int, membInfo>,
     val chatroomId: Long
 ) : RecyclerView.Adapter<ChatViewHolder>(){
     private val msgList = ArrayList<Chat>()
+    private var membMap =  HashMap<Int, membInfo>()
+
+    fun setMemMap(newMemMap: HashMap<Int, membInfo>){
+        membMap = newMemMap
+        notifyDataSetChanged()
+    }
     private val fireDB = FirebaseDatabase.getInstance().reference
         .child("chatroom").child(chatroomId.toString())
     init {
@@ -91,7 +97,7 @@ class ChatAdapter(
     // msgList 갱신용 함수
     fun addChat(chat: Chat) {
         msgList.add(chat)
-        notifyItemInserted(msgList.size - 1)
+        notifyItemInserted(msgList.size)
     }
 
     // 이전까지의 채팅 기록을 뒤져서 가져오는
@@ -122,6 +128,7 @@ sealed class ChatViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bind
         private val binding: ItemOtherMsgFullBinding
     ) : ChatViewHolder(binding) {
         fun bind(item: Chat, info: membInfo?) {
+            Log.d("OMF : ", info.toString())
             if (info != null) {
                 binding.ivOtherProfile.setImageBitmap(info.bitmap)
                 binding.tvOtherName.text = info.name

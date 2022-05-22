@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.capstone.momomeal.api.MomomealService
+import com.capstone.momomeal.data.ChatStatus
 import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.data.User
 import com.capstone.momomeal.databinding.FragmentChatInfoBinding
@@ -57,7 +58,7 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
                     val intent = Intent(activity, ChatActivity::class.java)
                     intent.putExtra("myinfo", user.trans_User_light())
                     intent.putExtra("chatroominfo", chatroom)
-                    intent.putExtra("isNewChat", false)
+                    intent.putExtra("chatstatus", ChatStatus.FIRST_ENTER)
                     startActivity(intent)
                     dismiss()
                 }
