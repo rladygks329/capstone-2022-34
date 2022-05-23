@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object MomomealService {
     private const val MOMOMEAL_Local_URL = "http://10.0.2.2:8080/"
-    private const val MOMOMEAL_AWS_URL = "3.39.60.56:8080"
+    private const val MOMOMEAL_AWS_URL = "http://3.39.60.56:8080/"
     private const val YOHAN_HOME = "http://192.168.0.5:8080/"
 
     private val customgson : Gson by lazy {
