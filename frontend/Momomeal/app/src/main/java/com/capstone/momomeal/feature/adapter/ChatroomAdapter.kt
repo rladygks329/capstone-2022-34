@@ -111,13 +111,11 @@ class ChatRoomViewHolder(binding:  ViewChatRoomBinding) : RecyclerView.ViewHolde
         }
 
         val betweenTimeHour = betweenTimeSecond/24
-        Log.d("hour", betweenTimeHour.toString())
         if (betweenTimeHour < 24) {
             return betweenTimeHour.toString() + "시간전"
         }
 
         val betweenTimeDay = betweenTimeHour / 24
-        Log.d("day", betweenTimeDay.toString())
         if (betweenTimeDay < 365) {
             return betweenTimeDay.toString() + "일전"
         }

@@ -64,7 +64,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
 
         pageInfo = (requireActivity() as MainActivity).myInfo
 
-        Log.d(TAG, "cReate!!")
+        //Log.d(TAG, "cReate!!")
 
         val mainactivity = requireActivity() as MainActivity
 
@@ -118,7 +118,7 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
     }
     fun chageBitmap(bitmap: Bitmap){
         val newImage = encodeImage(bitmap)
-        Log.d("mypage", newImage)
+        //Log.d("mypage", newImage)
         momomeal.updateUserInfo(UpdateUserInfoForm(pageInfo.idUser, pageInfo.email, pageInfo.name, newImage))
             .enqueue(object: Callback<checkResponse>{
                 override fun onResponse(
@@ -201,7 +201,6 @@ class MypageFragment : BaseFragment<FragmentMypageBinding>(FragmentMypageBinding
 
     fun View.showSoftKeyboard() {
         if (this.requestFocus()) {
-            Log.d("show","성공")
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
         }

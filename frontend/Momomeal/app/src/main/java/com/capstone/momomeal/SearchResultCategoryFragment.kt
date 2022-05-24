@@ -82,7 +82,7 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
                 call: Call<List<Chatroom>>,
                 response: Response<List<Chatroom>>
             ) {
-                Log.d("retrofit", response?.body().toString())
+                //Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){ return }
                 response.body()?.let{
                     chatAdapter.replaceData(ArrayList<Chatroom>(it))
@@ -90,7 +90,7 @@ class SearchResultCategoryFragment : BaseFragment<FragmentSearchResultCategoryBi
             }
 
             override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
-                Log.e("retrofit", t.toString())
+                //Log.e("retrofit", t.toString())
             }
         })
     }

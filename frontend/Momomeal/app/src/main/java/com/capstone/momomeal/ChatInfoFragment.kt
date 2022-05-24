@@ -50,7 +50,7 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
                 call: Call<HashMap<String, Int>>,
                 response: Response<HashMap<String, Int>>
             ) {
-                Log.d("retrofit", response?.body().toString())
+                //Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
                 }
@@ -65,7 +65,7 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
             }
 
             override fun onFailure(call: Call<HashMap<String, Int>>, t: Throwable) {
-                Log.e("retrofit", t.toString())
+                //Log.e("retrofit", t.toString())
             }
         })
     }
@@ -88,8 +88,6 @@ class ChatInfoFragment : BaseDialogFragment<FragmentChatInfoBinding>(FragmentCha
     private fun initView() {
         val mapView = MapView(requireActivity())
         val mapViewContainer = binding.fragmentChatInfoMapContainer as ViewGroup
-        Log.d("x", chatroom.coordPickupPlaceX!!.toString())
-        Log.d("y", chatroom.coordPickupPlaceY!!.toString())
         val mapPoint = MapPoint.mapPointWithGeoCoord(chatroom.coordPickupPlaceY!!, chatroom.coordPickupPlaceX!!)
 
         mapView.setMapCenterPoint(mapPoint, true);

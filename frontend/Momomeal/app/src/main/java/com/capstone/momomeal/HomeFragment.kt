@@ -80,7 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     // onCreate 이후 화면을 구성하는 코드
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("system","home Oncreate is called")
+        //Log.d("system","home Oncreate is called")
         mainActivity = (activity as MainActivity)
         if(mainActivity.myInfo.x == 0.0 && mainActivity.myInfo.y == 0.0){
             hasPoint = false
@@ -91,7 +91,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("system","home OncreateView is called")
+        //Log.d("system","home OncreateView is called")
         val retView = super.onCreateView(inflater, container, savedInstanceState)
 
 
@@ -194,7 +194,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 }
 
                 override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
-                    Log.e("retrofit", t.toString())
+                    //Log.e("retrofit", t.toString())
                 }
             })
     }
@@ -209,6 +209,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
 
 
     fun onclicker(s : String) {
-        Log.d(TAG, s)
+        //Log.d(TAG, s)
     }
 }
