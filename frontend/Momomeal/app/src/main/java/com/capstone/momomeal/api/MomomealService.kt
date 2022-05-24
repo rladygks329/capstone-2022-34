@@ -22,7 +22,7 @@ object MomomealService {
     }
     private val retrofit : Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(YOHAN_HOME)
+            .baseUrl(MOMOMEAL_AWS_URL)
             .addConverterFactory(GsonConverterFactory.create(customgson))
             .build()
     }
