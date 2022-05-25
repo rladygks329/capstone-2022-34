@@ -54,7 +54,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 requireActivity().supportFragmentManager,
                 reviewDialogFragment.tag
             )
-            Log.d("profile",(reviewDialogFragment.dialog == null).toString())
         }
         updatePage(user_id)
         return retview
@@ -69,7 +68,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                 if(response.isSuccessful.not()){
                     return
                 }
-                Log.d("retrofit", response.body().toString())
+                //Log.d("retrofit", response.body().toString())
                 response.body()?.let{
                     binding.tvProfileUsername.text = it.name
                     if(it.img != ""){
@@ -77,12 +76,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                     }
                     binding.pbOtherManner.progress = it.rate
                     binding.tvMannerPoint.text = it.rate.toString() + "점"
-                    Log.d("retrofit", it.reviewList.toString())
+                    //Log.d("retrofit", it.reviewList.toString())
                     reviewAdapter.replaceData(it.reviewList)
                 }
             }
             override fun onFailure(call: Call<getUserResponse>, t: Throwable) {
-                Log.e("retrofit", t.toString())
+                //Log.e("retrofit", t.toString())
             }
         })
     }

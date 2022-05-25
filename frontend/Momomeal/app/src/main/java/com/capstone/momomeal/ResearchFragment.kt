@@ -79,7 +79,7 @@ class ResearchFragment : BaseDialogFragment<FragmentResearchBinding>(FragmentRes
         return result
     }
     private fun submit(){
-        Log.d("research",count.toString())
+        //Log.d("research",count.toString())
         if(count < 3 ){
             showMSG("3개 이상의 항목을 선택해주세요")
             return

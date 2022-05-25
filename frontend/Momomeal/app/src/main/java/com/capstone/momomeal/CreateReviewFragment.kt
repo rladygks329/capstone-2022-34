@@ -85,7 +85,7 @@ class CreateReviewFragment : BaseDialogFragment<FragmentReviewBinding>(FragmentR
                     })
             }
         }
-        Log.d("crreview",rate.toString())
+        //Log.d("crreview",rate.toString())
         binding.fragmetReviewBack.setOnClickListener{
             dismiss()
         }

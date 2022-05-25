@@ -42,14 +42,12 @@ class LoginViewModel : ViewModel() {
         //만약 실행이 안된다면 아래 함수를 주석처리하고, _user.postValue(fakeuser) 이런식으로 사용
         //_user.postValue(fakeLoginResponse[0])
         viewModelScope.launch {
-            Log.d("call", email)
-            Log.d("call", password)
             loginRepo.login(email, password).enqueue(object :Callback<LoginResponse>{
                 override fun onResponse(
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
                 ) {
-                    Log.d("retrofit",response.body().toString())
+                    //Log.d("retrofit",response.body().toString())
                     if(response.isSuccessful.not()){
                         _loginEvent.postValue(Event("Fail"))
                         return
@@ -59,7 +57,7 @@ class LoginViewModel : ViewModel() {
                     }
                 }
                 override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Log.e("retrofit", t.toString())
+                    //Log.e("retrofit", t.toString())
                     _loginEvent.postValue(Event("Fail"))
                 }
             })

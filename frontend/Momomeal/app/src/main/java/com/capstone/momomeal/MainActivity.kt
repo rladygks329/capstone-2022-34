@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             ?.let {
                 mainBnv.selectedItemId = it
             }
-        Log.d("main",myInfo.name)
+        //Log.d("main",myInfo.name)
 
     }
 

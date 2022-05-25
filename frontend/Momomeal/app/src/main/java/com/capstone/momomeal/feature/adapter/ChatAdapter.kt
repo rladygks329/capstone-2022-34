@@ -128,7 +128,7 @@ sealed class ChatViewHolder(binding: ViewBinding) : RecyclerView.ViewHolder(bind
         private val binding: ItemOtherMsgFullBinding
     ) : ChatViewHolder(binding) {
         fun bind(item: Chat, info: membInfo?) {
-            Log.d("OMF : ", info.toString())
+            //Log.d("OMF : ", info.toString())
             if (info != null) {
                 binding.ivOtherProfile.setImageBitmap(info.bitmap)
                 binding.tvOtherName.text = info.name

@@ -75,7 +75,7 @@ class SignupFragment : BaseFragment<FragmentSignupBinding>(FragmentSignupBinding
         momomeal.register(RegisterForm(email, pwd, name))
             .enqueue(object : Callback<checkResponse>{
             override fun onResponse(call: Call<checkResponse>, response: Response<checkResponse>) {
-                Log.d("retrofit", response?.body().toString())
+                //Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
                 }

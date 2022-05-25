@@ -103,7 +103,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             .commit()
     }
     private fun paintGradient(view: TextView){
-        val text = "모두모아먹자!"
+        val text = "모두모아한끼!"
         val orange = ContextCompat.getColor(requireActivity(), R.color.orange_deep)
         val yellow = ContextCompat.getColor(requireActivity(), R.color.yellow)
         val green = ContextCompat.getColor(requireActivity(), R.color.green)

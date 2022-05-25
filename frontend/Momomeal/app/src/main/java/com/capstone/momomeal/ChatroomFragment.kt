@@ -39,7 +39,6 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, "OnCreateView Popout!!!!")
         val retview = super.onCreateView(inflater, container, savedInstanceState)
         val mainactivity = requireActivity() as MainActivity
         chatroomAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
@@ -51,10 +50,8 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
                     .child(chatroomInfo.idChatroom.toString())
                     .child("users")
                 userArea.get().addOnSuccessListener {
-                    Log.d(TAG, it.children.toString())
                     val a = it
                     if (it.hasChildren()) {
-                        Log.d(TAG, "AAA")
                     }
                 }
 
@@ -83,7 +80,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val mainactivity = requireActivity() as MainActivity
-                Log.d("onswipe",viewHolder.adapterPosition.toString())
+                //Log.d("onswipe",viewHolder.adapterPosition.toString())
 
                 val deleted_chat_room = chatroomAdapter.getData(viewHolder.layoutPosition)
                 chatroomAdapter.removeData(viewHolder.layoutPosition)
@@ -180,7 +177,7 @@ class ChatroomFragment : BaseFragment<FragmentChatroomBinding>(FragmentChatroomB
 
         momomeal.getEnteredChatroom(mainActivity.myInfo.idUser).enqueue(object: Callback<List<Chatroom>>{
             override fun onResponse(call: Call<List<Chatroom>>, response: Response<List<Chatroom>>) {
-                Log.d("retrofit", response?.body().toString())
+                //Log.d("retrofit", response?.body().toString())
                 if(response.isSuccessful.not()){
                     return
                 }
