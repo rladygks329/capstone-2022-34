@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import com.capstone.momomeal.databinding.ActivityMainBinding
+import com.capstone.momomeal.feature.BottomNavigator
+import com.capstone.momomeal.feature.MainTab
+import com.capstone.momomeal.data.User
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -19,36 +23,65 @@ class MainActivity : AppCompatActivity() {
         findViewById(R.id.bnv_main)
     }
     private lateinit var binding: ActivityMainBinding
-
+    private val navController: NavController by lazy {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fr_main_navi_host)
+            ?: throw IllegalStateException("the container MUST contain a fragment at least one")
+        navHostFragment.findNavController()
+    }
+    public val myInfo: User by lazy {
+        intent.getParcelableExtra<User>("user") as User
+    }
+    public val recommend: Boolean by lazy {
+        intent.getBooleanExtra("recommend", false)
+    }
+    var searchKeyword: String = ""
+    companion object {
+        private const val KEY_SELECTED_TAB = "selectedTab"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var bottomNavigationView : BottomNavigationView = findViewById(R.id.bnv_main)
-        var navController = findNavController(R.id.fr_main_navi_host)
-        NavigationUI.setupWithNavController(bottomNavigationView, navController)
-        navController.addOnDestinationChangedListener{ _, destination, _ ->
-            when (destination.id){
-                R.id.itemHome  -> bottomNavigationView.visibility = View.VISIBLE
-                R.id.itemChatRoom -> bottomNavigationView.visibility = View.VISIBLE
-                R.id.itemMypage -> bottomNavigationView.visibility = View.VISIBLE
-                else ->  bottomNavigationView.visibility = View.GONE
-            }
+
+        navController.apply {
+            navigatorProvider.addNavigator(
+                BottomNavigator(
+                    R.id.fr_main_navi_host,
+                    supportFragmentManager
+                )
+            )
+            // set a graph at code not XML, because add a custom navigator
+            setGraph(R.navigation.bottom_navigation)
+            mainBnv.setupWithNavController(this)
         }
-        // BottomNavigationView의 OnClickListener
-//        mainBnv.setOnItemSelectedListener {
-//
-//
-//        }
-//        binding.
+
+
+        savedInstanceState?.getInt(KEY_SELECTED_TAB)
+            ?.let {
+                MainTab.from(it)
+            }
+            ?.itemId
+            ?.let {
+                mainBnv.selectedItemId = it
+            }
+        //Log.d("main",myInfo.name)
 
     }
 
-    public fun changeFragment(fragment: Fragment) {
-        Log.d(TAG, "changeFragment Activated")
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fl_main_full_container, fragment)
+
+
+    fun moveSearch(frag: Fragment){
+        mainBnv.visibility = View.GONE
+        val home = supportFragmentManager.findFragmentByTag("HomeFragment")
+        supportFragmentManager.beginTransaction()
+            .hide(home!!)
+            .add(R.id.fr_main_navi_host, frag)
+            .addToBackStack(null)
             .commit()
     }
+    fun comebackHome(){
+        mainBnv.visibility = View.VISIBLE
+        supportFragmentManager.popBackStack()
+    }
+
 }

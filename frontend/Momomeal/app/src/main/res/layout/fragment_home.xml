@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/fragment_home_appBar"
         android:layout_width="match_parent"
-        android:layout_height="152dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/home_appbar_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,13 +19,15 @@
         <TextView
             android:id="@+id/fragment_home_edit_address"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="12dp"
             android:layout_marginHorizontal="16dp"
             android:textColor="@color/white"
             android:text="현재 위치를 입력해주세요"
             android:gravity="center_vertical"
             android:textSize="14sp"
             android:fontFamily="@font/lotte_mart_dream_bold"
+            android:drawableTint="@color/white"
             android:drawableEnd="@drawable/ic_down_mark_24"/>
         <androidx.appcompat.widget.SearchView
             android:id="@+id/fragment_home_searchbar"
@@ -33,6 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/home_searchview_background"
             app:queryHint="검색어를 입력하십시오"
             />
@@ -51,8 +54,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_korean"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_korean"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -60,12 +62,12 @@
                 android:textSize="11sp"
                 android:text="한식"
                 android:layout_weight="0.2"
+                android:tag="Korean"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_chinese"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_chinese"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -73,12 +75,12 @@
                 android:textSize="11sp"
                 android:text="중식"
                 android:layout_weight="0.2"
+                android:tag="Chinese"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_japanese"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_japanese"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -86,12 +88,12 @@
                 android:textSize="11sp"
                 android:text="일식"
                 android:layout_weight="0.2"
+                android:tag="Japanese"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_western"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_western"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -99,12 +101,12 @@
                 android:textSize="11sp"
                 android:text="양식"
                 android:layout_weight="0.2"
+                android:tag="Western"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_fastfood"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_fastfood"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -112,6 +114,7 @@
                 android:textSize="11sp"
                 android:text="패스트푸드"
                 android:layout_weight="0.2"
+                android:tag="Fastfood"
                 />
         </TableRow>
         <TableRow
@@ -119,8 +122,7 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_chicken"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_chicken"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -128,12 +130,12 @@
                 android:textSize="11sp"
                 android:text="치킨"
                 android:layout_weight="0.2"
+                android:tag="Chicken"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_pizza"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_pizza"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -141,12 +143,12 @@
                 android:textSize="11sp"
                 android:text="피자"
                 android:layout_weight="0.2"
+                android:tag="Pizza"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_snackbar"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_snackbar"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -154,12 +156,12 @@
                 android:textSize="11sp"
                 android:text="분식"
                 android:layout_weight="0.2"
+                android:tag="Snackbar"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_boiledpork"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_boiledfork"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -167,12 +169,12 @@
                 android:textSize="11sp"
                 android:text="족발/보쌈"
                 android:layout_weight="0.2"
+                android:tag="BoiledPork"
                 />
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                android:drawableTop="@drawable/ic_category_cafe_desert"
-                android:drawableTint="@color/orange_deep"
+                android:drawableTop="@drawable/ic_colorful_category_cafe_desert"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -180,6 +182,7 @@
                 android:textSize="11sp"
                 android:text="카페/디저트"
                 android:layout_weight="0.2"
+                android:tag="CafeAndDesert"
                 />
         </TableRow>
         <TableRow
@@ -187,7 +190,6 @@
             <TextView
                 android:padding="6dp"
                 android:layout_width="0dp"
-                app:drawableTint="@color/orange_deep"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:fontFamily="@font/roboto"
@@ -195,14 +197,29 @@
                 android:textSize="11sp"
                 android:text="야식"
                 android:layout_weight="0.2"
-                app:drawableTopCompat="@drawable/ic_category_midnightsnack" />
+                app:drawableTopCompat="@drawable/ic_colorful_category_midnight_snack"
+                android:tag="MidnightSnack"/>
         </TableRow>
     </TableLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="12dp"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="16sp"
+        android:text="추천 채팅방 목록"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_home_category_table" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_home_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         android:layout_marginHorizontal="16dp"
         android:clipToPadding="false"
         android:orientation="vertical"
@@ -211,8 +228,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_home_category_table">
-    </androidx.recyclerview.widget.RecyclerView>
+        app:layout_constraintTop_toBottomOf="@+id/textView"></androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_home"

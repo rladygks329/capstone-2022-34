@@ -1,5 +1,6 @@
 package com.capstone.momomeal.repository;
 
+import com.capstone.momomeal.domain.Category;
 import com.capstone.momomeal.domain.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Query;
@@ -36,9 +37,15 @@ public class ChatRoomRepository {
                 .getResultList();
     }
 
+    public List<ChatRoom> findAllOrderByDistance(){
+        return em.createQuery("select cr from ChatRoom cr " +
+                "order by cr.distance", ChatRoom.class)
+                .getResultList();
+    }
+
     public List<ChatRoom> findExceptParticipatedChatRoom(List<Long> participatedChatRoomIds){
         return em.createQuery("select cr from ChatRoom cr" +
-                " where cr.id not in :ids", ChatRoom.class)
+                        " where cr.id not in :ids", ChatRoom.class)
                 .setParameter("ids", participatedChatRoomIds)
                 .getResultList();
 
@@ -52,6 +59,14 @@ public class ChatRoomRepository {
 
     }
 
+    public List<ChatRoom> findExceptParticipatedChatRoomOrderByDistance(List<Long> participatedChatRoomIds){
+        return em.createQuery("select cr from ChatRoom cr " +
+                "where cr.id not in :ids " +
+                "order by cr.distance", ChatRoom.class)
+                .setParameter("ids", participatedChatRoomIds)
+                .getResultList();
+    }
+
     public int deleteById(Long chatRoomId){
         int cnt = em.createQuery("delete from ChatRoom cr" +
                         " where cr.id = :id")
@@ -62,10 +77,28 @@ public class ChatRoomRepository {
 
     }
 
+    public List<ChatRoom> findExceptParticipatedByKeyword(String keyword,
+                                                          List<Long> participatedChatRoomIds){
+        return em.createQuery("select cr from ChatRoom cr " +
+                        "where cr.title like concat('%',:keyword,'%') "
+                        + "and cr.id not in (:ids)", ChatRoom.class)
+                .setParameter("keyword", keyword)
+                .setParameter("ids", participatedChatRoomIds)
+                .getResultList();
+    }
     public List<ChatRoom> findByKeyword(String keyword){
         return em.createQuery("select cr from ChatRoom cr " +
-                "where cr.title like concat('%',:keyword,'%')", ChatRoom.class)
+                        "where cr.title like concat('%',:keyword,'%')", ChatRoom.class)
                 .setParameter("keyword", keyword)
                 .getResultList();
     }
+
+    public List<ChatRoom> findByCategoryIn(List<Category> categories, List<Long> participatedChatRoomIds){
+        return em.createQuery("select cr from ChatRoom cr " +
+                "where cr.category in (:categories) and cr.id not in (:ids)", ChatRoom.class)
+                .setParameter("categories", categories)
+                .setParameter("ids", participatedChatRoomIds)
+                .getResultList();
+    }
+
 }

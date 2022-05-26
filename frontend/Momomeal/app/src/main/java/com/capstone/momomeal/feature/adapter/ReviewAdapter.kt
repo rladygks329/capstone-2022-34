@@ -1,19 +1,20 @@
 package com.capstone.momomeal.feature.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.capstone.momomeal.R
 import com.capstone.momomeal.databinding.ItemReviewContentBinding
-import com.capstone.momomeal.feature.Rate
-import com.capstone.momomeal.feature.Review
+import com.capstone.momomeal.data.Rate
+import com.capstone.momomeal.data.Review
 
 class ReviewAdapter(
-    val context: Context, val reviewList: ArrayList<Review>
+    var reviewList: ArrayList<Review>
 ) : RecyclerView.Adapter<ViewHolder>() {
+    fun replaceData(reviews: List<Review>){
+        reviewList = ArrayList<Review>(reviews)
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemReviewContentBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
@@ -31,8 +32,8 @@ class ViewHolder(val binding: ItemReviewContentBinding) : RecyclerView.ViewHolde
     fun bind(item: Review) {
         binding.tvReviewContent.text = item.conReview
         when (item.rateSign) {
-            Rate.Good -> binding.ivReviewContent.setImageResource(R.drawable.ic_good_sign)
-            Rate.Bad -> binding.ivReviewContent.setImageResource(R.drawable.ic_bad_sign)
+            Rate.LIKE -> binding.ivReviewContent.setImageResource(R.drawable.ic_good_sign)
+            Rate.BAD -> binding.ivReviewContent.setImageResource(R.drawable.ic_bad_sign)
         }
     }
 }

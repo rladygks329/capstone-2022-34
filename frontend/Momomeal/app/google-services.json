@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "256963447432",
+    "project_id": "momomeal-5baef",
+    "storage_bucket": "momomeal-5baef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256963447432:android:3af47da8a9867109302d3d",
+        "android_client_info": {
+          "package_name": "com.capstone.momomeal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256963447432-fkq3c5eaigfp7ok0hkfnne6fuso8s2ff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIEQxSol85Zd0WzblCY2B0GvMtbOaIQkI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256963447432-fkq3c5eaigfp7ok0hkfnne6fuso8s2ff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

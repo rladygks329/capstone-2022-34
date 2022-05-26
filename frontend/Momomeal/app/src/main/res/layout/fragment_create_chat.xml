@@ -51,41 +51,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="120dp"
         android:layout_marginEnd="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_chat_craete_confirm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_create_chat">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_create_chat"
+        app:layout_constraintVertical_bias="0.2">
 
         <TextView
-            android:id="@+id/tv_chat_title"
+            android:id="@+id/tv_create_chat_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_chat_title_text"
             android:fontFamily="@font/roboto"
+            android:text="@string/tv_chat_title_text"
             android:textColor="@color/gray1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/et_chat_title"
+            android:id="@+id/et_create_chat_title"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="2dp"
             android:background="@drawable/textfield_create_chat_normal"
             android:ems="20"
             android:inputType="text"
+            android:padding="8dp"
+            android:textCursorDrawable="@drawable/cursor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_chat_title" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_create_chat_title" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="90dp"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="90dp">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_chat_category"
@@ -99,23 +102,23 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_category"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
-                app:hintEnabled="false"
-                app:boxStrokeWidth="0dp"
+                android:background="@drawable/textfield_create_chat_normal"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
                 app:boxCornerRadiusTopStart="8dp"
-                android:background="@drawable/textfield_create_chat_normal"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                app:boxStrokeWidth="0dp"
                 app:endIconDrawable="@drawable/ic_selector_btn_create_chat"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toStartOf="@+id/til_max_capacity"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category"
-                app:hintEnabled="false">
+                app:layout_constraintTop_toBottomOf="@+id/tv_chat_category">
+
                 <AutoCompleteTextView
                     android:id="@+id/spn_chat_category"
                     android:layout_width="match_parent"
@@ -140,29 +143,29 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_max_capacity"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="8dp"
+                android:background="@drawable/textfield_create_chat_normal"
                 app:boxCornerRadiusBottomEnd="8dp"
                 app:boxCornerRadiusBottomStart="8dp"
                 app:boxCornerRadiusTopEnd="8dp"
                 app:boxCornerRadiusTopStart="8dp"
-                android:background="@drawable/textfield_create_chat_normal"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:endIconDrawable="@drawable/ic_selector_btn_create_chat"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_chat_max_capacity"
-                app:layout_constraintStart_toEndOf="@+id/til_category">
+                app:layout_constraintStart_toEndOf="@+id/til_category"
+                app:layout_constraintTop_toBottomOf="@+id/tv_chat_max_capacity">
 
                 <AutoCompleteTextView
                     android:id="@+id/spn_chat_max_capacity"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:dropDownSelector="@drawable/bg_white_radius"
-                    android:inputType="none"
-                    android:fontFamily="@font/roboto"
                     android:ellipsize="end"
+                    android:fontFamily="@font/roboto"
+                    android:inputType="none"
                     android:maxLines="1"
                     android:textAlignment="center" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -173,10 +176,10 @@
             android:id="@+id/tv_chat_deliver_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_deliver_place_text"
-            android:fontFamily="@font/roboto"
-            android:textColor="@color/gray1"
             android:layout_marginTop="180dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/tv_deliver_place_text"
+            android:textColor="@color/gray1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -188,6 +191,8 @@
             android:background="@drawable/textfield_create_chat_normal"
             android:ems="20"
             android:inputType="text"
+            android:padding="8dp"
+            android:textCursorDrawable="@drawable/cursor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_chat_deliver_place" />
@@ -196,10 +201,10 @@
             android:id="@+id/tv_chat_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tv_location_text"
-            android:fontFamily="@font/roboto"
-            android:textColor="@color/gray1"
             android:layout_marginTop="270dp"
+            android:fontFamily="@font/roboto"
+            android:text="@string/tv_location_text"
+            android:textColor="@color/gray1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -211,20 +216,25 @@
             android:background="@drawable/textfield_create_chat_normal"
             android:ems="20"
             android:inputType="text"
+            android:padding="8dp"
+            android:textCursorDrawable="@drawable/cursor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_chat_location" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_chat_craete_confirm"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="@color/orange_deep"
         android:text="@string/btn_create_confirm_txt"
-        android:background="@drawable/bg_orange_deep_radius"
+        android:textColor="@color/white"
+        app:cornerRadius="12dp"
+        android:paddingVertical="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

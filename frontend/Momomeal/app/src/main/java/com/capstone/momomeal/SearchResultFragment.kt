@@ -1,35 +1,104 @@
 package com.capstone.momomeal
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
+import com.capstone.momomeal.api.MomomealService
 import com.capstone.momomeal.databinding.FragmentSearchResultBinding
 import com.capstone.momomeal.feature.BaseFragment
-import com.capstone.momomeal.feature.Category
-import com.capstone.momomeal.feature.Chatroom
+import com.capstone.momomeal.data.Chatroom
 import com.capstone.momomeal.feature.adapter.ChatroomAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class SearchResultFragment : BaseFragment<FragmentSearchResultBinding>(FragmentSearchResultBinding::inflate) {
-    val chatlist = arrayListOf<Chatroom>(
-        //test
-        Chatroom("Bhc 뿌링클 뿌개실분 ~ ", 123, Category.Chicken, 3, "국민대학교 정문", 3.3, listOf(7, 49, 89)),
-        Chatroom("밤 12시에 족발 먹을 사람 있니?", 128, Category.BoiledPork, 3, "서울대입구 4번출구", 3.9, listOf(3, 29, 69))
-    )
+
+    private val TAG = "SearchResultFragment"
+    private val momomeal = MomomealService.momomealAPI
+    private val chatInfoFrag = ChatInfoFragment()
+
+    val chatAdapter: ChatroomAdapter by lazy {
+        ChatroomAdapter(requireContext())
+    }
+    val mainActivity: MainActivity by lazy {
+        requireActivity() as MainActivity
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mainActivity.comebackHome()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val retView = super.onCreateView(inflater, container, savedInstanceState)
-        binding.fragmentSearchResultBack.setOnClickListener{
-            findNavController().popBackStack()
-        }
-        val chatAdapter = ChatroomAdapter(requireContext())
+        var SearchKeyword = arguments?.getString("SearchKeyword")
+        getSearchedChatRoom(SearchKeyword!!)
+
         binding.fragmentSearchResultRecycle.adapter = chatAdapter
-        chatAdapter.replaceData(chatlist)
+        chatAdapter.setItemClickListener(object : ChatroomAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                val item = chatAdapter.getData(position)
+                chatInfoFrag.arguments = bundleOf(
+                    "User" to mainActivity.myInfo!!,
+                    "Chatroom" to item
+                )
+                chatInfoFrag.show(mainActivity.supportFragmentManager, chatInfoFrag.tag)
+            }
+        })
+        binding.fragmentSearchResultBack.setOnClickListener{
+            (requireActivity() as MainActivity).comebackHome()
+        }
+        binding.fragmentSearchResultSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener, android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null){
+                    getSearchedChatRoom(query!!)
+                }
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
         return retView
+    }
+    private fun getSearchedChatRoom(s: String){
+        momomeal.getSearchChatroom(s, mainActivity.myInfo.idUser).enqueue(object: Callback<List<Chatroom>>{
+            override fun onResponse(
+                call: Call<List<Chatroom>>,
+                response: Response<List<Chatroom>>
+            ) {
+                //Log.d("retrofit", response?.body().toString())
+                if(response.isSuccessful.not()){
+                    return
+                }
+                response.body()?.let{
+                    chatAdapter.replaceData(ArrayList<Chatroom>(it))
+                }
+            }
+
+            override fun onFailure(call: Call<List<Chatroom>>, t: Throwable) {
+                //Log.e("retrofit", t.toString())
+            }
+        })
     }
 }
