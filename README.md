@@ -44,4 +44,4 @@
 
 
 ### 5. 실제 앱 동작 영상
-[![모두모아한끼_Youtube](https://img.youtube.com/vi/Y8WPZr_rjkQ/0.jpg)] (https://youtu.be/Y8WPZr_rjkQ)
+[![모두모아한끼_Youtube](https://img.youtube.com/vi/Y8WPZr_rjkQ/0.jpg)](https://www.youtube.com/watch?v=Y8WPZr_rjkQ)
