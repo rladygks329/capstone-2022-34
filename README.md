@@ -5,10 +5,7 @@
 
 저희는 배달 추가 비용 부담을 덜어주기 위해, 카테고리 기반의 맞춤 채팅방을 통해 근처의 사람들을 모아 공동으로 배달 주문을 할 수 있게 도와주는 서비스를 개발하려고 합니다. 
 
-### 2. 소개 영상
-[![모두모아한끼_Youtube](http://img.youtube.com/vi/VveeCXIwtDE/sddefault.jpg)](https://www.youtube.com/watch?v=VveeCXIwtDE)
-
-### 3. 팀 소개
+### 2. 팀 소개
 ```markdown
 이름 :    장진우
 학번 :    ****1694
@@ -40,8 +37,5 @@
 이메일 :  mjjung@kookmin.ac.kr
 ```
 
-### 4. 사용법
-
-
-### 5. 실제 앱 동작 영상
+### 3. 실제 앱 동작 영상
 [![모두모아한끼_Youtube](https://img.youtube.com/vi/Y8WPZr_rjkQ/0.jpg)](https://www.youtube.com/watch?v=Y8WPZr_rjkQ)
